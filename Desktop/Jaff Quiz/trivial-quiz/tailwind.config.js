@@ -86,6 +86,7 @@ module.exports = {
       },
       gray: "#e9ecef",
       modalback: "#00000059",
+       line: "#c2c2c2"
     },
     // ...
     borderRadius: {
