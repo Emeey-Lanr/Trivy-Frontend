@@ -2,6 +2,26 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    screens: {
+      sm: "640px",
+      // => @media (min-width: 640px) { ... }
+
+      md: "768px",
+      // => @media (min-width: 768px) { ... }
+
+      lg: "1024px",
+      // => @media (min-width: 1024px) { ... }
+
+      xl: "1280px",
+      // => @media (min-width: 1280px) { ... }
+
+      "2xl": "1536px",
+      // => @media (min-width: 1536px) { ... }
+      sidebarNone: { min: "1px", max: "1182px" },
+      sidebarshow: "1183px",
+      createmodal: { min: "1px", max: "500px" },
+      createmodalWidth: { min: "1px", max: "420px" },
+    },
     spacing: {
       01: "-90px",
       0: "0",
@@ -19,7 +39,8 @@ module.exports = {
       dw: "170px",
       dbh: "300px",
       dimageSize: "400px",
-      dashtable:"600px",
+      dashtable: "600px",
+      createModalSize: "400px",
       // percentage
       "1p": "10%",
       "2p": "20%",
@@ -64,11 +85,14 @@ module.exports = {
         200: "#f6feef",
       },
       gray: "#e9ecef",
+      modalback: "#00000059",
     },
     // ...
     borderRadius: {
       sideicon: "5px",
       sideedge: "20px",
+      createModal: "10px",
+      createdSubject: "10px",
     },
     extend: {},
   },

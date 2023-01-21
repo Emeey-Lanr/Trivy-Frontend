@@ -4,6 +4,7 @@ import AdminDashboard from "./Components/AdminDashboard";
 import JuniorCreateView from "./Components/JuniorCreateView";
 import SeniorCreateView from "./Components/SeniorCreateView";
 import PrimaryCreateView from "./Components/PrimaryCreateView";
+import QuizCollection from "./Components/QuizCollection";
 function App() {
   return (
     <Routes>
@@ -12,6 +13,7 @@ function App() {
       <Route path="/junior/create" element={<JuniorCreateView />} />
       <Route path="/senior/create" element={<SeniorCreateView />} />
       <Route path="/primary/create" element={<PrimaryCreateView />} />
+      <Route path="/quizcollections" element={<QuizCollection />} />
     </Routes>
   );
 }

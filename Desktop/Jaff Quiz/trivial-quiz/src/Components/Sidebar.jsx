@@ -3,7 +3,7 @@ import { SlPeople } from "react-icons/sl";
 import BorderBottomLine from "./BorderBottomLine";
 const Sidebar = () => {
   return (
-    <div className="w-dw h-9p fixed bottom-0 left-0 bg-dashback-100  rounded-r-sideedge overflow-y-auto">
+    <div className="w-dw h-9p fixed bottom-0 left-0 bg-dashback-100  rounded-r-sideedge overflow-y-auto sidebarNone:hidden">
       <div className="flex justify-center align-middle w-9p mx-auto bg-white mt-5 py-4 rounded-sideicon shadow-sm hover:bg-gray">
         <div className="w-10p">
           <div className="flex justify-center align-middle w-6 h-6 mx-auto py-2 bg-green-like-100 rounded-sideicon">

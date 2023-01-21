@@ -12,3 +12,12 @@
   grid-template-columns: 50% 50%;
   padding: 15px;
 }
+
+@media (max-width: 900px) {
+  .top-scorer {
+    grid-template-columns: 100%;
+  }
+  .top-scorer .beststudent {
+    margin-bottom: 20px;
+  }
+}

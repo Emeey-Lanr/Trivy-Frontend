@@ -7,9 +7,8 @@ import { FaRegUserCircle } from "react-icons/fa";
 const AdminDashboard = () => {
   return (
     <div className="bg-dashback-100 w-10p">
-      <DashbarNav />
       <Sidebar />
-      <div className="w-9p ml-auto">
+      <div className="w-9p ml-auto sidebarNone:w-10p">
         <div className="w-9p bg-green-like-100 h-dbh mx-auto"></div>
 
         {/* Top Scorers */}
@@ -78,12 +77,12 @@ const AdminDashboard = () => {
       </div>
 
       {/* Chart */}
-      <div className="w-7p mx-auto bg-chartbg">
+      <div className="w-7p mx-auto bg-chartbg sidebarNone:w-9p">
         corporis veniam qui eos ullam itaque provident assumenda voluptatem
       </div>
 
       {/* All payer total score */}
-      <div className="bg-white w-7p mx-auto h-dashtable overflow-x-auto shadow-sm mt-10 rounded-sideicon">
+      <div className="bg-white w-7p mx-auto h-dashtable overflow-x-auto shadow-sm mt-10 rounded-sideicon sidebarNone:w-9p">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora tenetur
         optio, saepe voluptates dicta vel nam perferendis velit aliquam
         laudantium quia pariatur. Temporibus ea dolorem illo eaque non nihil
@@ -129,6 +128,8 @@ const AdminDashboard = () => {
         tenetur doloribus earum, cumque maiores quisquam, tempore dolorum nulla
         maxime dicta veniam aperiam, beatae possimus.
       </div>
+      {/* Side Bar */}
+      <DashbarNav />
     </div>
   );
 };

@@ -6,6 +6,7 @@ const SeniorCreateView = () => {
     <div>
       <DashbarNav />
       <Sidebar />
+      
     </div>
   );
 };
