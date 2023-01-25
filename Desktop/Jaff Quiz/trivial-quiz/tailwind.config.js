@@ -36,6 +36,7 @@ module.exports = {
       9: "59px",
       10: "60px",
       11: "76px",
+      12: "90px",
       dw: "170px",
       dbh: "300px",
       dimageSize: "400px",
@@ -86,7 +87,7 @@ module.exports = {
       },
       gray: "#e9ecef",
       modalback: "#00000059",
-       line: "#c2c2c2"
+      line: "#c2c2c2",
     },
     // ...
     borderRadius: {
