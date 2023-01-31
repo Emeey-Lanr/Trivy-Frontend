@@ -15,6 +15,7 @@ import VerifyMessage from "./Components/VerifyMessage";
 import IndividualGameLogin from "./Components/IndividualGameLogin";
 import NameJoin from "./Components/NameJoin";
 import Game from "./Components/Game";
+import AdminGameLogin from "./Components/AdminGameLogin";
 export const appContext = createContext(null);
 function App() {
   let backendEndPoint = "http://localhost:2340";
@@ -79,7 +80,8 @@ function App() {
         <Route path="/questionbank" element={<Questionbank />} />
         <Route path="/emailverification" element={<VerifyMessage />} />
         <Route path="/:id" element={<VerifyEmail />} />
-        <Route path="/play/game" element={<IndividualGameLogin />} />
+        <Route path="/play/userlogin" element={<IndividualGameLogin />} />
+        <Route path="/play/adminlogin" element={<AdminGameLogin/>} />
         <Route path="/play/username" element={<NameJoin />} />
         <Route path="/play" element={<Game />} />
       </Routes>

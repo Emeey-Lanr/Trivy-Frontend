@@ -39,6 +39,7 @@ module.exports = {
       12: "90px",
       dw: "170px",
       dbh: "300px",
+      input:"300px",
       dimageSize: "400px",
       dashtable: "600px",
       createModalSize: "400px",
