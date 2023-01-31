@@ -2,15 +2,25 @@ import CreateModal from "./CreateModal";
 import CreatView from "./CreatView";
 import DashbarNav from "./DashbarNav";
 import Sidebar from "./Sidebar";
-
+import { useContext, useEffect, useState } from "react";
+import { appContext } from "../App";
+import SideBarBack from "./SideBarBack";
 const JuniorCreateView = () => {
+  const { setSideBarBoxShadow, setShowCreateModal, setCurrentSet } =
+    useContext(appContext);
+  useEffect(() => {
+    setSideBarBoxShadow(3);
+    setCurrentSet("Junior");
+    setShowCreateModal(false);
+  }, []);
   return (
     <>
       <div className="w-100">
         <div className="w-10p bg-dashback-100">
           <CreatView />
         </div>
-        {/* <CreateModal /> */}
+        <CreateModal />
+        <SideBarBack />
         <DashbarNav />
         <Sidebar />
       </div>

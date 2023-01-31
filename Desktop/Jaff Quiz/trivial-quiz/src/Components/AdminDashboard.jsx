@@ -2,12 +2,47 @@ import DashbarNav from "./DashbarNav";
 import Sidebar from "./Sidebar";
 import "../styles/dashboard.css";
 import bestStudent from "../Images/bestStudent.jpg";
+import DashboardChart from "./DashBoardChart";
 import { FaRegUserCircle } from "react-icons/fa";
-
+import { useContext, useEffect, useState } from "react";
+import { appContext } from "../App";
+import SideBarBack from "./SideBarBack";
 const AdminDashboard = () => {
+  const { setSideBarBoxShadow } = useContext(appContext);
+  useEffect(() => {
+    setSideBarBoxShadow(1);
+  }, []);
+  const [userRecords, setUserRecords] = useState([
+    {
+      name: "oyelowo",
+      subject: [
+        { name: "english", score: 1 },
+        { name: "maths", score: 2 },
+        { name: "french", score: 30 },
+      ],
+      total: 90,
+    },
+    {
+      name: "mark",
+      subject: [
+        { name: "english", score: 60 },
+        { name: "maths", score: 20 },
+        { name: "french", score: 23 },
+      ],
+      total: 90,
+    },
+    {
+      name: "rock",
+      subject: [
+        { name: "english", score: 30 },
+        { name: "maths", score: 30 },
+        { name: "french", score: 30 },
+      ],
+      total: 90,
+    },
+  ]);
   return (
     <div className="bg-dashback-100 w-10p">
-      <Sidebar />
       <div className="w-9p ml-auto sidebarNone:w-10p">
         <div className="w-9p bg-green-like-100 h-dbh mx-auto"></div>
 
@@ -77,59 +112,44 @@ const AdminDashboard = () => {
       </div>
 
       {/* Chart */}
-      <div className="w-7p mx-auto bg-chartbg sidebarNone:w-9p">
-        corporis veniam qui eos ullam itaque provident assumenda voluptatem
+      <div className="w-8p mx-auto">
+        <div className="w-9p ml-auto bg-chartbg sidebarNone:w-9p">
+          <DashboardChart />
+        </div>
       </div>
 
       {/* All payer total score */}
       <div className="bg-white w-7p mx-auto h-dashtable overflow-x-auto shadow-sm mt-10 rounded-sideicon sidebarNone:w-9p">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora tenetur
-        optio, saepe voluptates dicta vel nam perferendis velit aliquam
-        laudantium quia pariatur. Temporibus ea dolorem illo eaque non nihil
-        quidem blanditiis! Veniam quam nesciunt ab tempore. Sunt dolorem
-        corrupti laboriosam nobis saepe! Cupiditate tenetur iste ab quasi quam
-        molestias, harum tempora nobis ullam? Nesciunt facilis delectus esse
-        molestiae nemo sint aliquam odit corporis, nobis quidem! Tenetur ipsa
-        autem cumque quis quia doloribus ipsam, exercitationem blanditiis neque
-        non quaerat fuga quibusdam provident? Ab, autem officiis saepe
-        reprehenderit exercitationem non tempore voluptate! Quas deserunt nobis
-        incidunt reprehenderit, eum facilis sunt provident unde error molestias
-        nam, in tempore doloremque architecto inventore eaque porro! Ipsum quas
-        eos reprehenderit blanditiis sint impedit, ut voluptatibus ratione at
-        harum consequuntur sit, iure perspiciatis cum sequi. Delectus ea, nobis
-        est fugiat libero minus culpa fugit. Praesentium sapiente enim, quaerat
-        hic ipsa nobis nihil debitis a, perspiciatis id corrupti aliquid
-        repellat! Rem minus iure suscipit ipsam magni amet vero veritatis
-        laborum, totam temporibus repellendus similique, molestiae possimus
-        perspiciatis fuga ut ea quae dolore sint eligendi. Perspiciatis eos
-        recusandae, quis molestias ducimus consequatur ut repellat quae expedita
-        doloremque numquam pariatur delectus eum, nemo incidunt laudantium
-        dolores nam vel omnis dicta nulla quidem voluptatibus. Corrupti a
-        doloremque quibusdam eius corporis reiciendis quasi necessitatibus
-        officiis ratione fuga accusantium assumenda repellat nostrum quod
-        laboriosam error, quidem optio nesciunt molestiae hic. Culpa blanditiis
-        quidem ipsa dolores sit obcaecati esse distinctio voluptatibus quia,
-        rerum enim nisi omnis consequuntur voluptas sequi consectetur laudantium
-        qui mollitia dicta sed! Quia debitis voluptate impedit nobis ex ad
-        numquam et deleniti aliquid! Enim quasi ad praesentium laboriosam
-        eligendi! Consectetur, aspernatur reprehenderit dolore quam assumenda
-        quod nulla, officia unde quas repellat laborum fugit nobis molestias
-        aliquid cum. Perspiciatis velit nobis quaerat hic debitis dolorem,
-        temporibus officia corporis possimus cum obcaecati cumque repellat
-        magni, quod, mollitia quae numquam. Libero debitis ratione minus
-        suscipit doloribus sunt placeat non nihil ipsam. Fugit rem incidunt
-        ipsam earum nostrum veritatis odit assumenda molestias sunt in. Quis
-        sint nisi repellat ad, libero esse, laboriosam atque recusandae
-        veritatis inventore cumque odio obcaecati. Magnam eos sequi illo.
-        Laborum blanditiis et nihil est excepturi, ullam molestias omnis
-        consectetur ipsum facere maiores cumque corrupti. Voluptas qui quis
-        natus totam alias magni nulla modi doloremque cumque, tenetur iusto
-        dicta corporis eius asperiores porro! Consequatur sapiente animi alias
-        tenetur doloribus earum, cumque maiores quisquam, tempore dolorum nulla
-        maxime dicta veniam aperiam, beatae possimus.
+        <div className="w-10p sticky top-0">
+          <p className="w-3p bg-green-like-100 py-2 rounded-sideicon mx-auto text-center text-white my-3">
+            Participants
+          </p>
+        </div>
+
+        <div className="w-scoreResultSize">
+          <div className="flex justify-around w-10p">
+            <div>
+              <p>Index</p>
+              {userRecords.map((_, id) => (
+                <div>{id}</div>
+              ))}
+            </div>
+
+            <div>
+              <p>Name</p>
+              {userRecords.map((name) => (
+                <div>
+                  <p>{name.name}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
       {/* Side Bar */}
+      <SideBarBack />
       <DashbarNav />
+      <Sidebar />
     </div>
   );
 };

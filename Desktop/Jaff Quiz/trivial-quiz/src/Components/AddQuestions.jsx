@@ -7,6 +7,7 @@ import { AiOutlineLine } from "react-icons/ai";
 import { SlCloudUpload } from "react-icons/sl";
 import AlertModal from "./AlertModal";
 import { appContext } from "../App";
+import SaveQuestionModal from "./SaveQuestionModal";
 export const addQuestionContext = createContext(null);
 
 const AddQuestions = () => {
@@ -19,6 +20,11 @@ const AddQuestions = () => {
   const answer3Input = useRef();
   const answer4Input = useRef();
 
+  const [subjects, setSubjects] = useState([
+    { subject: "math" },
+    { subject: "english" },
+    { subject: "rent" },
+  ]);
   const [imageswitch, setImageSwitch] = useState(true);
   const [imageUrl, setImageUrl] = useState("");
   // to check if answer is picked
@@ -138,13 +144,13 @@ const AddQuestions = () => {
   };
 
   //adding question to bank
-  const emptyInputFuction = (empty,checkNumber) => {
+  const emptyInputFuction = (empty, checkNumber) => {
     questionInput.current.value = empty;
     answer1Input.current.value = empty;
     answer2Input.current.value = empty;
     answer3Input.current.value = empty;
     answer4Input.current.value = empty;
-    setCheckNumber(checkNumber)
+    setCheckNumber(checkNumber);
   };
   const alertFunction = (status, message, time) => {
     setAlertModalStatus(status);
@@ -183,14 +189,24 @@ const AddQuestions = () => {
   };
 
   const editQuestion = (id) => {
-    questionInput.current.value = questionBank[id].question.text
-    // answer1Input.current.value = 
-    // answer2Input.current.value = 
-    // answer3Input.current.value = 
-    // answer4Input.current.value = 
+    questionInput.current.value = questionBank[id].question.text;
+    // answer1Input.current.value =
+    // answer2Input.current.value =
+    // answer3Input.current.value =
+    // answer4Input.current.value =
   };
+
+  // save question
+  const [openSaveQuestionModal, setOpenSaveQuestionModal] = useState(false);
+  const removeAddedQuestion = (Qid) => {
+    setQuestionBank(questionBank.filter((_, id) => id !== Qid));
+  };
+
+
   return (
-    <addQuestionContext.Provider value={{}}>
+    <addQuestionContext.Provider
+      value={{subjects, openSaveQuestionModal, setOpenSaveQuestionModal }}
+    >
       <div>
         <DashbarNav />
         <Sidebar />
@@ -200,7 +216,10 @@ const AddQuestions = () => {
             <button className="w-10p">Exist</button>
           </div>
           <div className="w-3p sidebarNone:w-5p">
-            <button className="w-10p bg-green-like-100 py-3 text-white ">
+            <button
+              className="w-10p bg-green-like-100 py-3 text-white"
+              onClick={() => setOpenSaveQuestionModal(true)}
+            >
               Save
             </button>
           </div>
@@ -366,7 +385,10 @@ const AddQuestions = () => {
                       <div className="flex justify-between items-center">
                         <div className="questionNumber">{id + 1}</div>
                         <div className="border rounded-sideicon">
-                          <button className="bg-green-like-100 py-2 px-3 rounded-l-sideicon text-white">
+                          <button
+                            className="bg-green-like-100 py-2 px-3 rounded-l-sideicon text-white"
+                            onClick={() => removeAddedQuestion(id)}
+                          >
                             remove
                           </button>
                           <button
@@ -418,6 +440,7 @@ const AddQuestions = () => {
           </div>
         </div>
         <AlertModal />
+        <SaveQuestionModal />
       </div>
     </addQuestionContext.Provider>
   );

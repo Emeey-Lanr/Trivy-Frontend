@@ -8,5 +8,35 @@
 
 .gradi {
   background: linear-gradient(to left, #05b97d, #83df33);
- 
+}
+
+@media (max-width: 1233px) {
+  .collections {
+    grid-template-columns: 30% 30% 30%;
+  }
+}
+
+@media (max-width: 1160px) {
+  .collections {
+    width: 90%;
+  }
+}
+@media (max-width: 920px) {
+  .collections {
+    width: 100%;
+  }
+}
+
+@media (Max-width:800px){
+  .collections{
+    grid-template-columns: 40%;
+    justify-content: center;
+  }
+}
+@media (Max-width:630px){
+  .collections{
+    grid-template-columns: 90%;
+    justify-content: center;
+    
+  }
 }

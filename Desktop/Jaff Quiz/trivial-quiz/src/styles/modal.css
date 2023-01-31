@@ -55,3 +55,8 @@
 .addedQuestion div {
   margin-bottom: 10px;
 }
+.subjectnameToAddQuestionTo{
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  justify-content: space-evenly;
+}

@@ -12,3 +12,10 @@
 .inputbtn input:focus {
   outline: none;
 }
+
+
+@media (Max-width:550px){
+  .inputbtn{
+    width: 100%;
+  }
+}

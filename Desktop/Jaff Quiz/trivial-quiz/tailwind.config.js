@@ -42,6 +42,7 @@ module.exports = {
       dimageSize: "400px",
       dashtable: "600px",
       createModalSize: "400px",
+      scoreResultSize: "3000px",
       // percentage
       "1p": "10%",
       "2p": "20%",
@@ -86,8 +87,11 @@ module.exports = {
         200: "#f6feef",
       },
       gray: "#e9ecef",
+      inputLine: "#c6c6c6",
+      inputOutline: "#03a26d72",
       modalback: "#00000059",
       line: "#c2c2c2",
+      warning: "#ff0000e5",
     },
     // ...
     borderRadius: {
