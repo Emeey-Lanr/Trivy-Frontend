@@ -7,10 +7,14 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import { appContext } from "../App";
 import SideBarBack from "./SideBarBack";
+import axios from "axios";
+import {useNavigate} from "react-router-dom"
 const AdminDashboard = () => {
-  const { setSideBarBoxShadow } = useContext(appContext);
+  const { adminDetails, setAdminDetails, adminEndPoint,dashboardFuction, setSideBarBoxShadow } =   useContext(appContext);
+
   useEffect(() => {
     setSideBarBoxShadow(1);
+  dashboardFuction()
   }, []);
   const [userRecords, setUserRecords] = useState([
     {

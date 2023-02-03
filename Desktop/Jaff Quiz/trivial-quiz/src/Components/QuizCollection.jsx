@@ -3,7 +3,9 @@ import DashbarNav from "./DashbarNav";
 import Sidebar from "./Sidebar";
 import { SlPlus, SlTrash, SlPeople, SlBookOpen } from "react-icons/sl";
 import "../styles/collection.css";
+import axios from "axios"
 const QuizCollection = () => {
+
   return (
     <div className="w-100">
       <Sidebar />

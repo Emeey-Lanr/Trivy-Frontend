@@ -1,7 +1,26 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { appContext } from "../App";
+import axios from "axios"
 const CreatView = () => {
-  const {setShowCreateModal, currentSet } = useContext(appContext);
+  let navigate = useNavigate()
+  const {
+    adminId,
+    adminEndPoint,
+    showCreateModal,
+    setShowCreateModal,
+    currentSet,
+  } = useContext(appContext);
+  const saveIdEndPoint  = `${adminEndPoint}/saveClassId`
+  const view = () => {
+    axios.post(saveIdEndPoint, { class: currentSet, adminId: adminId }).then((result) => {
+      if (result.data.status) {
+        localStorage.quizClassId = result.data.identification;
+        navigate("/quizcollections");
+      }
+    })
+    
+  }
   return (
     <div className="w-10p h-10p fixed bottom-0  right-0 mx-auto flex justify-center items-center">
       <div>
@@ -18,7 +37,7 @@ const CreatView = () => {
           >
             Create
           </button>
-          <button className="bg-green-like-100 py-3 px-11 mx-4 rounded-sideicon text-white createmodal:mx-0 block createmodal:w-10p createmodal:px-0"
+          <button onClick={()=>view()} className="bg-green-like-100 py-3 px-11 mx-4 rounded-sideicon text-white createmodal:mx-0 block createmodal:w-10p createmodal:px-0"
           >
             View
           </button>

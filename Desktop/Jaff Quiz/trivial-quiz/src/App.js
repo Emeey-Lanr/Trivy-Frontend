@@ -16,16 +16,24 @@ import IndividualGameLogin from "./Components/IndividualGameLogin";
 import NameJoin from "./Components/NameJoin";
 import Game from "./Components/Game";
 import AdminGameLogin from "./Components/AdminGameLogin";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 export const appContext = createContext(null);
 function App() {
+  let navigate = useNavigate();
   let backendEndPoint = "http://localhost:2340";
   let socket = useRef();
   useEffect(() => {
     socket.current = Socket(backendEndPoint);
   }, []);
   // hfhh
+  const [adminDetails, setAdminDetails] = useState({});
+  const [adminId, setAdminId] = useState("");
   const [adminEndPoint, setAdminEndPoint] = useState(
     "http://localhost:2340/admin"
+  );
+  const [gameEndPoint, setGameEndPoint] = useState(
+    "http://localhost:2340/game"
   );
   // created for the alert modal, so that it can be used by any component when needed
   const [alertModalStatus, setAlertModalStatus] = useState(false);
@@ -42,13 +50,36 @@ function App() {
   const [currentSet, setCurrentSet] = useState("");
 
   const [userName, setUsername] = useState("");
+  const adminEndpoint = `${adminEndPoint}/admindashboard`;
 
-
+  const dashboardFuction = () => {
+    axios
+      .get(adminEndpoint, {
+        headers: {
+          Authorization: `bearer ${localStorage.adminId}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((result) => {
+        if (result.data.status) {
+          setAdminDetails(result.data.adminDetails);
+          console.log(result.data.adminDetails);
+          setAdminId(result.data.adminDetails._id);
+        } else {
+          navigate("/admin/login");
+        }
+      });
+  };
   return (
     <appContext.Provider
       value={{
         socket,
+        adminDetails,
+        setAdminDetails,
+        adminId,
         adminEndPoint,
+        gameEndPoint,
+        dashboardFuction,
         alertModalStatus,
         setAlertModalStatus,
         alertMessage,
@@ -81,7 +112,7 @@ function App() {
         <Route path="/emailverification" element={<VerifyMessage />} />
         <Route path="/:id" element={<VerifyEmail />} />
         <Route path="/play/userlogin" element={<IndividualGameLogin />} />
-        <Route path="/play/adminlogin" element={<AdminGameLogin/>} />
+        <Route path="/play/adminlogin" element={<AdminGameLogin />} />
         <Route path="/play/username" element={<NameJoin />} />
         <Route path="/play" element={<Game />} />
       </Routes>

@@ -6,12 +6,13 @@ import { useContext, useEffect, useState } from "react";
 import { appContext } from "../App";
 import SideBarBack from "./SideBarBack";
 const JuniorCreateView = () => {
-  const { setSideBarBoxShadow, setShowCreateModal, setCurrentSet } =
+  const {dashboardFuction, setSideBarBoxShadow, setShowCreateModal, setCurrentSet } =
     useContext(appContext);
   useEffect(() => {
     setSideBarBoxShadow(3);
     setCurrentSet("Junior");
     setShowCreateModal(false);
+    dashboardFuction()
   }, []);
   return (
     <>

@@ -5,3 +5,18 @@
     grid-template-columns: 15% 15% 15% 15% 15%;
     justify-content: space-between;
 }
+
+.answerbtn{
+    width: 80%;
+    display: grid;
+    grid-template-columns: 40% 40%;
+    margin:  0 auto;
+    justify-content: space-between;
+    margin-top: 90px;
+}
+
+.answerbtn div>button{
+    background: #ededed;
+    border-radius: 50px 0 50px 0;
+    
+}
