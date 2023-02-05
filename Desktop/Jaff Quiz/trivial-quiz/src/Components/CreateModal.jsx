@@ -31,11 +31,14 @@ const CreateModal = () => {
     setMessage("")
   }
   const quizNameSchema = {
+    time: { hour: 0, minutes: 0, second: 0 },
+    subjectMark:1,
     quizName: quizName,
-    question: [],
+    questions: [],
     score: 0,
   };
   const addQuizName = () => {
+    // checks if a subject has been added before in the list of the subjects added
     let ifCheck = quizQuestionBox.filter(
       (ui, ud) => ui.quizName.toUpperCase() === quizName.toUpperCase()
     );
@@ -107,7 +110,7 @@ const CreateModal = () => {
                 </button>
               </div>
               <h1 className="text-center text-5xl text-bold">{currentSet}</h1>
-              {message !== "" && <p className="w-8p mx-auto text-center font-mono text-sm   text-green-like-200">{message}</p>}
+              {message !== "" && <p className="w-8p mx-auto text-center font-mono text-sm   text-green-like-100">{message}</p>}
             </div>
             <div className="quiznameInput">
               <label>Quiz Name</label>

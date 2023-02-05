@@ -36,6 +36,9 @@ const AdminLogin = () => {
           if (result.data.status) {
             localStorage.adminId = result.data.adminId;
             navigate("/admindashboard");
+            localStorage.removeItem("quizClassId");
+            localStorage.removeItem("quizxxx");
+            localStorage.removeItem("")
           } else {
             setAlertMessage(result.data.message);
             setAlertModalStatus(true);

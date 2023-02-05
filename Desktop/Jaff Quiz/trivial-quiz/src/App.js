@@ -50,11 +50,12 @@ function App() {
   const [currentSet, setCurrentSet] = useState("");
 
   const [userName, setUsername] = useState("");
-  const adminEndpoint = `${adminEndPoint}/admindashboard`;
-
+  const adminEndpointt = `${adminEndPoint}/admindashboard`;
+// deletemodal boolean
+  const [deleteModalState, setDeleteModalState] =useState(false)
   const dashboardFuction = () => {
     axios
-      .get(adminEndpoint, {
+      .get(adminEndpointt, {
         headers: {
           Authorization: `bearer ${localStorage.adminId}`,
           "Content-Type": "application/json",
@@ -76,10 +77,12 @@ function App() {
         socket,
         adminDetails,
         setAdminDetails,
+
         adminId,
         adminEndPoint,
         gameEndPoint,
         dashboardFuction,
+        // boolean state for the alert modal
         alertModalStatus,
         setAlertModalStatus,
         alertMessage,
@@ -93,10 +96,15 @@ function App() {
         // create modal
         showCreateModal,
         setShowCreateModal,
+        // responsible for the delete modal
+        deleteModalState,
+        setDeleteModalState,
         currentSet,
         setCurrentSet,
         userName,
         setUsername,
+
+
       }}
     >
       <Routes>

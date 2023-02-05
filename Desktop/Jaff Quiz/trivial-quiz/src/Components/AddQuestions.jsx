@@ -1,18 +1,20 @@
 import DashbarNav from "./DashbarNav";
 import Sidebar from "./Sidebar";
 import "../styles/addquestion.css";
-import { createContext, useContext, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { FaTimes, FaCheck } from "react-icons/fa";
 import { AiOutlineLine } from "react-icons/ai";
 import { SlCloudUpload } from "react-icons/sl";
 import AlertModal from "./AlertModal";
 import { appContext } from "../App";
 import SaveQuestionModal from "./SaveQuestionModal";
+import axios from "axios";
 export const addQuestionContext = createContext(null);
 
 const AddQuestions = () => {
   // app context
-  const { setAlertModalStatus, setAlertMessage } = useContext(appContext);
+  const { adminEndPoint, setAlertModalStatus, setAlertMessage } =
+    useContext(appContext);
   // empty input
   const questionInput = useRef();
   const answer1Input = useRef();
@@ -20,11 +22,11 @@ const AddQuestions = () => {
   const answer3Input = useRef();
   const answer4Input = useRef();
 
-  const [subjects, setSubjects] = useState([
-    { subject: "math" },
-    { subject: "english" },
-    { subject: "rent" },
-  ]);
+  const [subjects, setSubjects] = useState([]);
+  const [currentQuiz, setCurrentQuiz] = useState({
+    quizSubject: [],
+  });
+  const [currentQuizId, setCurrentQuizId] = useState("");
   const [imageswitch, setImageSwitch] = useState(true);
   const [imageUrl, setImageUrl] = useState("");
   // to check if answer is picked
@@ -87,11 +89,7 @@ const AddQuestions = () => {
   //picking answers
   //  setting questions and answer
   const [questionBank, setQuestionBank] = useState([]);
-  const [check, setCheck] = useState([
-    { user: "ayo", age: 20 },
-    { user: "ayo", age: 20 },
-    { user: "ayo", age: 20 },
-  ]);
+
   const [question, setQuestion] = useState("");
   const [option1, setOption1] = useState("");
   const [option2, setOption2] = useState("");
@@ -101,6 +99,41 @@ const AddQuestions = () => {
   const [option2Status, setOption2Status] = useState(false);
   const [option3Status, setOption3Status] = useState(false);
   const [option4Status, setOption4Status] = useState(false);
+  const getSpecificQuizEndPoint = `${adminEndPoint}/getSpecificQuiz`;
+
+  // if (localStorage.questions) {
+  //   //  const ifSetQuestion = JSON.parse(localStorage.questions);
+  //   //  console.log(ifSetQuestion);
+  //   console.log(localStorage.questions);
+  // }
+  useEffect(() => {
+    if (localStorage.questions) {
+       const yes = JSON.parse(localStorage.questions);
+   
+      setQuestionBank(yes);
+    }
+    axios
+      .get(getSpecificQuizEndPoint, {
+        headers: {
+          Authorization: `bearer, ${localStorage.quizxxx}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((result) => {
+        if (result.data.status) {
+          setCurrentQuiz(result.data.currentQuiz);
+          setCurrentQuizId(result.data.currentQuiz._id);
+          setSubjects(result.data.currentQuiz.quizSubject);
+        }
+      });
+  }, []);
+
+  useEffect(() => {
+ 
+       localStorage.questions = JSON.stringify(questionBank);
+    
+  }, [questionBank]);
+
   const questionToBeAdded = {
     question: { text: question, image: "" },
     answers: [
@@ -160,6 +193,7 @@ const AddQuestions = () => {
       setAlertMessage("");
     }, time);
   };
+
   const [status, setStatus] = useState(false);
   const addQuestionToBank = () => {
     if (question === "") {
@@ -176,24 +210,15 @@ const AddQuestions = () => {
     } else {
       alertFunction(true, "added", 500);
       setQuestionBank([...questionBank, questionToBeAdded]);
+
       emptyInputFuction("", 0);
     }
 
     console.log(questionToBeAdded);
-
-    // if (status) {
-    //
-    // } else {
-    //   alert("you can't add");
-    // }
   };
 
   const editQuestion = (id) => {
     questionInput.current.value = questionBank[id].question.text;
-    // answer1Input.current.value =
-    // answer2Input.current.value =
-    // answer3Input.current.value =
-    // answer4Input.current.value =
   };
 
   // save question
@@ -202,10 +227,15 @@ const AddQuestions = () => {
     setQuestionBank(questionBank.filter((_, id) => id !== Qid));
   };
 
-
   return (
     <addQuestionContext.Provider
-      value={{subjects, openSaveQuestionModal, setOpenSaveQuestionModal }}
+      value={{
+        subjects,
+        currentQuizId,
+        questionBank,
+        openSaveQuestionModal,
+        setOpenSaveQuestionModal,
+      }}
     >
       <div>
         <DashbarNav />

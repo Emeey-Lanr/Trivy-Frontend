@@ -1,7 +1,27 @@
-import { useState } from "react";
 import DashbarNav from "./DashbarNav";
 import Sidebar from "./Sidebar";
+import { useState, useEffect, useContext } from "react"
+import { appContext } from "../App";
+import axios from "axios";
 const Questionbank = () => {
+  const {adminEndPoint}= useContext(appContext)
+   const getSpecificQuizEndPoint = `${adminEndPoint}/getSpecificQuiz`;
+
+   useEffect(() => {
+     
+     axios
+       .get(getSpecificQuizEndPoint, {
+         headers: {
+           Authorization: `bearer, ${localStorage.quizxxx}`,
+           "Content-Type": "application/json",
+         },
+       })
+       .then((result) => {
+         if (result.data.status) {
+          console.log(result.data)
+         }
+       });
+   }, []);
   
   return (
     <div>

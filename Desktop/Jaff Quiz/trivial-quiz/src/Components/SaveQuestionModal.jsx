@@ -1,18 +1,71 @@
 import { useContext, useState } from "react";
-import { FaTimes } from "react-icons/fa";
+import { FaRing, FaSpinner, FaTimes } from "react-icons/fa";
 import { addQuestionContext } from "./AddQuestions";
+import { appContext } from "../App";
 import "../styles/modal.css";
+import axios from "axios";
 const SaveQuestionModal = () => {
-  const { subjects, openSaveQuestionModal, setOpenSaveQuestionModal } =
-    useContext(addQuestionContext);
+  const { adminEndPoint } = useContext(appContext);
+  const {
+    subjects,
+    currentQuizId,
+    questionBank,
+    openSaveQuestionModal,
+    setOpenSaveQuestionModal,
+  } = useContext(addQuestionContext);
   const [subjectStyleForBtn, setSubjectStyleForBtn] = useState("hhh");
-  const [message, setMessage] =useState("")
+  const [message, setMessage] = useState("");
+  const [subjectName, setSubjectName] = useState("");
+  const [subjectId, setSubjectId] = useState("");
+  const [replace, setReplace] = useState(-1);
+  // responsible for the spiner state
+  const [spinState, setSpinState] = useState(false)
+
+  // inputData
+  const [hour, setHour] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  const [assignedMark, setAssignedMark] = useState(1);
   const addToTheExistingOne = (id, subject) => {
-    setSubjectStyleForBtn(subject + "add");
+    setSubjectStyleForBtn(subject + "add" + id);
+    setSubjectName(subject);
+    setSubjectId(id);
+    setReplace(0);
   };
   const replaceTheExistingOne = (id, subject) => {
-    setSubjectStyleForBtn(subject + "replace")
+    setSubjectStyleForBtn(subject + "replace" + id);
+    setSubjectName(subject);
+    setSubjectId(id);
+    setReplace(1);
+  };
 
+  const addQuestionEndPoint = `${adminEndPoint}/addSpecificQuestion`;
+  const addQuestionSchema = {
+    time: { hour: hour, minutes: minutes, second: seconds },
+    assignedMark: assignedMark,
+    quizId: currentQuizId,
+    subjectName: subjectName,
+    replaceAdd: replace,
+    quizQuestion: questionBank,
+    subjectId: subjectId,
+  };
+  const saveQuestionBtn = () => {
+    if (questionBank.length > 0) {
+      setSpinState(true)
+      axios.post(addQuestionEndPoint, addQuestionSchema).then((result) => {
+        if (result.data.status) {
+          console.log(result.data)
+        } else {
+         console.log(result.data) 
+        }
+        
+      });
+    } else {
+      alert("You need to add aleast a question")
+    }
+    
+    // console.log(currentQuizId);
+    // alert(currentQuizId)
   };
   return (
     <>
@@ -24,40 +77,68 @@ const SaveQuestionModal = () => {
                 <FaTimes />
               </button>
             </div>
-            {message !== "" && <div className="w-9p mx-auto bg-dashback-200">
-
-            </div>}
+            {message !== "" && (
+              <div className="w-9p mx-auto bg-dashback-200"></div>
+            )}
             <div className="flex justify-center items-center px-5 py-3">
               <div>
-                <input type="text" className="h-5 w-5 border text-center" />
+                <input
+                  type="number"
+                  className="h-5 w-6 border text-center"
+                  value={hour}
+                  onChange={(e) => setHour(e.target.value)}
+                />
                 <p className="text-center">H</p>
               </div>
               <div>
-                <input type="text" className="h-5 w-5 border text-center" />
+                <input
+                  type="number"
+                  className="h-5 w-6 border text-center"
+                  value={minutes}
+                  onChange={(e) => setMinutes(e.target.value)}
+                />
                 <p className="text-center">M</p>
               </div>
               <div>
-                <input type="text" className="h-5 w-5 border text-center" />
+                <input
+                  type="number"
+                  className="h-5 w-6 border text-center"
+                  value={seconds}
+                  onChange={(e) => setSeconds(e.target.value)}
+                />
                 <p className="text-center">S</p>
+              </div>
+            </div>
+            <div className="flex justify-center items-center px-5 py-3">
+              <div>
+                <p className="text-center">Assign a mark</p>
+                <div className="flex justify-center w-10p">
+                  <input
+                    type="number"
+                    className="h-5 w-8 border text-center"
+                    value={assignedMark}
+                    onChange={(e) => setAssignedMark(e.target.value)}
+                  />
+                </div>
               </div>
             </div>
             <div className="subjectnameToAddQuestionTo ">
               {subjects.map((info, id) => (
                 <div>
-                  <p className="text-center">{info.subject}</p>
+                  <p className="text-center">{info.quizName}</p>
                   <div className="flex w-10p bg-dashback-200">
-                    <button
+                    <button disabled={spinState}
                       className={`w-5p py-2 text-sm border-r border-r-green-like-100 ${
-                        subjectStyleForBtn === info.subject + "add" &&
+                        subjectStyleForBtn === info.subject + "add" + id &&
                         "bg-green-like-100 rounded-sideicon text-white"
                       }`}
                       onClick={() => addToTheExistingOne(id, info.subject)}
                     >
                       Add
                     </button>
-                    <button
+                    <button disabled={spinState}
                       className={`5p py-2 px-1 text-sm text-center  ${
-                        subjectStyleForBtn === info.subject + "replace" &&
+                        subjectStyleForBtn === info.subject + "replace" + id &&
                         "bg-green-like-100 rounded-sideicon text-white"
                       }`}
                       onClick={() => replaceTheExistingOne(id, info.subject)}
@@ -69,8 +150,11 @@ const SaveQuestionModal = () => {
               ))}
             </div>
             <div className="w-8p py-5 mx-auto">
-              <button className="w-10p py-2 bg-green-like-100 rounded-sideicon text-white">
-                Save
+              <button disabled={spinState}
+                className="w-10p py-2 bg-green-like-100 rounded-sideicon text-white flex justify-center items-center"
+                onClick={() => saveQuestionBtn()}
+              >
+                Save {spinState && <FaRing className="spin" style={{ margin: "0 2px" }} />}
               </button>
             </div>
           </div>
