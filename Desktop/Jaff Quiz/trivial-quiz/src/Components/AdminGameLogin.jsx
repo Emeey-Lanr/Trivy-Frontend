@@ -7,7 +7,11 @@ const AdminGameLogin = () => {
   let navigate = useNavigate();
   const { gameEndPoint } = useContext(appContext);
   const [adminUserName, setAdminUserName] = useState("");
+  const [message, setMessage] = useState("");
   const [gameId, setGameId] = useState("");
+  const [btnStyle, setBtnStyle] = useState("bg-green-like-100 text-white");
+  const [loginStyle, setLoginStyle] = useState("Login");
+  const [disableBtn, setDisableBtn] = useState(false)
 
   const adimGameLoginEndPoint = `${gameEndPoint}/adminlogin`;
   const adminLoginSchema = {
@@ -16,11 +20,20 @@ const AdminGameLogin = () => {
   };
   const login = () => {
     if (adminUserName === "" || gameId === "") {
+      setMessage("Fill in input");
     } else {
+      setBtnStyle("bg-green-like-200 text-chartbg");
+      setLoginStyle("Login...");
+      setDisableBtn(true)
       axios.post(adimGameLoginEndPoint, adminLoginSchema).then((result) => {
         if (result.data.status) {
           localStorage.adminIdentification = result.data.adminStatusId;
+
           navigate("/play");
+        } else {
+          setDisableBtn(false)
+          setMessage(result.data.message);
+          setBtnStyle("bg-green-like-100 text-white");
         }
       });
     }
@@ -36,6 +49,13 @@ const AdminGameLogin = () => {
             Admin
           </p>
         </div>
+        {message !== "" && (
+          <div className="py-2 px-1">
+            <p className="text-center font-mono text-green-like-100">
+              {message}
+            </p>
+          </div>
+        )}
         <div>
           <p>Username</p>
           <div>
@@ -57,11 +77,11 @@ const AdminGameLogin = () => {
           </div>
         </div>
         <div>
-          <button
-            className="text-center text-white w-input py-3 rounded-sideicon  bg-green-like-100"
+          <button disabled={disableBtn}
+            className={`text-center  w-input py-3 rounded-sideicon ${btnStyle}`}
             onClick={() => login()}
           >
-            Login
+            {loginStyle}
           </button>
         </div>
       </div>

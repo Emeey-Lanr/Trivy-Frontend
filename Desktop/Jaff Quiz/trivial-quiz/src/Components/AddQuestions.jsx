@@ -2,7 +2,7 @@ import DashbarNav from "./DashbarNav";
 import Sidebar from "./Sidebar";
 import "../styles/addquestion.css";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { FaTimes, FaCheck } from "react-icons/fa";
+import { FaTimes, FaCheck, FaSlash } from "react-icons/fa";
 import { AiOutlineLine } from "react-icons/ai";
 import { SlCloudUpload } from "react-icons/sl";
 import AlertModal from "./AlertModal";
@@ -57,14 +57,7 @@ const AddQuestions = () => {
     },
   });
 
-  const uploadImage = (e) => {
-    console.log(e);
-    let reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = () => {
-      console.log(reader.result);
-    };
-  };
+ 
 
   //chnaging from text to image
   const [btnStyle, setBtnStyle] = useState({
@@ -135,7 +128,7 @@ const AddQuestions = () => {
   }, [questionBank]);
 
   const questionToBeAdded = {
-    question: { text: question, image: "" },
+    question: { text: question, image: imageUrl },
     answers: [
       { option: option1, status: option1Status },
       { option: option2, status: option2Status },
@@ -194,6 +187,32 @@ const AddQuestions = () => {
     }, time);
   };
 
+  const uploadImageForQuizEndPoint = `${adminEndPoint}/uploadImgForQuiz` 
+  const [spin, setSpin] = useState("")
+  const [imgUploadMessage, setimgUploadMessage] = useState("")
+ const uploadImage = (e) => {
+   console.log(e);
+   let reader = new FileReader();
+   reader.readAsDataURL(e.target.files[0]);
+   reader.onload = () => {
+     console.log(reader.result);
+     setSpin("spin")
+     setimgUploadMessage("wait while img upload don't switch page")
+     axios.post(uploadImageForQuizEndPoint, { imageUrl: reader.result }).then((result) => {
+       if (result.data.status) {
+         setImageUrl(result.data.imgUrl)
+         setSpin("")
+
+       }else{
+         setimgUploadMessage(result.data.message)
+         setTimeout(() => {
+           setSpin("")
+           setimgUploadMessage("")
+         },1000)
+       }
+     })
+   };
+ };
   const [status, setStatus] = useState(false);
   const addQuestionToBank = () => {
     if (question === "") {
@@ -260,7 +279,7 @@ const AddQuestions = () => {
               <textarea
                 ref={questionInput}
                 name=""
-                className="sidebarNone:mb-3"
+                className="flex justify-center items-center sidebarNone:mb-3"
                 onChange={(e) => setQuestion(e.target.value)}
               ></textarea>
             </div>
@@ -270,7 +289,9 @@ const AddQuestions = () => {
               {imageUrl === "" && (
                 <div className="w-10p h-dw flex justify-center items-center">
                   <label id="image">
-                    <SlCloudUpload className="text-5xl text-green-like-100" />
+                    <SlCloudUpload
+                      className={`text-5xl text-green-like-100 ${spin}`}
+                    />
                     <input
                       type="file"
                       id="image"
@@ -278,11 +299,17 @@ const AddQuestions = () => {
                       onChange={(e) => uploadImage(e)}
                     />
                   </label>
+                  <p>{imgUploadMessage}</p>
                 </div>
               )}
               {imageUrl !== "" && (
-                <div>
-                  <img src="" alt="" />
+                <div className="w-8p mx-auto">
+                  <img
+                    src={imageUrl}
+                    className="w-10p object-cover"
+                    alt=""
+                    style={{ height: "300px" }}
+                  />
                 </div>
               )}
             </div>
@@ -409,62 +436,75 @@ const AddQuestions = () => {
                 <h1 className="text-center text-xl text-white py-3">
                   Questions
                 </h1>
-                {questionBank.length > 0 &&
-                  questionBank.map((quiz, id) => (
-                    <div className="bg-dashback-100 w-8p mb-3 mx-auto rounded-sideicon pt-2 px-1 sidebarNone:w-10p sidebarNone:mx-auto">
-                      <div className="flex justify-between items-center">
-                        <div className="questionNumber">{id + 1}</div>
-                        <div className="border rounded-sideicon">
-                          <button
-                            className="bg-green-like-100 py-2 px-3 rounded-l-sideicon text-white"
-                            onClick={() => removeAddedQuestion(id)}
-                          >
-                            remove
-                          </button>
-                          <button
-                            className="bg-green-like-200 py-2 px-3 rounded-r-sideicon"
-                            onClick={() => editQuestion(id)}
-                          >
-                            Edit
-                          </button>
-                        </div>
-                      </div>
 
-                      <div className="w-10p flex justify-center items-center h-dw">
-                        {quiz.question.image !== "" && (
-                          <img src={quiz.question.image} alt="" />
-                        )}
-                        <p className="italic text-2xl">{quiz.question.text}</p>
-                      </div>
-                      <div className="w-9p mx-auto">
-                        <div className="flex  items-center">
-                          <div className="w-10p mb-6">
-                            {quiz.answers.map((ans, id) =>
-                              !ans.status ? (
-                                <div className="optionDiv py-5">
-                                  <p>{ans.option}</p>
-                                  <div>
-                                    <div className="notAnswer flex justify-center items-center">
-                                      <div></div>
-                                    </div>
-                                  </div>
-                                </div>
-                              ) : (
-                                <div className="optionDiv my-3">
-                                  <p>{ans.option}</p>
-                                  <div>
-                                    <div className="notAnswer flex justify-center items-center">
-                                      <FaCheck className="text-green-like-100 w-9p" />
-                                    </div>
-                                  </div>
-                                </div>
-                              )
-                            )}
+                <div className="w-7p mx-auto">
+                  {questionBank.length > 0 ? (
+                    questionBank.map((content, id) => (
+                      <div>
+                        <div className="flex justify-between items-center py-2">
+                          <p
+                            className="h-4 w-4 border bg-green-like-100 text-white flex justify-center items-center"
+                            style={{ borderRadius: "40px" }}
+                          >
+                            {id + 1}
+                          </p>
+                          <div className="flex">
+                            <button
+                              className="bg-green-like-100 py-1 px-3"
+                              onClick={() => removeAddedQuestion(id)}
+                            >
+                              Remove
+                            </button>
+                            <button
+                              className="py-1 px-3"
+                              onClick={() => editQuestion(id)}
+                            >
+                              Edit
+                            </button>
                           </div>
                         </div>
+                        <div>
+                          {content.question.image !== "" && (
+                            <div>
+                              <img src={content.question.image} alt="" />
+                            </div>
+                          )}
+                          <div>
+                            <p className="text-center">
+                              {content.question.text}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="w-10p">
+                          {content.answers.map((ans, id) => (
+                            <div
+                              className={`${
+                                ans.status
+                                  ? "bg-green-like-100 text-white"
+                                  : "bg-dashback-200"
+                              }  w-7p mx-auto my-1 flex justify-between py-3 items-center px-2`}
+                            >
+                              <p>{ans.option}</p>
+                              <div
+                                className={`h-5 w-5 flex justify-center items-center border  ${
+                                  ans.status
+                                    ? "border-white"
+                                    : "border-green-like-100"
+                                }`}
+                                style={{ borderRadius: "40px" }}
+                              >
+                                {ans.status ? <FaCheck /> : <FaSlash />}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="w-10p h-1 bg-dashback-200 mt-3"></div>
                       </div>
-                    </div>
-                  ))}
+                    ))
+                  ) : (
+                    <div></div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

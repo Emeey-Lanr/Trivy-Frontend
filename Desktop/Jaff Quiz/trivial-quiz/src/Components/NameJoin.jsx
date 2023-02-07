@@ -3,27 +3,86 @@ import { SlCloudUpload } from "react-icons/sl";
 import { FaAngleRight } from "react-icons/fa";
 import { appContext } from "../App";
 import { useContext, useEffect, useState, useLayoutEffect } from "react";
-import { useRevalidator } from "react-router-dom";
+import axios from "axios";
+import AlertModal from "./AlertModal";
+import { useNavigate } from "react-router-dom";
 const NameJoin = () => {
-  const { socket, userName, setUsername } = useContext(appContext);
+  const { gameEndPoint, setAlertModalStatus, setAlertMessage } =
+    useContext(appContext);
+    let navigate = useNavigate()
   const [name, setName] = useState("");
-  const [displayName, setDis] = useState("");
-  const [userid, setuserid] = useState({});
-  const checkifMessage = () => {
-     if (socket.current) {
-       socket.current.on("message", (data) => {
-        setDis(data.name)
-      })
-    }
-  }
-  useEffect(() => {
-   checkifMessage()
-   
-  });
+  const [quizId, setQuizId] = useState("");
+  const [adminId, setAdminId] = useState("");
+  const [imgUrl, setImageUrl] = useState("");
+  const [adminStatus, setAdminStatus] = useState("");
+  const [subjectToBeDone, setSubjectToBeDone] = useState("");
 
+  const getFormerDetailEndPoint = `${gameEndPoint}/verifyPassToken`;
+  useEffect(() => {
+    axios
+      .get(getFormerDetailEndPoint, {
+        headers: {
+          Authorization: `bearer ${localStorage.pass}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((result) => {
+        if (result.data.status) {
+          console.log(result.data);
+          setQuizId(result.data.userDetail.quizID);
+          setAdminId(result.data.userDetail.adminId);
+          setAdminStatus(false);
+          setSubjectToBeDone(result.data.userDetail.subjectToBeDone);
+        }
+      });
+  }, []);
+
+  const uploadImgEndPoint = `${gameEndPoint}/uploadPlayerImg`;
+  const uploadImg = (e) => {
+    console.log(e.target.files[0]);
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+
+    reader.onload = () => {
+      axios
+        .post(uploadImgEndPoint, { imageUrl: reader.result })
+        .then((result) => {
+          setImageUrl(result.data.imgUrl);
+        });
+    };
+  };
+  const playerSchema = {
+    adminStatus: adminStatus,
+    quizId: quizId,
+    adminId: adminId,
+    playerName: name,
+    playerImage: imgUrl,
+    subjectToBeDone: subjectToBeDone,
+  };
+  const ifErrorFunction = (a, b, c, d) => {
+     setAlertModalStatus(a);
+     setAlertMessage(b);
+     setTimeout(() => {
+       setAlertMessage(c);
+       setAlertModalStatus(d);
+     }, 700);
+  }
+  const navigateToJoinEndPoint = `${gameEndPoint}/savePlayerDetails`;
   const joinGame = () => {
-    socket.current.emit("playing", { name: name });
-    
+    if (name === "") {
+     ifErrorFunction(true, "Enter a username", "", false)
+    } else if (imgUrl === "") {
+        ifErrorFunction(true, "Upload an img", "", false);
+    } else {
+      axios.post(navigateToJoinEndPoint, playerSchema).then((result) => {
+        if (result.data.status) {
+          localStorage.adminIdentification = result.data.playerToken;
+          navigate("/play")
+        } else {
+           ifErrorFunction(true, result.data.message, "", false);
+        }
+      });
+    }
   };
 
   return (
@@ -32,16 +91,26 @@ const NameJoin = () => {
         <div className="w-10p flex justify-center my-2">
           <Logo />
         </div>
-        <div className="w-10p">
-          <div className="rounded-sideicon">
-            <p>{displayName}</p>
-            <p className="text-center text-white">Upload your picture</p>
+        {imgUrl !== "" && (
+          <div className="h-12 w-12   mx-auto">
+            <img src={imgUrl} alt="" className="h-12 w-12" />
           </div>
-          <div className="w-10p flex justify-center">
-            <label htmlFor="" id="img">
+        )}
+        <div className="w-10p">
+          <div className="w-10p flex justify-center py-2">
+            <label id="image">
               <SlCloudUpload className="text-5xl text-green-like-100" />
-              <input type="files" id="img" hidden />
+              <input
+                type="file"
+                id="image"
+                hidden
+                onChange={(e) => uploadImg(e)}
+              />
             </label>
+          </div>
+          <div className="rounded-sideicon">
+            <p></p>
+            <p className="text-center">Upload your picture</p>
           </div>
           <div className="w-10p">
             <div className="bg-green-like-100 py-2 rounded-sideicon">
@@ -64,6 +133,7 @@ const NameJoin = () => {
           </div>
         </div>
       </div>
+      <AlertModal/>
     </div>
   );
 };

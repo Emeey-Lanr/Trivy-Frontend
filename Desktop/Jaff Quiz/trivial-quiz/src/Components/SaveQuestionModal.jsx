@@ -41,8 +41,8 @@ const SaveQuestionModal = () => {
 
   const addQuestionEndPoint = `${adminEndPoint}/addSpecificQuestion`;
   const addQuestionSchema = {
-    time: { hour: hour, minutes: minutes, second: seconds },
-    assignedMark: assignedMark,
+    time: { hour: Number(hour), minutes: Number(minutes), second:Number(seconds) },
+    assignedMark: Number(assignedMark),
     quizId: currentQuizId,
     subjectName: subjectName,
     replaceAdd: replace,

@@ -48,18 +48,18 @@ const QuizCollection = () => {
   }, []);
 
   const targetQuizCollectionEndPoint = `${adminEndPoint}/generateQuizSpecificToken`;
-  const getQuizFunction = (a, b) => {
+  const getQuizFunction = (a, b, c) => {
      axios
       .post(targetQuizCollectionEndPoint, { quizDbId: b})
       .then((result) => {
         if (result.data.status) {
           localStorage.quizxxx = result.data.quizId;
-          navigate("/add/quiz/questions");
+          navigate(c);
         }
       });
   }
   const addQuestion = (id, quizDatabaseid) => {
-   getQuizFunction(id, quizDatabaseid)
+   getQuizFunction(id, quizDatabaseid, "/add/quiz/questions")
   };
   const [quizIdentificationForDeleting, setquizIdentificationForDeleting] = useState({
     index: "",
@@ -72,7 +72,7 @@ const QuizCollection = () => {
 
 
   const openQuestion = (id, quizDatabaseid) => {
-    getQuizFunction(id, quizDatabaseid);
+    getQuizFunction(id, quizDatabaseid, "/questionbank");
   };
   return (
     <quizCollectionContext.Provider

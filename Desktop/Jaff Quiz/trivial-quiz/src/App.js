@@ -18,6 +18,7 @@ import Game from "./Components/Game";
 import AdminGameLogin from "./Components/AdminGameLogin";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Trail from "./Components/Trail";
 export const appContext = createContext(null);
 function App() {
   let navigate = useNavigate();
@@ -123,6 +124,7 @@ function App() {
         <Route path="/play/adminlogin" element={<AdminGameLogin />} />
         <Route path="/play/username" element={<NameJoin />} />
         <Route path="/play" element={<Game />} />
+        <Route path="/trial" element={<Trail/>}/>
       </Routes>
     </appContext.Provider>
   );
