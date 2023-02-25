@@ -58,6 +58,7 @@ const NameJoin = () => {
     playerName: name,
     playerImage: imgUrl,
     subjectToBeDone: subjectToBeDone,
+    totalScore: 0,
   };
   const ifErrorFunction = (a, b, c, d) => {
      setAlertModalStatus(a);

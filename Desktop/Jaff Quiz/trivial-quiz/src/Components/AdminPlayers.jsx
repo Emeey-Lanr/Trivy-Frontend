@@ -22,7 +22,7 @@ const AdminPlayers = () => {
                   {individualName === user.playerName
                     ? "You Joined"
                     : user.playerName}{" "}
-                  Joined
+                
                 </p>
               </div>
             </div>

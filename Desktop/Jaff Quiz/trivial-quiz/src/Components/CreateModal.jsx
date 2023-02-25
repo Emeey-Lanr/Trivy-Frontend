@@ -31,7 +31,7 @@ const CreateModal = () => {
     setMessage("")
   }
   const quizNameSchema = {
-    time: { hour: 0, minutes: 0, second: 0 },
+    time: 0,
     subjectMark:1,
     quizName: quizName,
     questions: [],

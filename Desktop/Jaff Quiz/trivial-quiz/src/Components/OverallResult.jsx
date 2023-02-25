@@ -1,31 +1,26 @@
+
 import React, { useContext, useState } from "react";
 import Logo from "./Logo";
 import "../styles/game.css";
 import best from "../Images/bestStudent.jpg"
 import { FaArrowRight } from "react-icons/fa";
 import { gameContext } from "./Game";
-const TopActs = () => {
-  const {
-    admin,
-    playerScore,
-    playerScoreGameIndex,
-      currentSubject,
-    nextSubjectOrOverallResult,
-  } = useContext(gameContext);
+const OverallResult = () => {
+  const { admin, playerScore, quizCompleted } = useContext(gameContext);
   return (
     <div className="w-10p">
       <div className="py-2 px-2">
         <Logo />
       </div>
-      <div className="w-dw bg-green-like-100 py-3">
-        <p className="text-center text-white font-mono">{currentSubject}</p>
+      <div className="w-dw bg-green-like-100 py-3 mx-auto">
+        <p className="text-center text-white font-mono">Overall Result</p>
       </div>
       <div className="topacts">
         {playerScore.map((players, id) => (
           <div className="topActsDiv">
             <div className="scoreBalldiv">
               <div className="scoreBall">
-                <p>{players.subjectToBeDone[playerScoreGameIndex].score}</p>
+                <p>{players.totalScore}</p>
               </div>
             </div>
 
@@ -47,7 +42,7 @@ const TopActs = () => {
         <div className="w-dw h-7 flex justify-center items-center bg-green-like-100 fixed bottom-0 right-4">
           <button
             className="w-10 h-7"
-            onClick={() => nextSubjectOrOverallResult()}
+            onClick={() =>quizCompleted ()}
           >
             <FaArrowRight className="text-white" />
           </button>
@@ -57,4 +52,4 @@ const TopActs = () => {
   );
 };
 
-export default TopActs;
+export default OverallResult;

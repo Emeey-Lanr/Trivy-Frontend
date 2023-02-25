@@ -69,6 +69,12 @@ const QuizCollection = () => {
     setDeleteModalState(true);
     setquizIdentificationForDeleting({index:index, quizId:quizID})
   };
+  // find the user that played
+  const findUser = (index, quizId) => {
+
+    getQuizFunction(index, quizId, "/quizParticipants");
+    
+  }
 
 
   const openQuestion = (id, quizDatabaseid) => {
@@ -131,7 +137,10 @@ const QuizCollection = () => {
                   <div>
                     <div className="flex justify-center bg-green-like-100 shadow-lg rounded-sideicon py-2 px-3">
                       <button>
-                        <SlPeople className="text-white" />
+                        <SlPeople
+                          className="text-white"
+                          onClick={() => findUser(id, Content._id)}
+                        />
                       </button>
                     </div>
                   </div>

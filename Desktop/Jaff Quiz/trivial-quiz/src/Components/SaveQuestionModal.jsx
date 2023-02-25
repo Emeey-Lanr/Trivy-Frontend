@@ -22,8 +22,6 @@ const SaveQuestionModal = () => {
   const [spinState, setSpinState] = useState(false)
 
   // inputData
-  const [hour, setHour] = useState(0);
-  const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [assignedMark, setAssignedMark] = useState(1);
   const addToTheExistingOne = (id, subject) => {
@@ -41,7 +39,7 @@ const SaveQuestionModal = () => {
 
   const addQuestionEndPoint = `${adminEndPoint}/addSpecificQuestion`;
   const addQuestionSchema = {
-    time: { hour: Number(hour), minutes: Number(minutes), second:Number(seconds) },
+    time:Number(seconds),
     assignedMark: Number(assignedMark),
     quizId: currentQuizId,
     subjectName: subjectName,
@@ -51,17 +49,30 @@ const SaveQuestionModal = () => {
   };
   const saveQuestionBtn = () => {
     if (questionBank.length > 0) {
-      setSpinState(true)
+      if (seconds > 0) {
+        setSpinState(true)
       axios.post(addQuestionEndPoint, addQuestionSchema).then((result) => {
         if (result.data.status) {
           console.log(result.data)
+          setMessage(result.data.message)
+          setTimeout(() => {
+            setMessage("")
+            setOpenSaveQuestionModal(false)
+            setSpinState(false)
+            setSeconds(0)
+            setSubjectStyleForBtn("")
+          },1000)
         } else {
-         console.log(result.data) 
+         setMessage(result.data.message)
         }
         
       });
+      } else {
+        setMessage("Add time")
+      }
+      
     } else {
-      alert("You need to add aleast a question")
+     setMessage("You need to add aleast one question")
     }
     
     // console.log(currentQuizId);
@@ -78,27 +89,9 @@ const SaveQuestionModal = () => {
               </button>
             </div>
             {message !== "" && (
-              <div className="w-9p mx-auto bg-dashback-200"></div>
+              <div className="w-9p mx-auto bg-dashback-200">{message}</div>
             )}
             <div className="flex justify-center items-center px-5 py-3">
-              <div>
-                <input
-                  type="number"
-                  className="h-5 w-6 border text-center"
-                  value={hour}
-                  onChange={(e) => setHour(e.target.value)}
-                />
-                <p className="text-center">H</p>
-              </div>
-              <div>
-                <input
-                  type="number"
-                  className="h-5 w-6 border text-center"
-                  value={minutes}
-                  onChange={(e) => setMinutes(e.target.value)}
-                />
-                <p className="text-center">M</p>
-              </div>
               <div>
                 <input
                   type="number"

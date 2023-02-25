@@ -21,6 +21,7 @@ module.exports = {
       sidebarshow: "1183px",
       createmodal: { min: "1px", max: "500px" },
       createmodalWidth: { min: "1px", max: "420px" },
+      quizQuestion: { min: "1px", max: "1100px" },
     },
     spacing: {
       01: "-90px",
@@ -39,7 +40,7 @@ module.exports = {
       12: "90px",
       dw: "170px",
       dbh: "300px",
-      input:"300px",
+      input: "300px",
       dimageSize: "400px",
       dashtable: "600px",
       createModalSize: "400px",

@@ -2,23 +2,39 @@ import Logo from "./Logo";
 import { FaAngleRight } from "react-icons/fa";
 import "../styles/gamelogin.css";
 import { appContext } from "../App";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const IndividualGameLogin = () => {
   let navigate = useNavigate();
-  const { gameEndPoint } = useContext(appContext);
+  const {socket, gameEndPoint } = useContext(appContext);
   const [spin, setSpin] = useState("");
   const userLoginEndPoint = `${gameEndPoint}/verifyUserPin`
   const [userGamePassword, setUserGamePassword] = useState("")
   const [message, setMessage] = useState("")
+  const [userSocketId, setUserSocketId] = useState("")
+  const getIdFunction = () => {
+    if (socket.currrent) {
+      socket.currrent.on("userId", (unique) => {
+        // setUserSocketId(socketId.id);
+        console.log(unique);
+      });
+    }
+  }
+  useEffect(() => {
+    getIdFunction()
+  },[])
   const checkForGame = () => {
-    setSpin("spin");
+    console.log(userSocketId)
+    
     if (userGamePassword === "") {
       setMessage("Fill in input")
     } else {
+      setSpin("spin");
       axios.post(userLoginEndPoint, { password: userGamePassword }).then((result) => {
         if (result.data.status) {
+          // socket.currrent.emit("checkIfAdminIsLoggedIn", { ifLoggedInPin: result.data.lastGameUniqueId })
+          
          localStorage.pass = result.data.passId
          navigate("/play/username");
         } else {

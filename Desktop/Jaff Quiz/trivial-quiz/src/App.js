@@ -16,6 +16,7 @@ import IndividualGameLogin from "./Components/IndividualGameLogin";
 import NameJoin from "./Components/NameJoin";
 import Game from "./Components/Game";
 import AdminGameLogin from "./Components/AdminGameLogin";
+import Participants from "./Components/Participants";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Trail from "./Components/Trail";
@@ -65,7 +66,7 @@ function App() {
       .then((result) => {
         if (result.data.status) {
           setAdminDetails(result.data.adminDetails);
-          console.log(result.data.adminDetails);
+          console.log(result.data.adminDetails, result.data);
           setAdminId(result.data.adminDetails._id);
         } else {
           navigate("/admin/login");
@@ -117,6 +118,7 @@ function App() {
         <Route path="/primary/create" element={<PrimaryCreateView />} />
         <Route path="/quizcollections" element={<QuizCollection />} />
         <Route path="/add/quiz/questions" element={<AddQuestions />} />
+        <Route path="/quizParticipants" element={<Participants/>}/>
         <Route path="/questionbank" element={<Questionbank />} />
         <Route path="/emailverification" element={<VerifyMessage />} />
         <Route path="/:id" element={<VerifyEmail />} />
