@@ -118,6 +118,14 @@ top: -20px;
     background-color: #03a26c;
     animation: div2 2s 1 running normal;
 }
+.selfQuizId{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% ;
+    justify-content: space-between;
+
+}
+
 
 @keyframes div1 {
 
