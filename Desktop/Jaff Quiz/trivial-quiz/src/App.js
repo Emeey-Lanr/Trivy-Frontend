@@ -20,6 +20,9 @@ import Participants from "./Components/Participants";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Trail from "./Components/Trail";
+import Setting from "./Components/Setting";
+import Search from "./Components/Search";
+import Result from "./Components/Result.jsx";
 export const appContext = createContext(null);
 function App() {
   let navigate = useNavigate();
@@ -31,6 +34,8 @@ function App() {
   // hfhh
   const [adminDetails, setAdminDetails] = useState({});
   const [adminId, setAdminId] = useState("");
+  const [adminOrganizationUserName, setAdminOrganizationUserName] = useState("")
+  const [adminImage, setAdminImage] = useState("")
   const [adminEndPoint, setAdminEndPoint] = useState(
     "http://localhost:2340/admin"
   );
@@ -68,6 +73,8 @@ function App() {
           setAdminDetails(result.data.adminDetails);
           console.log(result.data.adminDetails, result.data);
           setAdminId(result.data.adminDetails._id);
+          setAdminOrganizationUserName(result.data.adminDetails.adminUserName);
+          setAdminImage(result.data.adminDetails.adminImg)
         } else {
           navigate("/admin/login");
         }
@@ -81,6 +88,8 @@ function App() {
         setAdminDetails,
 
         adminId,
+        adminOrganizationUserName,
+        adminImage,
         adminEndPoint,
         gameEndPoint,
         dashboardFuction,
@@ -105,8 +114,6 @@ function App() {
         setCurrentSet,
         userName,
         setUsername,
-
-
       }}
     >
       <Routes>
@@ -118,7 +125,7 @@ function App() {
         <Route path="/primary/create" element={<PrimaryCreateView />} />
         <Route path="/quizcollections" element={<QuizCollection />} />
         <Route path="/add/quiz/questions" element={<AddQuestions />} />
-        <Route path="/quizParticipants" element={<Participants/>}/>
+        <Route path="/admin/result" element={<Participants />} />
         <Route path="/questionbank" element={<Questionbank />} />
         <Route path="/emailverification" element={<VerifyMessage />} />
         <Route path="/:id" element={<VerifyEmail />} />
@@ -126,7 +133,10 @@ function App() {
         <Route path="/play/adminlogin" element={<AdminGameLogin />} />
         <Route path="/play/username" element={<NameJoin />} />
         <Route path="/play" element={<Game />} />
-        <Route path="/trial" element={<Trail/>}/>
+        <Route path="/trial" element={<Trail />} />
+        <Route path="/admin/setting" element={<Setting />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/result" element={<Result/>}/>
       </Routes>
     </appContext.Provider>
   );

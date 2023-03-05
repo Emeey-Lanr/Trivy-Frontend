@@ -1,8 +1,9 @@
 import Logo from "./Logo";
 import axios from "axios";
 import { appContext } from "../App";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+const {geolocation} =navigator
 const AdminGameLogin = () => {
   let navigate = useNavigate();
   const {socket, gameEndPoint } = useContext(appContext);
@@ -12,16 +13,67 @@ const AdminGameLogin = () => {
   const [btnStyle, setBtnStyle] = useState("bg-green-like-100 text-white");
   const [loginStyle, setLoginStyle] = useState("Login");
   const [disableBtn, setDisableBtn] = useState(false)
-
+useEffect(()=>{
+if(!geolocation){
+console.log("geolation not supported")
+} else {
+  console.log("geolocation is supported")
+ 
+  geolocation.getCurrentPosition((position) => {
+  console.log(position.coords)
+})
+}
+},[])
   // picking the type you want
   const [modeBtn, setModeBtn] = useState(0)
-
-
+let ref  = useRef()
+const [pickedState, setPickedState] = useState("")
+ const [state, setState] = useState([
+"",
+"Abia",
+"Adamawa",
+"Akwa Ibom",
+"Anambra",
+"Bauchi",
+"Bayelsa",
+"Benue",
+"Borno",
+"Cross River",
+"Delta",
+"Ebonyi",
+"Edo",
+"Ekiti",
+"Enugu",
+"Gombe",
+"Imo",
+"Jigawa",
+"Kaduna",
+"Kano",
+"Katsina",
+"Kebbi",
+"Kogi",
+"Kwara",
+"Lagos",
+"Nasarawa",
+"Niger",
+"Ogun",
+"Ondo",
+"Osun",
+"Oyo",
+"Plateau",
+"Rivers",
+"Sokoto",
+"Taraba",
+"Yobe",
+"Zamfara",
+"FCT"
+  ])
   const adimGameLoginEndPoint = `${gameEndPoint}/adminlogin`;
   const adminLoginSchema = {
     username: adminUserName,
     gameid: gameId,
-    mode:modeBtn
+    mode: modeBtn,
+    state:pickedState,
   };
 
   const adminBtn = () => {
@@ -37,8 +89,9 @@ const AdminGameLogin = () => {
   }
  
   const login = () => {
-    
-      if (adminUserName === "" || gameId === "") {
+    console.log(adminLoginSchema)
+
+      if (adminUserName === "" || gameId === "" ) {
         setMessage("Fill in input");
       } else {
         if (
@@ -99,13 +152,23 @@ const AdminGameLogin = () => {
           </div>
         </div>
         <div className="my-2">
-          <p>Game id</p>
+          <p>Quiz id</p>
           <div>
             <input
               type="password"
               onChange={(e) => setGameId(e.target.value)}
               className=" text-green-like-100 h-6 border border-inputLine w-input rounded-sideicon focus:outline-green-like-100"
             />
+          </div>
+        </div>
+        <div className="my-2">
+          <p>Pick a state</p>
+          <div>
+            <select onChange={(e)=>setPickedState(e.target.value)}  className="text-green-like-100 font-bold h-6 border border-inputLine w-input rounded-sideicon focus:outline-green-like-100">
+              {state.map((state) => (
+                <option >{state}</option>
+              )) }
+            </select>
           </div>
         </div>
         

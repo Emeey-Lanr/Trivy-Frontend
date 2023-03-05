@@ -15,6 +15,8 @@ import OverallResult from "./OverallResult";
 import AdminModeQuestionPlayer from "./AdminModeQuestionPlayer";
 import UserModeQuestionPlayer from "./UserModeQuestionPlayer";
 import IndividualGameLogin from "./IndividualGameLogin";
+import AdminModeTopActs from "./AdminModeTopActs";
+import bese from  "../Images/bestStudent.jpg"
 export const gameContext = createContext();
 const Game = () => {
   const { socket, gameEndPoint, userName } = useContext(appContext);
@@ -69,7 +71,28 @@ const Game = () => {
 
 
   // PLAYER
-  const [allPlayersPlaying, setAllPlayersPlaying] = useState([]);
+  const [allPlayersPlaying, setAllPlayersPlaying] = useState([
+    { playerImage: bese, playerName: "Wiilom" },
+    { playerImage: bese, playerName: "Wiilom" },
+    { playerImage: bese, playerName: "Oyelowo Emmanuel" },
+    { playerImage: bese, playerName: "Ogunsokanmidayo  aramide Sunday" },
+    { playerImage: bese, playerName: "Wiilom" },
+    { playerImage: bese, playerName: "Wiilom" },
+    { playerImage: bese, playerName: "Wiilom" },
+    { playerImage: bese, playerName: "Wiilom" },
+    { playerImage: bese, playerName: "Wiilom" },
+    { playerImage: bese, playerName: "Wiilom" },
+    { playerImage: bese, playerName: "Wiilom" },
+    { playerImage: bese, playerName: "Wiilom" },
+    { playerImage: bese, playerName: "Wiilom" },
+    { playerImage: bese, playerName: "Wiilom" },
+    { playerImage: bese, playerName: "Wiilom" },
+    { playerImage: bese, playerName: "Wiilom" },
+    { playerImage: bese, playerName: "Wiilom" },
+    { playerImage: bese, playerName: "Wiilom" },
+    { playerImage: bese, playerName: "Wiilom" },
+    { playerImage: bese, playerName: "Wiilom" },
+  ]);
   const [individualName, setIndividualName] = useState("");
   const [ifPicked, setifPicked] = useState(-1);
   const [currentSubject, setCurrentSubject] = useState("")
@@ -173,6 +196,242 @@ const ifItExistAndProbablyReload = () => {
     }
   };
 
+  const [adminModeQuestion, setAdminModeQuestion] = useState({});
+
+  // this makes the time and the answer to be unseen untill a time is given to
+  // answer the question
+  const [startBtnForAdmin, setStartBtnForAdmin] = useState(false)
+  const [answerTimeStatus, setAnswerTimeStatus] = useState(false)
+
+  const [assignedScoreMode1, setAssignedScoreMode1] = useState(1)
+  const [mode1Score, setMode1Score] = useState(-1)
+  // makes it impossible for them to answer and pick the answer by itself
+  const [showScreen, setShowScreen] = useState(false)
+  const [answerId, setAnswerId] = useState(-1)
+  const [answerStyle, setAnswerStyle] = useState("")
+   const [adminIdButtonClickedIndicator, setadminIdButtonClickedIndicator] =
+    useState(-1);
+  const [scoreIndex,setScoreIndex] =useState(-1)
+  const [adminMode1QuestionNumber, setAdminModeQuestionNumber] = useState(1)
+  // const [correctAnswerIndex, se]
+  const CancelStyleFunction = () => {
+        setShowScreen(false);
+        setAnswerStyle("");
+        setadminIdButtonClickedIndicator(-1);
+        setAnswerTimeStatus(false);
+  }
+
+  // already played
+  const alreadyPlayedFunction = () => {
+    if (socket.current) {
+      socket.current.on("alreadyPlayed", (data) => {
+        if (data.roomId === roomId) {
+          if (admin) {
+            alert("Subject done with can't be played again")
+            setAdminStage("AdminPage01")
+            setStartLoading(false)
+          
+          }
+        }
+      });
+    }
+  }
+  // Stage 1
+  const mode1StartSubjectPlayers = () => {
+    
+    if (socket.current) {
+      socket.current.on("openQuestionAdminMode1Players", (data) => {
+        
+        setAdminModeQuestionNumber(data.currentGameIndex);
+        setAdminStage(data.adminStage) 
+        setAdminModeQuestion(data.currentQuestion);
+        setCurrentSubject(data.currentSubject) 
+        setStartLoading(false);
+        setQuizMode(data.mode)
+         data.currentQuestion.answers.map((answers, id) => {
+           if (answers.status) {
+             setAnswerId(id);
+           }
+         });
+        
+     });
+   }
+  }
+  const mode1StartSubjectAdmin = () => {
+    if (socket.current) {
+      socket.current.on("openQuestionAdminMode1", (data) => {
+    
+        if (data.roomId === roomId) {
+         
+          if (admin) {
+           
+            setAdminModeQuestionNumber(data.currentGameIndex);
+            setAdminStage(data.adminStage);
+            setAdminModeQuestion(data.currentQuestion);
+            setCurrentSubject(data.currentSubject);
+            setStartLoading(false);
+            setStartBtnForAdmin(true)
+            data.currentQuestion.answers.map((answers, id) => {
+              if (answers.status) {
+                setAnswerId(id)
+              }
+            })
+          }
+        }
+      });
+    }
+  };
+
+  // responsible for time
+const mode1TimeFunction = ()=>{
+  if(socket.current){
+    socket.current.on("quizMode1Time", (data) => {
+      if (data.roomId === roomId) {
+        setCurrentSecond(data.time);
+        setAssignedScoreMode1(data.mark)
+        setAnswerTimeStatus(true)
+        setWait(true);
+        setStartBtnForAdmin(false)
+      }
+      
+      
+    })
+  }
+}
+
+  // responsible for submitting every subject
+  const submitModeOneSubject = () => {
+    if(socket.current){
+      socket.current.on("collectAnswer", (data) => {
+        if(data.roomId === roomId){
+          setShowScreen(true)
+          setAnswerStyle(answerId + "yes")
+          setadminIdButtonClickedIndicator(-1)
+
+          if (admin) {
+            setTimeout(() => {
+              setStartLoading(true)
+            },4000)
+          }
+          
+      if(admin === false){
+        if (mode1Score === -1) {
+          setMode1Score(0)
+        }
+        setTimeout(()=>{
+          setStartLoading(true)
+         socket.current.emit("submittedAnswer", {
+          currentSubject: currentSubject,
+          name: individualName,
+          roomId: data.roomId,
+          score:mode1Score
+        
+        });
+       },4000)
+      }
+        
+      }
+       
+      });
+    }
+  }
+
+  // It shows what they get after each Question
+  const showScoreAfterEachQuestion = () => {
+    if (socket.current) {
+      socket.current.on("showAdminMode1CurrentScore", (data) => {
+        if (data.roomId === roomId) {
+          setSpinnerStatus(false)
+          setAdminStage("AdminPage05");
+          setScoreIndex(data.scoreIndex);
+             setPlayerScore(data.players);
+             setPlayerScoreGameIndex(data.subjectDoneIdentification);
+          setCurrentSubject(data.currentSubject);
+          setTopActAnimation(1)
+
+          setTimeout(() => {
+            setTopActAnimation(2);
+          }, 2000);
+        }
+      })
+    }
+  }
+
+  const adminMode1NextQuestionPlayers = () => {
+    if (socket.current) {
+      socket.current.on("changeQuestionAdminMode1Players", (data) => {
+        // meant to cancel the style
+        setShowScreen(false);
+        setAnswerStyle("");
+        setadminIdButtonClickedIndicator(-1);
+        setAnswerTimeStatus(false);
+        // ////////////////////////
+         setAdminModeQuestionNumber(data.currentGameIndex);
+         setAdminStage(data.adminStage);
+         setAdminModeQuestion(data.currentQuestion);
+         setCurrentSubject(data.currentSubject);
+         setStartLoading(false);
+         setQuizMode(data.mode);
+         data.currentQuestion.answers.map((answers, id) => {
+           if (answers.status) {
+             setAnswerId(id);
+           }
+         });
+        
+      })
+    }
+  }
+const adminMode1NextQuestionAdmin = ()=>{
+  if (socket.current) {
+    socket.current.on("changeQuestionAdminMode1Admin", (data) => {
+      if (data.roomId === roomId) {
+        if (admin) {
+          // meant to cancel the style
+        setShowScreen(false);
+        setAnswerStyle("");
+        setadminIdButtonClickedIndicator(-1);
+        setAnswerTimeStatus(false);
+        // ////////////////////////
+          setAdminModeQuestionNumber(data.currentGameIndex);
+          setAdminStage(data.adminStage);
+          setAdminModeQuestion(data.currentQuestion);
+          setCurrentSubject(data.currentSubject);
+          setStartLoading(false);
+          setStartBtnForAdmin(true);
+          data.currentQuestion.answers.map((answers, id) => {
+            if (answers.status) {
+              setAnswerId(id);
+            }
+          });
+        }
+      }
+    });
+  }
+  }
+  
+  const adminMode1SubjectOverallFunction = () => {
+    if (socket.current) {
+      socket.current.on("adminMode1SubjectOverall", (data) => {
+        if (data.roomId === roomId) {
+          console.log(data)
+           setWait(false);
+           setAdminStage(data.adminStage);
+           setPlayerScore(data.ranking);
+           setPlayerScoreGameIndex(data.index);
+           setCurrentSubject(data.subject);
+          setTopActAnimation(1);
+        
+           setTimeout(() => {
+             setTopActAnimation(2);
+           }, 2000)
+        }
+      })
+    }
+  }
+
+
+  ////////////
+  // stage 2
   const switchToLoadFunction = () => {
     if (socket.current) {
       socket.current.on("switchToLoad", (data) => {
@@ -291,6 +550,7 @@ const ifItExistAndProbablyReload = () => {
     if (socket.current) {
       socket.current.on("overallResult", (data)=>{
         if (data.adminId === roomId) {
+          CancelStyleFunction()
           setAdminStage("AdminPage04")
           setPlayerScore(data.overallResult);
           setTopActAnimation(1);
@@ -348,12 +608,14 @@ const ifItExistAndProbablyReload = () => {
   const [subjectScoreBox, setSubjectScoreBox] = useState([])
   const [quizNumberAttempted, setQuizNumberAttempted] = useState([])
   const [knowPickedAnswer, setPickedAnwser] = useState([])
+
   
  
   const startStage3QuestionFunction = () => {
     if (socket.current) {
       socket.current.on("stage3Question", (data) => {
         console.log(data)
+        setCurrentQuestionIndex(0)
         setAdminStage(data.adminPage);
         setStartLoading(true)
         setCurrentSubjectName(data.subjectName);
@@ -453,71 +715,98 @@ await sendMessage()
       
     }
   }
+
+  // Stage 3 pre result based on the total after each subject
+  const stage3PreResultFunction = ()=>{
+    if (socket.current) {
+      socket.current.on("stage3PreSubject", (data) => {
+        if (data.roomId === roomId) {
+          console.log(data)
+          setAdminStage(data.adminStage);
+          setPlayerScore(data.ranking);
+          setPlayerScoreGameIndex(data.subjectId);
+          setCurrentSubject(data.currentSubject);
+          setTimeout(() => {
+            setTopActAnimation(2)
+          },1000)
+        }
+      })
+    }
+  }
   
   useEffect(() => {
+    // stage1 the admin has the control to read the question, next
+    //  alreadyPlayedFunction()
+    // ifItExistAndProbablyReload();
+    // checkIfAPlayerJoined();
+    // ifYouJoined();
+    // switchToLoadFunction();
+    // // stage 1 Admin
+    // mode1StartSubjectAdmin()
+    // mode1StartSubjectPlayers()
+    // mode1TimeFunction()
+    // submitModeOneSubject()
+    // showScoreAfterEachQuestion()
+    // adminMode1NextQuestionPlayers()
+    // adminMode1NextQuestionAdmin()
+    // adminMode1SubjectOverallFunction()
+    // adminMode1QuestionNumber()
+    // // stage2, this is the automatic one that runs based on the time
+    // switchToStart();
+    // switchToStartAdminPage()
+    // nextQuestion()
+    // ifGamePlayed()
+    // adminNextQuestion()
+    // changeToSemiVictoryStage()
+    // changeNextSubjectFunction()
+    // changeToVictoryPageFunction()
+    // loadSpinnerFunction()
+    // whenResultIsSavedFunction()
 
-    // stage1 the admin has the control to read the question, next 
-
-
-    // stage2, this is the automatic one that runs based on the time
-    ifItExistAndProbablyReload();
-    checkIfAPlayerJoined();
-    ifYouJoined();
-    switchToLoadFunction();
-    switchToStart();
-    switchToStartAdminPage()
-    nextQuestion()
-    ifGamePlayed()
-    adminNextQuestion()
-    changeToSemiVictoryStage()
-    changeNextSubjectFunction()
-    changeToVictoryPageFunction()
-    loadSpinnerFunction()
-    whenResultIsSavedFunction()
-
-    // stage 3
-    // self more like a cbt question
-    startStage3QuestionFunction()
-    adminPageWhileQuizFunction()
-    submitAnswerFunction()
+    // // stage 3
+    // // self more like a cbt question
+    // startStage3QuestionFunction()
+    // adminPageWhileQuizFunction()
+    // submitAnswerFunction()
+    // stage3PreResultFunction()
 
     if (wait) {
       timer = setInterval(() => {
-        
-        setCurrentSecond(currentSecond - 1)
+        setCurrentSecond(currentSecond - 1);
         if (currentSecond === 0) {
           if (admin) {
             if (admin) {
               if (quizMode === 1) {
-                
-              } else if (quizMode === 2) { 
+                if (admin) {
+                  socket.current.emit("mode1SubmitQuestion",
+                    {roomId:roomId}
+                  )
+    
+                  setWait(false);
+                }
+              } else if (quizMode === 2) {
                 socket.current.emit("changeQuestion", {
                   roomId: roomId,
                   currentQuestion: currentQuestion[currentQuestionIndex],
                 });
                 setWait(false);
-
               } else if (quizMode === 3) {
                 socket.current.emit("selfSubmitQuestion", {
                   roomId: roomId,
-                
-                })
-                setStartLoading(true)
-                setWait(false)
+                });
+                setStartLoading(true);
+                setWait(false);
               }
-              
             }
-          }else{
-            setWait(false)
+          } else {
+            setWait(false);
           }
-        }  
-         
-         
+        }
+
         //  console.log("yes");
       }, 1000);
       return () => clearInterval(timer);
     }
-  
   });
   // useEffect(() => {
     
@@ -541,7 +830,20 @@ await sendMessage()
   const startQuizBtn = (quizname, id) => {
     console.log(adminQuestionTitle[id].subjectMark);
     if (quizMode === 1) {
-      // here there will be button for each question where the admin can read assign time and next
+           setAdminStage("AdminPage02");
+      setStartLoading(true);
+      socket.current.emit("adminModeStart", {
+        allQuestion: adminQuestionTitle,
+        currentQuestion: adminQuestionTitle[id].questions,
+        allQuestionLength: adminQuestionTitle.length,
+        currentIndex: 0,
+        identification: roomId,
+        adminPage: "AdminPage02",
+        currentSubjectName:adminQuestionTitle[id].quizName,
+        assignedMark: adminQuestionTitle[id].subjectMark,
+        
+      })
+      
     } else if (quizMode === 2) {
        setAdminStage("AdminPage02");
     setStartLoading(true);
@@ -583,7 +885,33 @@ await sendMessage()
    
   };
 
+// stage 1
+  
+  const startAdminGameBtn = () => {
+    setTimerStatus(true)
+    
+  }
+ 
+  const adminModePickAnswerBtn = (status, answerId) => {
+    if (status) {
+      setMode1Score(assignedScoreMode1);
+    } else {
+      setMode1Score(0)
+    }
+    console.log(mode1Score)
+    setadminIdButtonClickedIndicator(answerId)
+  }
 
+  const adminMode1NextButton = () => {
+    socket.current.emit("changedToNextQuestionOrSubjectOverallAdminMode1", {
+      roomId: roomId,
+      
+    })
+    
+  }
+
+
+// stage 2
   const pickAnswer = (status, id) => {
     console.log(id, status)
     setifPicked(id)
@@ -600,10 +928,12 @@ await sendMessage()
   // switch to next game  
   const nextSubjectOrOverallResult = () => {
     console.log(2)
-    socket.current.emit("switchPageToNextSubjectOrOverallResult",{
-      gameId: roomId,
-      
-    })
+    
+       socket.current.emit("switchPageToNextSubjectOrOverallResult", {
+         gameId: roomId,
+       });
+    
+   
     
   }
 
@@ -616,13 +946,29 @@ await sendMessage()
 
   // stage 3
   const startSelfModeBtn = () => {
+    if(quizMode === 1){
+      if (selTime > 0) {
+     
+        socket.current.emit("emitTimeAndEnabledButton", {
+          roomId: roomId,
+          currentTime: selTime,
+
+          
+      })
+   setTimerStatus(false);
+    } else {
+      alert("pls input a specific time")
+    }
+
+    }else if(quizMode === 3){
     if (selTime > 0) {
       socket.current.emit("startSelfMode", {
         question: playerQuestion,
         currentSubjectName: currentSubject,
-        roomId:roomId,
-        allSubjects:adminQuestionTitle,
-        time:selTime
+        roomId: roomId,
+        allSubjects: adminQuestionTitle,
+        time: selTime,
+        allTotalSubject: adminQuestionTitle,
       });
       setAdminStage("AdminPage02");
       setStartLoading(true)
@@ -632,8 +978,10 @@ await sendMessage()
     } else {
       alert("pls input a specific time")
     }
+  }
     
   }
+
 
   // next and prev btn
   const selfPrevBtn = () => {
@@ -674,7 +1022,12 @@ await sendMessage()
     const item = [...subjectScoreBox]
    item[currentQuestionIndex]  = assignedMark
       setSubjectScoreBox(item)
+    }else{
+       const item = [...subjectScoreBox]
+   item[currentQuestionIndex]  = 0
+      setSubjectScoreBox(item)
     }
+    console.log(subjectScoreBox)
     
     // It shows youv've attempted a question and the number of questions attempted
     const attemptedQuestion = [...quizNumberAttempted]
@@ -690,17 +1043,26 @@ await sendMessage()
         allPlayersPlaying,
         individualName,
         startQuizBtn,
+        currentSecond,
+        //  Stage 1
+        startAdminGameBtn,
+        adminModePickAnswerBtn,
+        adminIdButtonClickedIndicator,
+        adminModeQuestion,
+        answerTimeStatus,
+        startBtnForAdmin,
+        showScreen,
+        answerStyle,
+        scoreIndex,
+        adminMode1NextButton,
+        // stage2 and some not cause I did stage 2 first
         currentQuestion,
         adminQuestion,
         pickAnswer,
         ifPicked,
-        minutes,
-        second,
         currentTime,
         playerScore,
         playerScoreGameIndex,
-        currentMinutes,
-        currentSecond,
         currentSubject,
         currentSubjectName,
         nextSubjectOrOverallResult,
@@ -769,7 +1131,11 @@ await sendMessage()
                   </div>
                 ) : (
                   <>
-                    {quizMode === 1 && <div></div>}
+                    {quizMode === 1 && (
+                      <div className="w-10p">
+                        <AdminModeQuestionPlayer />
+                      </div>
+                    )}
                     {quizMode === 2 && (
                       <div>
                         <AdminQuestion />
@@ -777,7 +1143,11 @@ await sendMessage()
                     )}
                     {quizMode === 3 && (
                       <div className="w-10p h-10p fixed top-0 bg-green-like-100 flex justify-center items-center">
-                        <div className="w-dw h-dw"><p className="text-white  text-5xl text-serif texty">{currentSecond}</p></div>
+                        <div className="w-dw h-dw">
+                          <p className="text-white  text-5xl text-serif texty">
+                            {currentSecond}
+                          </p>
+                        </div>
                       </div>
                     )}
                   </>
@@ -802,6 +1172,16 @@ await sendMessage()
               ) : (
                 <div>
                   <OverallResult />
+                </div>
+              ))}
+            {adminStage === "AdminPage05" &&
+              (topActAnimation === 1 ? (
+                <div>
+                  <TopActAnimation />
+                </div>
+              ) : (
+                <div>
+                  <AdminModeTopActs />
                 </div>
               ))}
             {spinnerStatus && (
@@ -835,7 +1215,7 @@ await sendMessage()
                   <>
                     {/* this one has button to next the question */}
                     {quizMode === 1 && (
-                      <div>
+                      <div className="w-10p">
                         <AdminModeQuestionPlayer />
                       </div>
                     )}
@@ -873,6 +1253,16 @@ await sendMessage()
               ) : (
                 <div>
                   <OverallResult />
+                </div>
+              ))}
+            {adminStage === "AdminPage05" &&
+              (topActAnimation === 1 ? (
+                <div>
+                  <TopActAnimation />
+                </div>
+              ) : (
+                <div>
+                  <AdminModeTopActs />
                 </div>
               ))}
             {spinnerStatus && (

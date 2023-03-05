@@ -1,19 +1,20 @@
 import React, { useContext, useState } from "react";
 import Logo from "./Logo";
 import "../styles/game.css";
-import best from "../Images/bestStudent.jpg"
+import best from "../Images/bestStudent.jpg";
 import { FaArrowRight } from "react-icons/fa";
 import { gameContext } from "./Game";
-const TopActs = () => {
-  const {
-    admin,
-    playerScore,
-    playerScoreGameIndex,
+const AdminModeTopActs = () => {
+    const {
+      admin,
+      playerScore,
+      playerScoreGameIndex,
       currentSubject,
-    nextSubjectOrOverallResult,
-  } = useContext(gameContext);
+      scoreIndex,
+      adminMode1NextButton,
+    } = useContext(gameContext);
+
   return (
-    
     <div className="w-10p">
       <div className="py-2 px-2">
         <Logo />
@@ -26,7 +27,13 @@ const TopActs = () => {
           <div className="topActsDiv">
             <div className="scoreBalldiv">
               <div className="scoreBall">
-                <p>{players.subjectToBeDone[playerScoreGameIndex].score}</p>
+                <p>
+                  {
+                    players.subjectToBeDone[playerScoreGameIndex].questions[
+                      scoreIndex
+                    ]
+                  }
+                </p>
               </div>
             </div>
 
@@ -46,10 +53,7 @@ const TopActs = () => {
       </div>
       {admin && (
         <div className="w-dw h-7 flex justify-center items-center bg-green-like-100 fixed bottom-0 right-4">
-          <button
-            className="w-10 h-7"
-            onClick={() => nextSubjectOrOverallResult()}
-          >
+          <button className="w-10 h-7" onClick={adminMode1NextButton}>
             <FaArrowRight className="text-white" />
           </button>
         </div>
@@ -58,4 +62,4 @@ const TopActs = () => {
   );
 };
 
-export default TopActs;
+export default AdminModeTopActs;

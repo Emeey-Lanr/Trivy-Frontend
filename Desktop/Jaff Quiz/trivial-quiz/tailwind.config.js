@@ -22,6 +22,7 @@ module.exports = {
       createmodal: { min: "1px", max: "500px" },
       createmodalWidth: { min: "1px", max: "420px" },
       quizQuestion: { min: "1px", max: "1100px" },
+      setting: { min: "1px", max: "770px" },
     },
     spacing: {
       01: "-90px",
@@ -38,6 +39,7 @@ module.exports = {
       10: "60px",
       11: "76px",
       12: "90px",
+      13: "120px",
       dw: "170px",
       dbh: "300px",
       input: "300px",

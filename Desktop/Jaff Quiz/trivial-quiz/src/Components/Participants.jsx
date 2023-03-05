@@ -5,11 +5,128 @@ import SidBarBack from "./SideBarBack"
 import axios from "axios"
 import { useEffect, useState, useContext } from "react"
 import { appContext } from "../App"
-
+import { SlPeople } from "react-icons/sl"
+import { FaArrowLeft, FaRegUserCircle } from "react-icons/fa"
+import bestStudent from "../Images/bestStudent.jpg"
 const Participants = () => {
     const {adminEndPoint} = useContext(appContext)
-    const [Participants, setParticipants] = useState([])
-    const  verifyParticipantsEndPoints = `${adminEndPoint}/findParticipants`
+  const [Participants, setParticipants] = useState([])
+  const [currentPositionStatus, setCurrentPositionStatus] = useState(2)
+  const verifyParticipantsEndPoints = `${adminEndPoint}/findParticipants`
+  const [userRecords, setUserRecords] = useState([
+    {
+      playerName: "oyelowo",
+      playerImage: bestStudent,
+      subjectToBeDone: [
+        { quizName: "english", score: 30 },
+        { quizName: "Yoruba", score: 10 },
+        { quizName: "Maths", score: 30 },
+        { quizName: "English", score: 10 },
+      ],
+      totalScore: 90,
+    },
+    {
+      playerName: "Emmanuel",
+      playerImage: bestStudent,
+      subjectToBeDone: [
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+      ],
+      totalScore: 90,
+    },
+    {
+      playerName: "Dara",
+      playerImage: bestStudent,
+      subjectToBeDone: [
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+      ],
+      totalScore: 90,
+    },
+    {
+      playerName: "Wole",
+      playerImage: bestStudent,
+      subjectToBeDone: [
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+      ],
+      totalScore: 90,
+    },
+    {
+      playerName: "Kola",
+      playerImage: bestStudent,
+      subjectToBeDone: [
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+      ],
+      totalScore: 90,
+    },
+    {
+      playerName: "Tunde",
+      playerImage: bestStudent,
+      subjectToBeDone: [
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+      ],
+      totalScore: 90,
+    },
+    {
+      playerName: "Brain",
+      playerImage: bestStudent,
+      subjectToBeDone: [
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+      ],
+      totalScore: 90,
+    },
+  ]);
+  const [topThree, setTopThree] = useState([
+    {
+      playerName: "oyelowo",
+      playerImage: bestStudent,
+      subjectToBeDone: [
+        { quizName: "english", score: 30 },
+        { quizName: "Yoruba", score: 10 },
+        { quizName: "Maths", score: 30 },
+        { quizName: "English", score: 10 },
+      ],
+      totalScore: 90,
+    },
+    {
+      playerName: "Emmanuel",
+      playerImage: bestStudent,
+      subjectToBeDone: [
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+      ],
+      totalScore: 90,
+    },
+    {
+      playerName: "Dara",
+      playerImage: bestStudent,
+      subjectToBeDone: [
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+        { quizName: "english", score: 1 },
+      ],
+      totalScore: 90,
+    },
+  ]);
     useEffect(() => {
         axios
           .get(verifyParticipantsEndPoints, {
@@ -23,22 +140,162 @@ const Participants = () => {
             if (result.data.status) {
             }
           });
-    },[])
+    }, [])
+  const checkResult = () => {
+    setCurrentPositionStatus(2)
+  }
   return (
     <div className="w-10p">
-      <SidBarBack />
-      <Sidebar /> 
-          <DashbarNav />
-          <div className="py-2 w-5p mx-auto mt-12 mb-3 bg-green-like-100 rounded-sideicon flex justify-center items-center">
-            <span className="text-xl text-white">Acid Participants</span>
-          </div>
-          <div className="w-7p bg-white rounded-sideicon mx-auto shadow-md overflow-x-scroll">
-              <div style={{ width: "1400px" }}>
-                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates, recusandae repellat ut quaerat corrupti, sequi aut obcaecati ab beatae excepturi sint itaque illo asperiores suscipit esse, tempora sed numquam. Non quidem odio adipisci harum, distinctio dolorem est quam aut sint. Assumenda eius quasi beatae repellendus ut cumque amet! Laboriosam totam culpa nam autem iure quis, magni, tempora expedita earum accusantium facilis qui voluptatum, eaque quibusdam error dolor natus ipsum hic inventore asperiores sapiente. Vero quidem nesciunt iusto officiis quae quibusdam similique, ab praesentium libero rem cum deleniti enim, neque atque perferendis? Temporibus debitis consequuntur doloribus voluptates beatae, enim quos vero aliquam odio expedita reiciendis cumque nemo itaque ad quod officia corrupti quam rerum sit esse rem reprehenderit eius dolorum necessitatibus! Provident qui illum dolor reiciendis cupiditate id reprehenderit cumque est fugiat, ad tempore aperiam voluptates, illo repellat libero ipsam beatae perferendis nisi dolores debitis quam ipsum, perspiciatis quia nam. Deleniti architecto facilis laudantium cumque delectus iste dolores sit, qui atque esse eaque soluta minima alias quisquam incidunt dicta. Fugit laborum eos odit deleniti, quod consectetur! Magnam odio alias tempore tempora saepe iure minus nihil harum quibusdam eos corrupti quas, omnis cupiditate. Cum sint consectetur nam molestiae aliquam, nesciunt, dicta ad error unde nostrum omnis corporis? Fugit possimus, doloribus alias laborum architecto placeat obcaecati, debitis iste fuga aperiam excepturi dicta sunt quod sit qui nihil maxime corporis quaerat a dolorum assumenda nisi? Tempore beatae, assumenda nam, voluptates omnis provident sequi magnam, illum laborum sint aperiam voluptatem odit doloremque asperiores similique eveniet veritatis cumque vitae ducimus quisquam culpa optio? Aut nemo porro ullam voluptatum distinctio, cupiditate ad nulla, accusamus neque natus in? Possimus quisquam et voluptates optio sunt expedita voluptas excepturi aperiam rem cupiditate ipsam recusandae, quos autem, eos nulla suscipit deleniti accusamus laboriosam aspernatur ut dolor accusantium! Numquam laborum explicabo asperiores aperiam vel, voluptatibus nihil autem dolores nesciunt enim harum iure quidem laboriosam. Adipisci placeat voluptate excepturi dolorum quam consequatur corporis vel harum, iste minima pariatur, aspernatur quia ipsam nulla rem. Minima odit beatae totam nostrum quidem incidunt a, nam ipsum accusamus ipsa tenetur cupiditate placeat qui similique dolores alias officia magnam, magni inventore vero! Veritatis quibusdam, nam doloremque, repudiandae cupiditate libero ducimus odio ratione odit nulla maiores officiis mollitia officia excepturi distinctio molestiae adipisci fugiat ut, ipsam sunt impedit. Beatae minus ipsa, illum recusandae iure consectetur ducimus nesciunt minima velit rem voluptatem et cupiditate accusamus ex. Expedita ratione magnam velit neque quod ut, ipsum recusandae natus! Blanditiis neque error quae laudantium necessitatibus et illo ratione sed velit repudiandae, quia nulla optio voluptatibus, repellat ipsum id nam aliquam veniam tempora laboriosam nisi rem cumque iusto. Recusandae quod, quam aspernatur unde explicabo vero placeat laborum vitae dolorum sed iste consectetur harum numquam. Tempora, repudiandae ea facere excepturi cumque velit tempore dolore ratione assumenda quasi aperiam, sed laudantium rem eum adipisci impedit quisquam id architecto magni quas ipsa minus nulla quos. Magni quo, aperiam explicabo saepe natus harum error ex ea. Iusto, a ducimus? Voluptas id eveniet doloribus dolor quasi doloremque temporibus autem.</p>
+      {currentPositionStatus === 1 ? (
+        <div className="mt-dw w-8p mx-auto">
+          <p>Series</p>
+          <div className="w-8p mx-auto bg-green-like-100 rounded-sideicon">
+            <p className="text-white w-8p mx-auto text-2xl border-b py-3">
+              Quiz 1
+            </p>
+            <div className="w-9p mx-auto mt-2 flex justify-between items-center">
+              <div className="">
+                <p className="h-6 w-6 rounded-sideicon flex justify-center items-center bg-white">
+                  <SlPeople />
+                </p>
+                <p className="text-white">Total Participants</p>
               </div>
-              
+              <p className="text-white font-serif text-2xl">300</p>
+            </div>
+
+            <div className="w-9p mx-auto flex justify-center items-center py-2">
+              <button
+                onClick={() => checkResult()}
+                className="w-5p py-2 rounded-sideicon bg-white"
+              >
+                View Result
+              </button>
+            </div>
           </div>
-          
+        </div>
+      ) : (
+        <div className="w-8p mx-auto mt-12 sidebarNone:w-10p">
+          <div className="w-8p mx-auto  py-1 px-1 rounded-sideicon">
+            <button>
+              <FaArrowLeft className="text-green-like-100 text-1xl" />
+            </button>
+          </div>
+          <div className="w-10p">
+            <div className="w-8p">
+              <p className="text-center text-green-like-100 text-3xl">Quiz 1</p>
+            </div>
+            <div className="mt-12">
+              <div className="top-scorer">
+                {topThree.map((player, id) => (
+                  <div className="beststudent  shadow-lg mt-01 gradi rounded-sideicon">
+                    <div>
+                      <img
+                        src={player.playerImage}
+                        alt=""
+                        className="h-dimage 10p object-cover"
+                      />
+                      <p className="border-b text-white border-dashback-200 pt-2">
+                        {player.playerName}
+                      </p>
+                    </div>
+                    <div className="flex justify-center items-center">
+                      <div>
+                        <p className="w-10px flex justify-center items-center text-xl">
+                          <FaRegUserCircle
+                            className={`
+                      ${id === 0 && `text-orange-like-100 w-9`}
+                      ${id === 1 && `text-yellow-like-100 w-9`}
+                      ${id === 2 && `text-red-like-100 w-9`}
+                      `}
+                          />
+                        </p>
+                        <p className="text-xl text-white font-light">
+                          Point:{player.totalScore}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          {/* All payer total score */}
+          <div className="bg-white w-9p my-4 mx-auto h-dashtable overflow-x-auto shadow-sm mt-10 rounded-sideicon sidebarNone:w-9p">
+            <div className="w-10p sticky top-0">
+              <p className="w-3p bg-green-like-100 py-2 rounded-sideicon mx-auto text-center text-white my-3">
+                Participants
+              </p>
+            </div>
+            <div className="w-scoreResultSize">
+              <div className="w-10p">
+                <div className="flex">
+                  <div className="nameImageDiv">
+                    <div className="nameDescriptionDiv">
+                      <p>Name</p>
+                    </div>
+                    <div className="nameImageDivFlex">
+                      <div className="name">
+                        {userRecords.map((player) => (
+                          <div>
+                            <p>{player.playerName}</p>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="imagee">
+                        {userRecords.map((player) => (
+                          <div>
+                            <img src={player.playerImage} alt="" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div></div>
+                  <div className="flex">
+                    <div>
+                      <div className="quizNameFlex">
+                        {userRecords[0].subjectToBeDone.map((subject) => (
+                          <div className="w-11">
+                            <p>{subject.quizName}</p>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="">
+                        {userRecords.map((subject) => (
+                          <div className="scoreflex">
+                            {subject.subjectToBeDone.map((score) => (
+                              <div className="">
+                                <p>{score.score}</p>
+                              </div>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="totalDiv">
+                      <div className="total">
+                        <p>Total</p>
+                      </div>
+                      <div className="score">
+                        {userRecords.map((total) => (
+                          <div>
+                            <p>{total.totalScore}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      <SidBarBack />
+      <Sidebar />
+      <DashbarNav />
     </div>
   );
 }

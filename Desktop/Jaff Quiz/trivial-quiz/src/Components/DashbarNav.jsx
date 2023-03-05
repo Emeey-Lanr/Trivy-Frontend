@@ -5,7 +5,8 @@ import "../styles/navbar.css";
 import { appContext } from "../App";
 import { useContext } from "react";
 const DashbarNav = () => {
-  const { showSideBar, setShowSidebar } = useContext(appContext);
+  const { adminOrganizationUserName, adminImage, showSideBar, setShowSidebar } =
+    useContext(appContext);
   const handleShowSideBar = () => {
     if (showSideBar === "hidden") {
       setShowSidebar("block");
@@ -19,7 +20,7 @@ const DashbarNav = () => {
         <div className="flex h-8 justify-between items-center ml-3 sidebarNone:h-9 ">
           <div className="flex items-center h-8 ">
             <div className="w-100 sidebarNone:hidden">
-              <p>Jaff Quiz</p>
+              <p>{adminOrganizationUserName}</p>
             </div>
             <div className="ml-5 inputbtn sidebarNone:ml-0">
               <button>
@@ -31,7 +32,7 @@ const DashbarNav = () => {
           <div className="flex justify-between h-8 items-center">
             <div className="w-5 h-5 mr-4 border-2 border-green-like-100 flex justify-center items-center">
               <img
-                src={bestStudent}
+                src={adminImage === "" ? bestStudent :  adminImage}
                 alt=""
                 className="w-4 h-4 rounded-5 object-cover"
               />

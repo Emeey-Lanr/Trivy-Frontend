@@ -1,16 +1,9 @@
 import Chart from "react-apexcharts";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { dashboardContext } from "./AdminDashboard";
 const DashBoardChart = () => {
-  const [ppp, setpp] = useState([
-    { number: 20 },
-    { number: 30 },
-    { number: 40 },
-  ]);
-  const [playii, setplay] = useState();
-  // ppp.map((ui, ud) => {
-  //   setplay(ui)
-
-  // })
+  const { userRecords } = useContext(dashboardContext);
+  const [topThree, setTopThree] = useState([])
 
   const [charDetails, setChartDetails] = useState({
     option: {
@@ -19,7 +12,7 @@ const DashBoardChart = () => {
         foreColor: "",
       },
       xaxis: {
-        categories: ["Bayo", "kunle", "tunde"],
+        categories: topThree.map((content) => content.playerName),
       },
       plotOptions: {
         bar: {
@@ -41,10 +34,50 @@ const DashBoardChart = () => {
     series: [
       {
         name: "population",
-        data: ppp.map((ui, ud) => ui.number),
+        data: topThree.map((players) => players.totalScore),
       },
     ],
   });
+  useEffect(() => {
+    setTopThree(
+    userRecords.filter((_, id)=> id < 3)
+    )
+    setChartDetails({
+    option: {
+      chart: {
+        background: "#fafafa",
+        foreColor: "",
+      },
+      xaxis: {
+        categories: topThree.map((content) => content.playerName),
+      },
+      plotOptions: {
+        bar: {
+          horizonatal: true,
+        },
+      },
+      fill: {
+        colors: ["#03a26c"],
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      title: {
+        text: "Records",
+        align: "center",
+        margin: 20,
+      },
+    },
+    series: [
+      {
+        name: "population",
+        data: topThree.map((players) => players.totalScore),
+      },
+    ],
+  })
+
+  },[])
+
 
   return (
     <Chart
