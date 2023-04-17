@@ -1,7 +1,11 @@
+import ChattingSpace from "./ChattingSpace"
+import Sidebar from "./Sidebar"
+
 const Chat = () => {
   return (
-    <div>
-      
+    <div className="chat-div">
+      <ChattingSpace />
+      <Sidebar/>
     </div>
   )
 }
