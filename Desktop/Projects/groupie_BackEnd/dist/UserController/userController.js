@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signin = exports.signup = void 0;
+exports.verifyUserProfile = exports.signin = exports.signup = void 0;
 const db_1 = require("../db");
 const brcypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -28,7 +28,7 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             const registerUser = yield db_1.pool.query("INSERT INTO user_info(username, password) VALUES($1, $2)", [username, hashedPasword]);
             //  token creation
             const userToken = yield jwt.sign({ userId: username }, process.env.TKN, { expiresIn: "7d" });
-            res.send({ status: true, client_Token: userToken });
+            res.send({ status: true, client_Token: userToken, username: username });
         }
     }
     catch (error) {
@@ -37,8 +37,8 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.signup = signup;
 const signin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const message = (message, status) => {
-        res.send({ message: message, status: status });
+    const message = (message, status, username) => {
+        res.send({ message: message, status: status, username });
     };
     try {
         const { username, password } = req.body;
@@ -47,7 +47,7 @@ const signin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             const checkIfPassword = yield brcypt.compare(password, findUser.rows[0].password);
             if (checkIfPassword) {
                 const userToken = yield jwt.sign({ userId: findUser.rows[0].username }, process.env.TKN, { expiresIn: "7d" });
-                message(userToken, true);
+                message(userToken, true, findUser.rows[0].username);
             }
             else {
                 message("Invalid Password", false);
@@ -62,6 +62,70 @@ const signin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.signin = signin;
+const verifyUserProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const message = (userData, status, loggedIn, currentUser, noUserFound, lookedForUser, id, message) => {
+        switch (id) {
+            case 11:
+                return res.send({ userData: userData, status: status, loggedIn: loggedIn, currentUser: currentUser, lookedForUser: lookedForUser, message });
+            case 12:
+                return res.send({ userData: userData, status: status, loggedIn: loggedIn, currentUser: currentUser, lookedForUser: lookedForUser, message });
+            case 13:
+                return res.send({ userData: userData, status: status, loggedIn: loggedIn, currentUser: currentUser, lookedForUser: lookedForUser, message: message });
+            case 2:
+                return res.send({ userData: userData, status: status, loggedIn: loggedIn, currentUser, lookedForUser: lookedForUser, message: message });
+            case 0:
+                return res.send({ bothUnavailable: noUserFound, status: status, loggedIn: loggedIn, message: message });
+            default:
+                return res.send({ noUserFound: noUserFound, message: message });
+        }
+    };
+    const searchForUser = (userId, lookedForUserUsername) => __awaiter(void 0, void 0, void 0, function* () {
+        // A fuction that looks for both user
+        const lookedForUser = yield db_1.pool.query("SELECT * FROM user_info WHERE username IN ($1, $2)", [userId, lookedForUserUsername]);
+        // If only one user is found is either the person search for or the person searching
+        const ifUser = yield lookedForUser.rows.filter((name) => name.username === userId);
+        const ifOtherUser = yield lookedForUser.rows.filter((name) => name.username === lookedForUserUsername);
+        if (lookedForUser.rows.length === 1) {
+            // if it the person searching
+            if (ifUser.length === 1 && lookedForUserUsername === ifUser[0].username) {
+                console.log("User is logged in");
+                message(ifUser[0], true, true, true, false, { id: 0, username: "", password: "" }, 11, "Only the user logged in is found");
+            }
+            else if (ifUser.length === 1 && lookedForUserUsername !== ifUser[0].username) {
+                message(ifUser[0], true, true, true, false, { id: 0, username: "", password: "" }, 12, "User Searched for not found");
+            }
+            else {
+                // If it's the person searched for
+                console.log("user is not logged");
+                message({ id: 0, username: "", password: "" }, true, false, false, false, lookedForUser.rows[0], 13, "Only the user searched for is found");
+            }
+        }
+        else if (lookedForUser.rows.length === 2) {
+            // It checks if both users details are availbale
+            console.log("both user are looged available");
+            message(ifUser[0], true, true, true, false, ifOtherUser[0], 2, "Both users found");
+        }
+        else if (lookedForUser.rows.length === 0) {
+            // It checks if no user is found
+            message({ id: 0, username: "", password: "" }, false, false, false, false, { id: 0, username: "", password: "" }, 0, "No user found");
+        }
+    });
+    try {
+        const identification = req.headers.authorization.split(",");
+        console.log(identification);
+        const verfifyToken = yield jwt.verify(identification[1], process.env.TKN);
+        console.log(verfifyToken);
+        searchForUser(verfifyToken.userId, identification[2]);
+    }
+    catch (error) {
+        if (error.message === "jwt malformed") {
+            const identification = req.headers.authorization.split(",");
+            searchForUser("", identification[2]);
+        }
+        console.log(error.message);
+    }
+});
+exports.verifyUserProfile = verifyUserProfile;
 // module.exports = {
 //     signup,
 //     signin

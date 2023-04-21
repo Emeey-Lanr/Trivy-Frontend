@@ -1,4 +1,5 @@
 const pg = require("pg").Pool
+
 require("dotenv").config()
 export const pool = new pg({
     user: process.env.PG_USER,

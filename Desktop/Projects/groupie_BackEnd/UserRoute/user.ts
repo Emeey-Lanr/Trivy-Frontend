@@ -1,13 +1,14 @@
 import express from "express"
-const route = express.Router()
-import {signup, signin} from "../UserController/userController"
+export const route = express.Router()
+import {signup, signin, verifyUserProfile} from "../UserController/userController"
 
 route.post("/signup", signup)
-route.post("/signin",signin)
+route.post("/signin", signin)
+route.get("/verifyUserProfile", verifyUserProfile)
 
 
 
 
-module.exports = route
+// export route
 
 
