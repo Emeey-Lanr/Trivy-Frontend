@@ -35,10 +35,10 @@ const TopActs = () => {
             </div>
             <div className="nameBox">
               <div className="index">
-                <p>{id + 1}</p>
+                <p  className="text-white text-lg">{id + 1}</p>
               </div>
               <div className="name ">
-                <p>.{players.playerName}</p>
+                <p className="text-white">{players.playerName}</p>
               </div>
             </div>
           </div>

@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from 'react'
-import "../styles/game.css"
-import bese from "../Images/bestStudent.jpg"
-import { gameContext } from './Game'
+import React, { useContext, useEffect } from "react";
+import "../styles/game.css";
+import { gameContext } from "./Game";
 const AdminModeQuestionPlayer = () => {
   const {
     admin,
@@ -16,25 +15,27 @@ const AdminModeQuestionPlayer = () => {
     answerStyle,
     adminMode1QuestionNumber,
   } = useContext(gameContext);
- 
+
   return (
     <>
-      <div className="mode1AdminDiv">
+      <div className={`mode1AdminDiv`}>
         <div className="w-10p">
-          {/* {answerTimeStatus && ( */}
-            <div className="w-10 h-10 mx-auto flex justify-center fixed right-5 top-2 items-center bg-green-like-100" style={{borderRadius:"30px"}}>
+          {answerTimeStatus && (
+            <div
+              className="w-10 h-10 mx-auto flex justify-center fixed right-5 top-2 items-center bg-green-like-100"
+              style={{ borderRadius: "30px" }}
+            >
               <p className="text-center text-white text-2xl">
                 {currentSecond === -1 ? 0 : currentSecond}
               </p>
             </div>
-          {/* )} */}
-          <div className="adminModeQuestionDiv">
-            {/* {adminModeQuestion.question.image !== "" && ( */}
+          )}
+          <div className={`adminModeQuestionDiv`}>
+            {adminModeQuestion.question.image !== "" && (
               <div className="adminModeImageDiv py-3">
-                {/* <img src={adminModeQuestion.question.image} alt="" /> */}
-                <img className="adminModeImage" src={bese} alt="" />
+                <img src={adminModeQuestion.question.image} alt="" />
               </div>
-            {/* )} */}
+            )}
             <div className="w-10p h-10p  flex justify-center  items-center">
               <div className="w-10p">
                 <div className="flex justify-center items-center">
@@ -49,17 +50,18 @@ const AdminModeQuestionPlayer = () => {
                     {adminModeQuestion.question.text}
                   </p>
                 </div>
-                {/* {startBtnForAdmin && ( */}
+                {startBtnForAdmin && (
                   <div className="w-10p flex justify-center">
                     <button
-                      onClick={startAdminGameBtn}
                       className="bg-green-like-100 py-2 px-4 text-white"
+                      onClick={() => startAdminGameBtn()}
                     >
                       Start
                     </button>
                   </div>
-                {/* // )} */}
-                {/* {answerTimeStatus && ( */}
+                )}
+              
+                {answerTimeStatus && (
                   <div className="adminBtn">
                     {adminModeQuestion.answers.map((content, id) => (
                       <button
@@ -89,7 +91,7 @@ const AdminModeQuestionPlayer = () => {
                       </button>
                     ))}
                   </div>
-                {/* )} */}
+                )}
               </div>
             </div>
           </div>
@@ -103,6 +105,6 @@ const AdminModeQuestionPlayer = () => {
       )}
     </>
   );
-}
+};
 
-export default AdminModeQuestionPlayer
+export default AdminModeQuestionPlayer;

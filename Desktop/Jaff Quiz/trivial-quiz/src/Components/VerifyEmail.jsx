@@ -11,7 +11,6 @@ const VerifyEmail = () => {
   const [verifyMessage, setVerifyMessage] = useState("");
   const adminVerifyEndPoint = `${adminEndPoint}/verifyEmail`;
   useEffect(() => {
-    console.log(id);
     setVerifyMessage("Verifying...");
     axios
       .get(adminVerifyEndPoint, {

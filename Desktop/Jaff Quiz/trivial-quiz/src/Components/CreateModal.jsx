@@ -6,7 +6,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa";
 import SaveQuestionModal from "./SaveQuestionModal";
+import { useRef } from "react";
 const CreateModal = () => {
+  let emptyInput1 = useRef()
+  let emptyInput2 = useRef()
   let navigate = useNavigate()
   const {
     adminId,
@@ -42,11 +45,17 @@ const CreateModal = () => {
     let ifCheck = quizQuestionBox.filter(
       (ui, ud) => ui.quizName.toUpperCase() === quizName.toUpperCase()
     );
-    if (ifCheck.length === 0) {
-      setQuizQuestionBox([...quizQuestionBox, quizNameSchema]);
-      setMessageIfSubjectExist("");
+    if (quizQuestionBox.length < 4) {
+      if (ifCheck.length === 0) {
+        setQuizQuestionBox([...quizQuestionBox, quizNameSchema]);
+        setMessageIfSubjectExist("");
+        emptyInput2.current.value = ""
+    
+      } else {
+        setMessageIfSubjectExist("Subject already exist");
+      }
     } else {
-      setMessageIfSubjectExist("Subject already exist");
+      setMessageIfSubjectExist("you can't add more than 4 subject");
     }
   };
   const removeQuestionAdded = (sid) => {
@@ -61,7 +70,9 @@ const CreateModal = () => {
     quizSubject: quizQuestionBox,
     subjectToBePlayedByPlyers: quizQuestionBox,
     multiple: multipleStatus,
-     quizMultiplePassword: [],
+    quizMultiplePassword: [],
+    quizResultAcessPassword: "",
+    locked:false,
   };
 
   const quizCreationEndPoint = `${adminEndPoint}/createquiz`;
@@ -115,7 +126,7 @@ const CreateModal = () => {
             <div className="quiznameInput">
               <label>Quiz Name</label>
               <div>
-                <input
+                <input ref={emptyInput1}
                   type="text"
                   onChange={(e) => setSubjectName(e.target.value)}
                 />
@@ -124,7 +135,7 @@ const CreateModal = () => {
             <div className="addQuiz">
               <label>Add Subject Name</label>
               <div>
-                <input
+                <input ref={emptyInput2}
                   type="text"
                   className="border"
                   onChange={(e) => setQuizName(e.target.value)}
@@ -144,8 +155,39 @@ const CreateModal = () => {
               {quizQuestionBox !== "" &&
                 quizQuestionBox.map((question, id) => (
                   <div className="flex bg-green-like-100 rounded-createdSubject py-1">
-                    <p className="text-center text-white pl-1">
-                      {question.quizName}
+                    <p className="text-center flex text-white pl-1">
+                      {question.quizName.split("").length > 7 ?
+                        <span className="flex items-center">
+                        <span>
+                          {question.quizName.split("")[0]}
+                        </span> 
+                        <span>
+                          {question.quizName.split("")[1]}
+                       </span> 
+                        <span>
+                          {question.quizName.split("")[2]}
+                       </span> 
+                        <span>
+                          {question.quizName.split("")[3]}
+                       </span> 
+                        <span>
+                          {question.quizName.split("")[4]}
+                       </span> 
+                        <span>
+                          {question.quizName.split("")[5]}
+                       </span> 
+                        <span>
+                          {question.quizName.split("")[6]}
+                       </span> 
+                        <span>
+                          .
+                       </span> 
+                        <span>
+                          .
+                       </span> 
+                      </span>
+                        : question.quizName
+                      }
                     </p>
                     <button
                       onClick={() => removeQuestionAdded(id)}

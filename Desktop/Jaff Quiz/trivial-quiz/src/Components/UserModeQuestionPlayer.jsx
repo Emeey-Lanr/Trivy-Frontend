@@ -15,13 +15,12 @@ const UserModeQuestionPlayer = () => {
     selfPrevBtn,
     selfQuestionIndicatorBtn,
     selfPickAnswerBtn,
+     selfSubmitBtn
   } = useContext(gameContext);
-  // const [winner, setWinner] = useState([
-  //   1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30
-  // ])
+ 
   return (
     <div className="w-10p flex justify-center items-center">
-      <div className="w-8p mx-auto">
+      <div className="w-8p mx-auto userWidth:w-9p">
         <div className="flex justify-between">
           <div className="w-dw py-2 px-2">
             <div>
@@ -30,8 +29,8 @@ const UserModeQuestionPlayer = () => {
               </div>
             </div>
           </div>
-          <div className="w-dw h-dw bg-green-like-100 flex justify-center items-center">
-            <p className="font-bold text-4xl font-serif text-white">
+          <div style={{borderRadius:"50px"}} className="w-11 h-11 fixed top-2 right-5 bg-green-like-100 flex justify-center items-center">
+            <p className="font-bold  text-4xl font-serif text-white">
               {currentSecond}
             </p>
           </div>
@@ -45,7 +44,7 @@ const UserModeQuestionPlayer = () => {
               alt=""
             />
           </div>
-        )}
+         )} 
         <div className="w-10p pt-8 pb-2 border-b border-green-like-100 flex ">
           <div
             className="h-3 w-3 p-2 bg-dashback-200 flex justify-center items-center"
@@ -79,7 +78,10 @@ const UserModeQuestionPlayer = () => {
                 {content.option}
               </p>
             </div>
-          ))}
+           ))} 
+          <div className="w-10p  flex justify-end">
+            <button className="py-2 px-4 bg-green-like-100 text-white" onClick={selfSubmitBtn}>Submit</button>
+          </div>
 
           <div className="w-10p flex justify-between py-3">
             <button onClick={() => selfPrevBtn()}>

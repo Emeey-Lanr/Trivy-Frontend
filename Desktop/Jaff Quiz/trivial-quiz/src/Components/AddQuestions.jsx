@@ -2,26 +2,41 @@ import DashbarNav from "./DashbarNav";
 import Sidebar from "./Sidebar";
 import "../styles/addquestion.css";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { FaTimes, FaCheck, FaSlash } from "react-icons/fa";
+import { FaTimes, FaCheck, FaSlash, FaArrowLeft } from "react-icons/fa";
 import { AiOutlineLine } from "react-icons/ai";
 import { SlCloudUpload } from "react-icons/sl";
 import AlertModal from "./AlertModal";
 import { appContext } from "../App";
 import SaveQuestionModal from "./SaveQuestionModal";
 import axios from "axios";
+import SidBarBack from "./SideBarBack";
+import EditQuestion from "./EditQuestion";
+import { useNavigate } from "react-router-dom";
 export const addQuestionContext = createContext(null);
+
 
 const AddQuestions = () => {
   // app context
-  const { adminEndPoint, setAlertModalStatus, setAlertMessage } =
-    useContext(appContext);
+  const {
+    adminEndPoint,
+    dashboardFuction,
+    setAlertModalStatus,
+    setAlertMessage,
+    setSideBarBoxShadow,
+    setShowSidebar,
+    setQuestionIndex,
+    setQuestionText,
+    setEditQuestion,
+    setEditQuestionState,
+  } = useContext(appContext);
+  const navigate = useNavigate()
   // empty input
   const questionInput = useRef();
   const answer1Input = useRef();
   const answer2Input = useRef();
   const answer3Input = useRef();
   const answer4Input = useRef();
-
+const lastQuestionLocation = useRef()
   const [subjects, setSubjects] = useState([]);
   const [currentQuiz, setCurrentQuiz] = useState({
     quizSubject: [],
@@ -94,12 +109,11 @@ const AddQuestions = () => {
   const [option4Status, setOption4Status] = useState(false);
   const getSpecificQuizEndPoint = `${adminEndPoint}/getSpecificQuiz`;
 
-  // if (localStorage.questions) {
-  //   //  const ifSetQuestion = JSON.parse(localStorage.questions);
-  //   //  console.log(ifSetQuestion);
-  //   console.log(localStorage.questions);
-  // }
+ 
   useEffect(() => {
+    
+    setShowSidebar("hidden")
+    dashboardFuction()
     if (localStorage.questions) {
        const yes = JSON.parse(localStorage.questions);
    
@@ -114,7 +128,15 @@ const AddQuestions = () => {
       })
       .then((result) => {
         if (result.data.status) {
-          setCurrentQuiz(result.data.currentQuiz);
+    
+          if (result.data.currentQuiz.class === "Primary") {
+             setSideBarBoxShadow(2);
+          } else if (result.data.currentQuiz.class === "Junior") {
+            setSideBarBoxShadow(3)
+          } else if (result.data.currentQuiz.class === "Senior") {
+            setSideBarBoxShadow(4)
+          }
+            setCurrentQuiz(result.data.currentQuiz);
           setCurrentQuizId(result.data.currentQuiz._id);
           setSubjects(result.data.currentQuiz.quizSubject);
         }
@@ -191,11 +213,11 @@ const AddQuestions = () => {
   const [spin, setSpin] = useState("")
   const [imgUploadMessage, setimgUploadMessage] = useState("")
  const uploadImage = (e) => {
-   console.log(e);
+
    let reader = new FileReader();
    reader.readAsDataURL(e.target.files[0]);
    reader.onload = () => {
-     console.log(reader.result);
+    
      setSpin("spin")
      setimgUploadMessage("wait while img upload don't switch page")
      axios.post(uploadImageForQuizEndPoint, { imageUrl: reader.result }).then((result) => {
@@ -227,19 +249,82 @@ const AddQuestions = () => {
     } else if (checkNumber === 0) {
       alertFunction(true, "No answer picked", 1000);
     } else {
+        lastQuestionLocation.current.scrollIntoView();
       alertFunction(true, "added", 500);
+      setImageUrl("")
       setQuestionBank([...questionBank, questionToBeAdded]);
 
       emptyInputFuction("", 0);
+    
     }
 
-    console.log(questionToBeAdded);
+
   };
 
+  const [editQuestionIndex, setEditQuestionIndex] = useState(-1)
+  const[disableBtn, setDisableBtn] = useState(false);
+   const [editedQuestion, setEditedQuestion] = useState({});
+   const [editQuestionText, setEditedQuestionText] = useState("");
+  const [editAnswerOption1, setEditAnswerOption1] = useState("");
+  const [editAnswerOption2, setEditAnswerOption2] = useState("");
+  const [editAnswerOption3, setEditAnswerOption3] = useState("");
+  const [editAnswerOption4, setEditAnswerOption4] = useState("");
+
+  const [editAnswerStatus1, setEditAnswerStatus1] = useState(false);
+  const [editAnswerStatus2, setEditAnswerStatus2] = useState(false);
+  const [editAnswerStatus3, setEditAnswerStatus3] = useState(false);
+  const [editAnswerStatus4, setEditAnswerStatus4] = useState(false);
+
+  const showAnswers_Option = (questionId, frstIndex, sndId, thrdId, lstId) => {
+    setEditAnswerOption1(questionBank[questionId].answers[frstIndex].option);
+    setEditAnswerOption2(questionBank[questionId].answers[sndId].option);
+    setEditAnswerOption3(questionBank[questionId].answers[thrdId].option);
+    setEditAnswerOption4(questionBank[questionId].answers[lstId].option);
+
+    setEditAnswerStatus1(questionBank[questionId].answers[frstIndex].status);
+    setEditAnswerStatus2(questionBank[questionId].answers[sndId].status);
+    setEditAnswerStatus3(questionBank[questionId].answers[thrdId].status);
+    setEditAnswerStatus4(questionBank[questionId].answers[lstId].status);
+  };
   const editQuestion = (id) => {
-    questionInput.current.value = questionBank[id].question.text;
+    console.log(id, questionBank);
+    setEditQuestionIndex(id)
+     setQuestionIndex(id);
+     setEditedQuestionText(questionBank[id].question.text);
+     setEditedQuestion(questionBank[id]);
+     showAnswers_Option(id, 0, 1, 2, 3);
+    setEditQuestionState(true);
   };
 
+  const changeStatus = (id) => {
+    setEditAnswerStatus1(id === 1 ? true : false);
+    setEditAnswerStatus2(id === 2 ? true : false);
+    setEditAnswerStatus3(id === 3 ? true : false);
+    setEditAnswerStatus4(id === 4 ? true : false);
+  };
+ 
+
+ 
+  const editQuestionBtn = () => {
+     const answers = [
+       { option: editAnswerOption1, status: editAnswerStatus1 },
+       { option: editAnswerOption2, status: editAnswerStatus2 },
+       { option: editAnswerOption3, status: editAnswerStatus3 },
+       { option: editAnswerOption4, status: editAnswerStatus4 },
+    ];
+    let question = [...questionBank]
+  
+    let edit = { ...editedQuestion }
+    edit.question.text = editQuestionText
+    edit.answers = answers
+    question[editQuestionIndex] = edit;
+    setQuestionBank(question)
+    setEditQuestionState(false)
+    alertFunction(true, "Edited", 500);
+  
+   
+  
+}
   // save question
   const [openSaveQuestionModal, setOpenSaveQuestionModal] = useState(false);
   const removeAddedQuestion = (Qid) => {
@@ -254,34 +339,47 @@ const AddQuestions = () => {
         questionBank,
         openSaveQuestionModal,
         setOpenSaveQuestionModal,
+        editQuestionText,
+        setEditedQuestionText,
+        editAnswerOption1,
+        setEditAnswerOption1,
+        editAnswerOption2,
+        setEditAnswerOption2,
+        editAnswerOption3,
+        setEditAnswerOption3,
+        editAnswerOption4,
+        setEditAnswerOption4,
+        editAnswerStatus1,
+        editAnswerStatus2,
+        editAnswerStatus3,
+        editAnswerStatus4,
+        changeStatus,
+        editQuestionBtn,
+        disableBtn,
+    
       }}
     >
       <div>
-        <DashbarNav />
-        <Sidebar />
-
-        <div className="mt-11 w-8p ml-auto flex justify-center items-center sidebarNone:w-10p">
-          <div className="w-7p py-3 bg-dashback-200 sidebarNone:w-5p">
-            <button className="w-10p">Exist</button>
-          </div>
-          <div className="w-3p sidebarNone:w-5p">
+        <div className="mt-11 w-8p ml-auto flex justify-between  items-center  sticky  sidebarNone:w-10p">
+          <div className=" py-3  sidebarNone:w-5p h-7">
             <button
-              className="w-10p bg-green-like-100 py-3 text-white"
-              onClick={() => setOpenSaveQuestionModal(true)}
+              className="w-10p"
+              onClick={() => navigate("/quizcollections")}
             >
-              Save
+              <FaArrowLeft />
             </button>
           </div>
         </div>
         <div className="w-8p mt-6 ml-auto sidebarNone:w-10p">
           {imageswitch && (
             <div className="text w-8p mx-auto  sidebarNone:w-10p sidebarNone:flex sidebarNone:justify-center">
-              <textarea
+              
+               <textarea
                 ref={questionInput}
                 name=""
-                className="flex justify-center items-center sidebarNone:mb-3"
+                className="h-4 sidebarNone:mb-3"
                 onChange={(e) => setQuestion(e.target.value)}
-              ></textarea>
+              ></textarea> 
             </div>
           )}
           {!imageswitch && (
@@ -422,7 +520,7 @@ const AddQuestions = () => {
                 ref={answer4Input}
               />
             </div>
-            <div className="w-6p mx-auto flex justify-end sidebarNone:w-8p">
+            <div className="w-6p mx-auto flex justify-end sidebarNone:w-9p">
               <button
                 className="bg-green-like-100 py-2 px-4 text-white rounded-sideicon"
                 onClick={() => addQuestionToBank()}
@@ -432,15 +530,15 @@ const AddQuestions = () => {
             </div>
             {/* Question added */}
             <div className="w-9px mx-auto sidebarNone:w-10p">
-              <div className="w-8p mt-6 rounded-sideicon sidebarNone:10p sidebarNone:mx-auto">
+              <div className="w-8p mt-6 rounded-sideicon sidebarNone:10p sidebarNone:mx-auto sidebarNone:w-10p">
                 <h1 className="text-center text-xl text-white py-3">
                   Questions
                 </h1>
 
-                <div className="w-7p mx-auto">
+                <div className="w-7p mx-auto sidebarNone:w-10p">
                   {questionBank.length > 0 ? (
                     questionBank.map((content, id) => (
-                      <div>
+                      <div className="w-10p">
                         <div className="flex justify-between items-center py-2">
                           <p
                             className="h-4 w-4 border bg-green-like-100 text-white flex justify-center items-center"
@@ -450,7 +548,7 @@ const AddQuestions = () => {
                           </p>
                           <div className="flex">
                             <button
-                              className="bg-green-like-100 py-1 px-3"
+                              className="bg-green-like-100 py-1 px-3 text-white"
                               onClick={() => removeAddedQuestion(id)}
                             >
                               Remove
@@ -463,7 +561,7 @@ const AddQuestions = () => {
                             </button>
                           </div>
                         </div>
-                        <div>
+                        <div className="w-8p sidebarNone:w-10p">
                           {content.question.image !== "" && (
                             <div>
                               <img src={content.question.image} alt="" />
@@ -482,7 +580,7 @@ const AddQuestions = () => {
                                 ans.status
                                   ? "bg-green-like-100 text-white"
                                   : "bg-dashback-200"
-                              }  w-7p mx-auto my-1 flex justify-between py-3 items-center px-2`}
+                              }  w-7p mx-auto my-1 flex justify-between py-3 items-center px-2 sidebarNone:w-10p`}
                             >
                               <p>{ans.option}</p>
                               <div
@@ -507,10 +605,25 @@ const AddQuestions = () => {
                 </div>
               </div>
             </div>
+            {questionBank.length > 0 && (
+              <div className="w-3p ml-auto sidebarNone:w-9p">
+                <button
+                  className="bg-green-like-100 px-6 py-2 rounded-sideicon text-white"
+                  onClick={() => setOpenSaveQuestionModal(true)}
+                >
+                  Save
+                </button>
+              </div>
+            )}
+            <div ref={lastQuestionLocation} />
           </div>
         </div>
         <AlertModal />
+        <EditQuestion />
         <SaveQuestionModal />
+        <SidBarBack />
+        <DashbarNav />
+        <Sidebar />
       </div>
     </addQuestionContext.Provider>
   );

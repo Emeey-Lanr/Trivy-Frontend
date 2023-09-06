@@ -43,7 +43,9 @@ const AdminRegister = () => {
     adminUserName: adminUserName,
     adminPassword: adminpassword,
     adminImg: "",
-    adminEmailVerificationStatus:false
+    adminEmailVerificationStatus: false,
+    searchId:"mTQ",
+    locked:false,
   };
 
   const signUp = () => {
@@ -59,6 +61,7 @@ const AdminRegister = () => {
       setDisableBtn(true);
       setBtnDisableStyle("bg-green-like-200 text-green-like-100");
       axios.post(adminEndPointUrl, adminSchema).then((result) => {
+      
         if (result.data.status) {
           navigate("/emailverification");
         } else {
@@ -72,27 +75,21 @@ const AdminRegister = () => {
             setAlertModalStatus(false);
           }, 2000);
         }
-      });
+      }).catch((err)=>{
+      
+      })
     }
   };
   return (
     <div className="w-10p h-10p fixed top-0 flex justify-center items-center">
-      <div className="w-dimageSize">
+      <div className="w-dimageSize createmodalWidth:w-9p">
         <div className="w-10p flex justify-center py-2">
           <Logo />
         </div>
 
+       
         <div className="my-3">
-          <p>Email</p>
-          <input
-            type="text"
-            onChange={(e) => emailFunction(e)}
-            className="h-10 w-10p rounded-sideicon border border-inputLine focus:outline-green-like-100"
-          />
-          <p className="text-sm text-warning">{ifNotEmail}</p>
-        </div>
-        <div className="my-3">
-          <p>UserName</p>
+          <p>Admin Username</p>
           <input
             type="text"
             onChange={(e) => setAdminUserName(e.target.value)}

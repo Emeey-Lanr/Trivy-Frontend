@@ -13,7 +13,7 @@ const DeleteModal = () => {
   const [message, setMessage] = useState("");
   const deleteCollection = `${adminEndPoint}/deleteCollection`;
   const deleteBtn = () => {
-      console.log(quizIdentificationForDeleting);
+ 
       setDeleteSpinner(true)
     axios.post(deleteCollection, quizIdentificationForDeleting).then((result) => {
         if (result.data.status) {
@@ -51,23 +51,25 @@ const DeleteModal = () => {
               </div>
             )}
             <div>
-              <p className="text-center flex justify-center items-center font-mono py-3 text-green-like-100">
-                Are you sure you want to delete{" "}
+              <div className="w-5 h-5 rounded-sideedge border border-red-like-100 flex justify-center items-center mx-auto">
                 <span>
                   <FaTrash className="text-red-like-100" />
                 </span>
+              </div>
+              <p className="text-center text-sm flex justify-center items-center  py-3 text-inputLine">
+                Are you sure you want to delete
               </p>
             </div>
-            <div className="flex py-3 px-2">
-              <button
-                className="bg-dashback-200 py-2 px-3 rounded-sideicon"
+            <div className=" py-3 px-2">
+              {/* <button
+                className="bg-dashback-200 w-10p mb-3 py-2 px-3 rounded-sideicon"
                 onClick={() => setDeleteModalState(false)}
               >
                 Cancel
-              </button>{" "}
+              </button>{" "} */}
               <button
                 disabled={deleteSpinner}
-                className="bg-green-like-100 py-2 px-3 rounded-sideicon text-white flex items-center"
+                className="bg-green-like-100 text-center w-10p py-2 px-3 rounded-sideicon text-white flex justify-center items-center"
                 onClick={() => deleteBtn()}
               >
                 Delete{" "}

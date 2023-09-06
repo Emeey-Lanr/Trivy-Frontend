@@ -4,6 +4,7 @@ import bestStudent from "../Images/bestStudent.jpg";
 import "../styles/navbar.css";
 import { appContext } from "../App";
 import { useContext } from "react";
+import noimg from "../Images/noImage.png";
 const DashbarNav = () => {
   const { adminOrganizationUserName, adminImage, showSideBar, setShowSidebar } =
     useContext(appContext);
@@ -32,7 +33,7 @@ const DashbarNav = () => {
           <div className="flex justify-between h-8 items-center">
             <div className="w-5 h-5 mr-4 border-2 border-green-like-100 flex justify-center items-center">
               <img
-                src={adminImage === "" ? bestStudent :  adminImage}
+                src={adminImage === "" ? noimg : adminImage}
                 alt=""
                 className="w-4 h-4 rounded-5 object-cover"
               />

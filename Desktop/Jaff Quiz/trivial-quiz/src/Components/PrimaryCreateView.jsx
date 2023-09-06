@@ -6,12 +6,13 @@ import { useContext, useEffect, useState } from "react";
 import { appContext } from "../App";
 import SideBarBack from "./SideBarBack";
 const PrimaryCreateView = () => {
-  const { dashboardFuction, setSideBarBoxShadow, setShowCreateModal, setCurrentSet } = useContext(appContext);
+  const { dashboardFuction, setSideBarBoxShadow, setShowSidebar, setShowCreateModal, setCurrentSet } = useContext(appContext);
   useEffect(() => {
     setSideBarBoxShadow(2);
     setCurrentSet("Primary");
     setShowCreateModal(false)
     dashboardFuction()
+     setShowSidebar("hidden")
   }, []);
   return (
     <>

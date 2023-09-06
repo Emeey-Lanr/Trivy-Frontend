@@ -97,26 +97,42 @@ top: -20px;
     width: 80%;
     /* padding: 20px 0; */
     transform: skewX(45deg);
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 
 }
-.nameBox div{
-    transform: none;
+.nameBox .nameNumb{
+    transform: rotate(0deg);
      font-family: monospace;
   color: white;
+  background-color: #03a26c;
+  width: 70%;
+  display: flex;
+  justify-content: center;
 }
-.nameBox .index p{
-  transform: rotate(40deg);
-  color: white;
-  font-size: 2rem;
- 
-}
-.nameBox .name p{
-    transform: skewX(-40deg);
+.nameBox .nameNumb p{
+    transform: rotate(10deg);
+    color: white;
     font-size: 1.2rem;
- 
 }
+.nameBox .cardinalRanking{
+    transform: rotate(0deg);
+    background-color: white;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    border: 2px solid #03a26c;
+}
+.nameBox .cardinalRanking p{
+    font-size: 2rem;
+    transform: rotate(30deg);
+    text-decoration:2px  underline #03a26c;
+}
+/* .nameBox .cardinalRankin{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
 
 .overallTopOveflow{
     width: 100%;
@@ -140,6 +156,7 @@ top: -20px;
     display: grid;
     grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% ;
     justify-content: space-between;
+    margin-bottom: 30px;
 
 }
 .mode1AdminDiv{
@@ -312,7 +329,9 @@ top: -20px;
     .topacts{
         grid-template-columns: 70%;
     }
-    
+    .selfQuizId{
+        grid-template-columns:20%  20%  20% 20% 20%;
+    }
 }
 
 @media (max-width:400px){

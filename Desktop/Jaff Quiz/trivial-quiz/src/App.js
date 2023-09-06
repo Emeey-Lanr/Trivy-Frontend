@@ -23,6 +23,9 @@ import Trail from "./Components/Trail";
 import Setting from "./Components/Setting";
 import Search from "./Components/Search";
 import Result from "./Components/Result.jsx";
+import Index from "./Components/Index";
+import ResetPassword from "./Components/ResetPassword";
+import EmailForgotPassRestLink from "./Components/EmailForgotPassRestLink";
 export const appContext = createContext(null);
 function App() {
   let navigate = useNavigate();
@@ -35,12 +38,16 @@ function App() {
   const [adminDetails, setAdminDetails] = useState({});
   const [adminId, setAdminId] = useState("");
   const [adminOrganizationUserName, setAdminOrganizationUserName] = useState("")
+  const [adminEmail, setAdminEmail] = useState("")
   const [adminImage, setAdminImage] = useState("")
   const [adminEndPoint, setAdminEndPoint] = useState(
     "http://localhost:2340/admin"
   );
   const [gameEndPoint, setGameEndPoint] = useState(
     "http://localhost:2340/game"
+  );
+  const [searchEndPoint, setSearchEndPoint] = useState(
+    "http://localhost:2340/search"
   );
   // created for the alert modal, so that it can be used by any component when needed
   const [alertModalStatus, setAlertModalStatus] = useState(false);
@@ -60,6 +67,24 @@ function App() {
   const adminEndpointt = `${adminEndPoint}/admindashboard`;
 // deletemodal boolean
   const [deleteModalState, setDeleteModalState] =useState(false)
+
+  // lastQuizHeld
+  const [lastPlayed, setLastPlayed] = useState([])
+  const [lastPlayedDetails, setLastPlayedDetails] = useState({})
+  const [ranking, setRanking] =useState([])
+
+  // Edit question state and modal
+  const [questionIndex, setQuestionIndex] = useState(0)
+  const [questionText, setQuestionText] = useState("")
+  const [options,setOptions] = useState([])
+  const [editQuestion, setEditQuestion] = useState({
+    question: { text: "", image: "" },
+    answers: [
+      { option: "", status: false },
+    ],
+    score: 0
+  })
+  const [editQuestionState, setEditQuestionState] = useState(false)
   const dashboardFuction = () => {
     axios
       .get(adminEndpointt, {
@@ -69,16 +94,21 @@ function App() {
         },
       })
       .then((result) => {
+      
         if (result.data.status) {
           setAdminDetails(result.data.adminDetails);
           console.log(result.data.adminDetails, result.data);
           setAdminId(result.data.adminDetails._id);
+          setRanking(result.data.ranking)
           setAdminOrganizationUserName(result.data.adminDetails.adminUserName);
+          setAdminEmail(result.data.adminDetails.adminEmail)
           setAdminImage(result.data.adminDetails.adminImg)
-        } else {
-          navigate("/admin/login");
-        }
-      });
+          setLastPlayed(result.data.lastQuizheld)
+          setLastPlayedDetails(result.data.quizDetails);
+        } 
+      }).catch((error) => {
+        console.log(error)
+      })
   };
   return (
     <appContext.Provider
@@ -90,10 +120,16 @@ function App() {
         adminId,
         adminOrganizationUserName,
         adminImage,
+        adminEmail,
         adminEndPoint,
         gameEndPoint,
+        searchEndPoint,
         dashboardFuction,
-        // boolean state for the alert modal
+// last played
+        lastPlayed,
+        lastPlayedDetails,
+        ranking, 
+            // boolean state for the alert modal
         alertModalStatus,
         setAlertModalStatus,
         alertMessage,
@@ -114,11 +150,28 @@ function App() {
         setCurrentSet,
         userName,
         setUsername,
+
+
+        // Edit Question
+        questionIndex,
+        setQuestionIndex,
+        questionText,
+        setQuestionText,
+        options,
+        setOptions,
+        editQuestion,
+        setEditQuestion,
+        editQuestionState,
+        setEditQuestionState
+      
       }}
     >
       <Routes>
+        <Route path="/" element={<Index/>}/>
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/register" element={<AdminRegister />} />
+        <Route path="/forgot/password" element={<EmailForgotPassRestLink/>}/>
+        <Route path="/reset/password/:id" element={<ResetPassword/>}/>
         <Route path="/admindashboard" element={<AdminDashboard />} />
         <Route path="/junior/create" element={<JuniorCreateView />} />
         <Route path="/senior/create" element={<SeniorCreateView />} />
@@ -128,7 +181,7 @@ function App() {
         <Route path="/admin/result" element={<Participants />} />
         <Route path="/questionbank" element={<Questionbank />} />
         <Route path="/emailverification" element={<VerifyMessage />} />
-        <Route path="/:id" element={<VerifyEmail />} />
+        <Route path="/verify/:id" element={<VerifyEmail />} />
         <Route path="/play/userlogin" element={<IndividualGameLogin />} />
         <Route path="/play/adminlogin" element={<AdminGameLogin />} />
         <Route path="/play/username" element={<NameJoin />} />

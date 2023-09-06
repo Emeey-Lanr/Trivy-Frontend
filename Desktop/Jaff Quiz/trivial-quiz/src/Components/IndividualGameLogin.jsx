@@ -16,8 +16,7 @@ const IndividualGameLogin = () => {
   const getIdFunction = () => {
     if (socket.currrent) {
       socket.currrent.on("userId", (unique) => {
-        // setUserSocketId(socketId.id);
-        console.log(unique);
+      
       });
     }
   }
@@ -25,7 +24,7 @@ const IndividualGameLogin = () => {
     getIdFunction()
   },[])
   const checkForGame = () => {
-    console.log(userSocketId)
+
     
     if (userGamePassword === "") {
       setMessage("Fill in input")
@@ -33,8 +32,7 @@ const IndividualGameLogin = () => {
       setSpin("spin");
       axios.post(userLoginEndPoint, { password: userGamePassword }).then((result) => {
         if (result.data.status) {
-          // socket.currrent.emit("checkIfAdminIsLoggedIn", { ifLoggedInPin: result.data.lastGameUniqueId })
-          
+      
          localStorage.pass = result.data.passId
          navigate("/play/username");
         } else {

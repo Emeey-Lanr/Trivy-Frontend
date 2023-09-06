@@ -3,7 +3,7 @@ import axios from "axios";
 import { appContext } from "../App";
 import { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-const {geolocation} =navigator
+
 const AdminGameLogin = () => {
   let navigate = useNavigate();
   const {socket, gameEndPoint } = useContext(appContext);
@@ -13,17 +13,7 @@ const AdminGameLogin = () => {
   const [btnStyle, setBtnStyle] = useState("bg-green-like-100 text-white");
   const [loginStyle, setLoginStyle] = useState("Login");
   const [disableBtn, setDisableBtn] = useState(false)
-useEffect(()=>{
-if(!geolocation){
-console.log("geolation not supported")
-} else {
-  console.log("geolocation is supported")
- 
-  geolocation.getCurrentPosition((position) => {
-  console.log(position.coords)
-})
-}
-},[])
+
   // picking the type you want
   const [modeBtn, setModeBtn] = useState(0)
 let ref  = useRef()
@@ -89,7 +79,7 @@ const [pickedState, setPickedState] = useState("")
   }
  
   const login = () => {
-    console.log(adminLoginSchema)
+
 
       if (adminUserName === "" || gameId === "" ) {
         setMessage("Fill in input");
@@ -104,6 +94,8 @@ const [pickedState, setPickedState] = useState("")
            axios
              .post(adimGameLoginEndPoint, adminLoginSchema)
              .then((result) => {
+
+              
                if (result.data.status) {
                  socket.current.emit(
                    "ifAdminIsLoggedIn",
@@ -112,10 +104,15 @@ const [pickedState, setPickedState] = useState("")
                  localStorage.adminIdentification = result.data.adminStatusId;
                  navigate("/play");
                } else {
-                 setDisableBtn(false);
-                 setMessage(result.data.message);
-                 setBtnStyle("bg-green-like-100 text-white");
+                //  setDisableBtn(false);
+                //  setMessage(result.data.message);
+                //  setBtnStyle("bg-green-like-100 text-white");
                }
+             }).catch((err) => {
+                  setDisableBtn(false);
+                 setMessage(err.response.data.message);
+                 setBtnStyle("bg-green-like-100 text-white");
+           
              });
         } else {
           setMessage("pick a method")

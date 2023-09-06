@@ -2,7 +2,7 @@
   resize: none;
   width: 80%;
   border: 1px solid #b6b6b6;
-  height: 300px;
+  height: 100px;
 }
 .text textarea:focus {
   outline: 3px solid #03a26d72;
@@ -93,6 +93,6 @@
 
 @media (max-width:400px){
   .text textarea{
-    height: 200px;
+    height: 100px;
   }
 }

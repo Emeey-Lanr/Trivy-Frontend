@@ -1,8 +1,9 @@
 import Chart from "react-apexcharts";
 import { useContext, useEffect, useState } from "react";
 import { dashboardContext } from "./AdminDashboard";
+import { appContext } from "../App";
 const DashBoardChart = () => {
-  const { userRecords } = useContext(dashboardContext);
+  const { lastPlayed } = useContext(appContext);
   const [topThree, setTopThree] = useState([])
 
   const [charDetails, setChartDetails] = useState({
@@ -12,7 +13,7 @@ const DashBoardChart = () => {
         foreColor: "",
       },
       xaxis: {
-        categories: topThree.map((content) => content.playerName),
+        categories: ["a,","b","C"],
       },
       plotOptions: {
         bar: {
@@ -38,43 +39,43 @@ const DashBoardChart = () => {
       },
     ],
   });
+  const [playerName, setPlayerName] = useState([])
   useEffect(() => {
-    setTopThree(
-    userRecords.filter((_, id)=> id < 3)
-    )
+    setTopThree(lastPlayed.filter((_, id) => id < 3));
+    
     setChartDetails({
-    option: {
-      chart: {
-        background: "#fafafa",
-        foreColor: "",
-      },
-      xaxis: {
-        categories: topThree.map((content) => content.playerName),
-      },
-      plotOptions: {
-        bar: {
-          horizonatal: true,
+      option: {
+        chart: {
+          background: "#fafafa",
+          foreColor: "",
+        },
+        xaxis: {
+          categories:topThree.length >  0? [topThree[0].playerName, topThree[1].playerName] : [],
+        },
+        plotOptions: {
+          bar: {
+            horizonatal: true,
+          },
+        },
+        fill: {
+          colors: ["#03a26c"],
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        title: {
+          text: "Records",
+          align: "center",
+          margin: 20,
         },
       },
-      fill: {
-        colors: ["#03a26c"],
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      title: {
-        text: "Records",
-        align: "center",
-        margin: 20,
-      },
-    },
-    series: [
-      {
-        name: "population",
-        data: topThree.map((players) => players.totalScore),
-      },
-    ],
-  })
+      series: [
+        {
+          name: "population",
+          data: topThree.map((players) => players.totalScore),
+        },
+      ],
+    });
 
   },[])
 

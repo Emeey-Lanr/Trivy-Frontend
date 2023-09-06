@@ -35,7 +35,6 @@ const NameJoin = () => {
       })
       .then((result) => {
         if (result.data.status) {
-          console.log(result.data);
           setQuizId(result.data.userDetail.quizID);
           setAdminId(result.data.userDetail.adminId);
           setAdminStatus(false);
@@ -48,7 +47,6 @@ const NameJoin = () => {
 
   const uploadImgEndPoint = `${gameEndPoint}/uploadPlayerImg`;
   const uploadImg = (e) => {
-    console.log(e.target.files[0]);
     let reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
 
@@ -81,7 +79,7 @@ const NameJoin = () => {
     playerImage: imgUrl,
     subjectToBeDone: subjectToBeDone,
     totalScore: 0,
-    schoolName:schoolName
+    schoolName: schoolName
   };
   const ifErrorFunction = (a, b, c, d) => {
      setAlertModalStatus(a);

@@ -5,8 +5,9 @@ import "../styles/game.css";
 import best from "../Images/bestStudent.jpg"
 import { FaArrowRight } from "react-icons/fa";
 import { gameContext } from "./Game";
+import ordinal from "ordinal"
 const OverallResult = () => {
-  const { admin, playerScore, quizCompleted } = useContext(gameContext);
+  const { admin, playerScore,userPosition, quizCompleted } = useContext(gameContext);
   return (
     <div className="w-10p">
       <div className="py-2 px-2">
@@ -28,11 +29,14 @@ const OverallResult = () => {
               <img src={players.playerImage} alt="" />
             </div>
             <div className="nameBox">
-              <div className="index">
-                <p>{id + 1}</p>
+              
+              <div className="cardinalRanking">
+                <div>
+                  <p>{ordinal(userPosition[id].rank)} </p>
+                </div>
               </div>
-              <div className="name ">
-                <p>.{players.playerName}</p>
+              <div className="nameNumb">
+                  <p>{players.playerName}</p>
               </div>
             </div>
           </div>
@@ -40,10 +44,7 @@ const OverallResult = () => {
       </div>
       {admin && (
         <div className="w-dw h-7 flex justify-center items-center bg-green-like-100 fixed bottom-0 right-4">
-          <button
-            className="w-10 h-7"
-            onClick={() =>quizCompleted ()}
-          >
+          <button className="w-10 h-7" onClick={() => quizCompleted()}>
             <FaArrowRight className="text-white" />
           </button>
         </div>

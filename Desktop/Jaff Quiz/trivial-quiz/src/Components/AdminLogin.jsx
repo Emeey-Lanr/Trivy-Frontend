@@ -32,7 +32,7 @@ const AdminLogin = () => {
       axios
         .post(loginEndPoint, { userName: adminUserName, password: password })
         .then((result) => {
-          console.log(result.data);
+        
           if (result.data.status) {
             localStorage.adminId = result.data.adminId;
             navigate("/admindashboard");
@@ -59,13 +59,13 @@ const AdminLogin = () => {
   };
   return (
     <div className="w-10p h-10p fixed top-0 flex justify-center items-center">
-      <div className="w-dimageSize">
+      <div className="w-dimageSize createmodalWidth:w-9p">
         <div className="w-10p flex justify-center py-2">
           <Logo />
         </div>
 
         <div className="my-3">
-          <p>UserName</p>
+          <p>Admin Username</p>
           <input
             type="text"
             onChange={(e) => setAdminUserName(e.target.value)}
@@ -90,6 +90,10 @@ const AdminLogin = () => {
           <Link to="/admin/register" className="text-green-like-100">
             Signup
           </Link>
+        </div>
+        <div className="w-10p h-5 rounded-sideicon border border-inputLine flex justify-center items-center">
+          <Link to="/forgot/password" className="text-green-like-100 font-bold">Forgot Password ?</Link>
+
         </div>
       </div>
       <AlertModal />

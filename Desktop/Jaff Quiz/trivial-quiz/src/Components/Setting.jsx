@@ -8,21 +8,27 @@ import { SlCamera } from 'react-icons/sl';
 import bese from "../Images/bestStudent.jpg"
 import axios from 'axios';
 import AlertModal from './AlertModal';
+import noimg from "../Images/noImage.png"
 const Setting = () => {
     const {
       adminId,
+       adminOrganizationUserName,
+        adminImage,
+        adminEmail,
       adminEndPoint,
       dashboardFuction,
       setAlertModalStatus,
       setAlertMessage,
       setSideBarBoxShadow,
       setShowCreateModal,
+       setShowSidebar,
       setCurrentSet,
     } = useContext(appContext);
     const [spin, setSpin] = useState("")
     useEffect(() => {
         setSideBarBoxShadow(5);
-        setShowCreateModal(false);
+      setShowCreateModal(false);
+       setShowSidebar("hidden")
     }, []);
     const alertModalMessage = (a, b, c, d) => {
          setAlertModalStatus(a);
@@ -34,7 +40,7 @@ const Setting = () => {
     }
 const uploadImageEndPoint = `${adminEndPoint}/settingImage`;
     const uploadImage = (e) => {
-        console.log(e.target.files[0])
+     
         let imageUpload = new FileReader()
         imageUpload.readAsDataURL(e.target.files[0]);
         imageUpload.onload = () => {
@@ -77,7 +83,7 @@ const uploadImageEndPoint = `${adminEndPoint}/settingImage`;
             >
               <div className="w-13 h-13 flex justify-center items-center">
                 <img
-                  src={bese}
+                  src={adminImage === "" ? noimg : adminImage}
                   className="h-12"
                   alt=""
                   style={{ borderRadius: "100px", width: "90px" }}
@@ -87,10 +93,15 @@ const uploadImageEndPoint = `${adminEndPoint}/settingImage`;
               <div className="w-10p flex justify-end">
                 <label id="htm">
                   <SlCamera
-                                      className={`text-green-like-100 text-3xl shadow-lg ${spin}`}
+                    className={`text-green-like-100 text-3xl shadow-lg ${spin}`}
                     style={{ marginTop: "-20px", marginRight: "19px" }}
                   />
-                  <input type="file" id="htm" onChange={(e)=>uploadImage(e)} hidden />
+                  <input
+                    type="file"
+                    id="htm"
+                    onChange={(e) => uploadImage(e)}
+                    hidden
+                  />
                 </label>
               </div>
             </div>
@@ -103,7 +114,8 @@ const uploadImageEndPoint = `${adminEndPoint}/settingImage`;
                 <input
                   type="text"
                   disabled={true}
-                  className="w-10p h-6 border border-inputLine rounded-sideicon"
+                 
+                  className="w-10p h-6 border border-inputLine rounded-sideicon" value={`${adminEmail}`}
                 />
               </div>
               <div className="w-8p mx-auto py-4">
@@ -111,7 +123,7 @@ const uploadImageEndPoint = `${adminEndPoint}/settingImage`;
                 <input
                   type="text"
                   disabled={true}
-                  className="w-10p h-6 border border-inputLine rounded-sideicon"
+                  className="w-10p h-6 border border-inputLine rounded-sideicon" value={adminOrganizationUserName}
                 />
               </div>
             </div>
@@ -120,8 +132,8 @@ const uploadImageEndPoint = `${adminEndPoint}/settingImage`;
         <CreateModal />
         <SideBarBack />
         <DashbarNav />
-         <Sidebar />
-       <AlertModal/>
+        <Sidebar />
+        <AlertModal />
       </div>
     </>
   );

@@ -11,7 +11,6 @@ const Trail = () => {
   const collectId = () => {
     if (socket.current) {
       socket.current.on("clientId", (data) => {
-        console.log(data);
         setUserId(data.clientId);
       });
     }
@@ -21,7 +20,6 @@ const Trail = () => {
   const checkIfExistFunction = () => {
     if (socket.current) {
       socket.current.on("ifExist", (message) => {
-        console.log(message);
         if (message.status) {
           setIfExist(message.message);
         } else {
