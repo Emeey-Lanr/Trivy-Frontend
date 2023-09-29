@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import Logo from "./Logo";
+import "../styles/login.css"
+import logo from "../Images/Logo.png";
 import { appContext } from "../App";
 import AlertModal from "./AlertModal";
 import axios from "axios";
@@ -59,43 +60,64 @@ const AdminLogin = () => {
   };
   return (
     <div className="w-10p h-10p fixed top-0 flex justify-center items-center">
-      <div className="w-dimageSize createmodalWidth:w-9p">
-        <div className="w-10p flex justify-center py-2">
-          <Logo />
+      <div className="sign_Up">
+        <div className="logo_name">
+          <h2 className="text-l_bold">
+            <span>T</span> <br />
+            <span>R</span> <br />
+            <span>I</span> <br />
+            <span>V</span> <br />
+            <span>Y</span> <br />
+          </h2>
         </div>
-
-        <div className="my-3">
-          <p>Admin Username</p>
-          <input
-            type="text"
-            onChange={(e) => setAdminUserName(e.target.value)}
-            className="h-10 w-10p rounded-sideicon border border-inputLine focus:outline-green-like-100"
-          />
-        </div>
-        <div className="my-3">
-          <p>Password</p>
-          <input
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-            className="h-10 w-10p rounded-sideicon border border-inputLine focus:outline-green-like-100"
-          />
-        </div>
-        <div className="w-10p">
-          <button className={btnVerifyStyle} onClick={() => verify()}>
-            {btnClicked}
-          </button>
-        </div>
-        <div className="w-10p flex justify-between py-2 items-center">
-          <p>Don't have an account?</p>
-          <Link to="/admin/register" className="text-green-like-100">
-            Signup
-          </Link>
-        </div>
-        <div className="w-10p h-5 rounded-sideicon border border-inputLine flex justify-center items-center">
-          <Link to="/forgot/password" className="text-green-like-100 font-bold">Forgot Password ?</Link>
-
+        <div className="bg-l_bold sign_up_div">
+          <div className="w-dimageSize createmodalWidth:w-9p">
+            <div className="w-10p flex justify-center py-2">
+              <img src={logo} className="h-5 w-5" alt="" />
+            </div>
+            <div>
+              <p className="uppercase text-white text-xl text-center">Login</p>
+            
+             </div>
+            <div className="my-3">
+              <p className="text-white text-sm">Admin Username</p>
+              <input
+                type="text"
+                onChange={(e) => setAdminUserName(e.target.value)}
+                className="h-10 w-10p rounded-sideicon border border-inputLine focus:outline-green-like-100"
+              />
+            </div>
+            <div className="my-3">
+              <p className="text-white text-sm">Password</p>
+              <input
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+                className="h-10 w-10p rounded-sideicon border border-inputLine focus:outline-green-like-100"
+              />
+            </div>
+            <div className="w-10p">
+              <button className={btnVerifyStyle} onClick={() => verify()}>
+                {btnClicked}
+              </button>
+            </div>
+            <div className="w-10p flex justify-between py-2 items-center">
+              <p className="text-white text-sm">Don't have an account?</p>
+              <Link to="/admin/register" className="text-green-like-100">
+                Signup
+              </Link>
+            </div>
+            <div className="w-10p h-5 rounded-sideicon border border-white flex justify-center items-center">
+              <Link
+                to="/forgot/password"
+                className="text-green-like-100 font-medium text-sm"
+              >
+                Forgot Password ?
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
+
       <AlertModal />
     </div>
   );

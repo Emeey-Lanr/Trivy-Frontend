@@ -87,6 +87,8 @@ function App() {
   const [editQuestionState, setEditQuestionState] = useState(false)
   // Mobile Navigation
   const [mobileNav, setMobileNav] = useState(false)
+  const [topThree, SetTopThree] = useState([])
+  const [topThreeName, setTopThreeName] = useState([])
   const dashboardFuction = () => {
     axios
       .get(adminEndpointt, {
@@ -99,13 +101,14 @@ function App() {
       
         if (result.data.status) {
           setAdminDetails(result.data.adminDetails);
-     
           setAdminId(result.data.adminDetails._id);
           setRanking(result.data.ranking)
           setAdminOrganizationUserName(result.data.adminDetails.adminUserName);
           setAdminEmail(result.data.adminDetails.adminEmail)
           setAdminImage(result.data.adminDetails.adminImg)
           setLastPlayed(result.data.lastQuizheld)
+          SetTopThree(result.data.topThree)
+          setTopThreeName(result.data.topThreeName);
           setLastPlayedDetails(result.data.quizDetails);
         } 
       }).catch((error) => {
@@ -128,6 +131,8 @@ function App() {
         searchEndPoint,
         dashboardFuction,
 // last played
+        topThree,
+       topThreeName,
         lastPlayed,
         lastPlayedDetails,
         ranking, 

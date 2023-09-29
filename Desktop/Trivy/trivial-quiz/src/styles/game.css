@@ -84,8 +84,10 @@ top: -20px;
 .imgdiv{
     width: 80%;
     margin: 0 auto;
+
     border-right: 6px solid #03a26c;
-    border-bottom: 6px solid #03a26c;
+    border-radius: 0 120px 120px 0;
+    /* border-bottom: 6px solid #03a26c; */
 }
 .imgdiv img{
     width: 100%;
@@ -96,11 +98,26 @@ top: -20px;
     background: #03a26c;
     width: 80%;
     /* padding: 20px 0; */
-    transform: skewX(45deg);
+    transform: skewX(5deg);
     justify-content: space-between;
     align-items: center;
+    /* border-radius: 5px ; */
 
 }
+/* .nameBox .name{
+
+
+} */
+.nameBox .name p{
+   color: #ffffff;
+    transform: rotate(40deg);
+    transform: skewX(0deg);
+    font-size: 1rem;
+    font-weight:medium;
+    
+
+}
+
 .nameBox .nameNumb{
     transform: rotate(0deg);
      font-family: monospace;

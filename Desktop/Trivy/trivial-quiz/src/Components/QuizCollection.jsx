@@ -29,6 +29,7 @@ const QuizCollection = () => {
   const [collections, setCollections] = useState([]);
     const [btnRollStyle, setBtnRollStyle] = useState(-1);
   const [collectedPass, setCollectedPass] = useState("");
+  const [loadingResult, setLoadingResult] = useState(`Getting Collection......`)
   
   // Acess modal
   const [accesModalStatus, setAcessModalStatus] = useState(false)
@@ -47,6 +48,9 @@ const QuizCollection = () => {
          
           if (result.data.status) {
             setCollections(result.data.collections);
+            if(result.data.collections.length < 1){
+              setLoadingResult("Your quiz collection is empty")
+            }
             setCurrentSet(result.data.class);
             if (result.data.class === "Primary") {
               setSideBarBoxShadow(2);
@@ -58,7 +62,7 @@ const QuizCollection = () => {
           }
         }).catch((error) => {
           
-        });
+        })
   }
 
   useEffect(() => {
@@ -195,10 +199,11 @@ const QuizCollection = () => {
             <p  className="text-xl text-green-like-100 text-center uppercase">{currentSet}</p>
           </div>
         </div>
+
         {collections.length > 0 ? (
           <div className="collections">
             {collections.map((Content, id) => (
-              <div className="w-10p bg-dashback-100 mb-3">
+              <div key={id} className="w-10p bg-dashback-100 mb-3">
                 <div className="flex justify-between items-center my-2 w-9p mx-auto">
                   <div>
                     <FaLock className="text-green-like-100" />
@@ -319,7 +324,7 @@ const QuizCollection = () => {
         ) : (
           <div className="text-center flex justify-center mt-12">
             <p className="text-4xl uppercase text-inputLine">
-              Your quiz collection is empty
+                {loadingResult}
             </p>
           </div>
         )}
