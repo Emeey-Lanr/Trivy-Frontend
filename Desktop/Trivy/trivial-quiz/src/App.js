@@ -29,7 +29,7 @@ import EmailForgotPassRestLink from "./Components/EmailForgotPassRestLink";
 export const appContext = createContext(null);
 function App() {
   let navigate = useNavigate();
-  let backendEndPoint = "http://localhost:2340";
+  let backendEndPoint = "https://trivy.onrender.com";
   let socket = useRef();
   useEffect(() => {
     socket.current = Socket(backendEndPoint);
@@ -41,13 +41,13 @@ function App() {
   const [adminEmail, setAdminEmail] = useState("")
   const [adminImage, setAdminImage] = useState("")
   const [adminEndPoint, setAdminEndPoint] = useState(
-    "http://localhost:2340/admin"
+    "https://trivy.onrender.com/admin"
   );
   const [gameEndPoint, setGameEndPoint] = useState(
-    "http://localhost:2340/game"
+    "https://trivy.onrender.com/game"
   );
   const [searchEndPoint, setSearchEndPoint] = useState(
-    "http://localhost:2340/search"
+    "https://trivy.onrender.com/search"
   );
   // created for the alert modal, so that it can be used by any component when needed
   const [alertModalStatus, setAlertModalStatus] = useState(false);
@@ -112,7 +112,7 @@ function App() {
           setLastPlayedDetails(result.data.quizDetails);
         } 
       }).catch((error) => {
-        console.log(error)
+         navigate("/admin/login");
       })
   };
   return (

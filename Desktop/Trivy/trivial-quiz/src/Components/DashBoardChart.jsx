@@ -28,14 +28,14 @@ const DashBoardChart = () => {
           enabled: false,
         },
         title: {
-          text: "Records",
+          text: "Top Three",
           align: "center",
           margin: 20,
         },
       }}
       series={[
         {
-          name: "population",
+          name: "Top Three",
           data: topThree.filter((_,id)=>id < 3),
         }
       ]}

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { FaRing, FaSpinner, FaTimes } from "react-icons/fa";
+import { FaSpinner, FaTimes } from "react-icons/fa";
 import { addQuestionContext } from "./AddQuestions";
 import { appContext } from "../App";
 import "../styles/modal.css";
@@ -145,7 +145,7 @@ const SaveQuestionModal = () => {
                 className="w-10p py-2 bg-green-like-100 rounded-sideicon text-white flex justify-center items-center"
                 onClick={() => saveQuestionBtn()}
               >
-                Save {spinState && <FaRing className="spin" style={{ margin: "0 2px" }} />}
+                Save {spinState && <FaSpinner className="spin" style={{ margin: "0 2px" }} />}
               </button>
             </div>
           </div>

@@ -2,7 +2,7 @@ import DashbarNav from "./DashbarNav";
 import Sidebar from "./Sidebar";
 import "../styles/addquestion.css";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { FaTimes, FaCheck, FaSlash, FaArrowLeft } from "react-icons/fa";
+import { FaTimes, FaCheck, FaSlash, FaArrowLeft, FaArrowUp } from "react-icons/fa";
 import { AiOutlineLine } from "react-icons/ai";
 import { SlCloudUpload } from "react-icons/sl";
 import AlertModal from "./AlertModal";
@@ -37,6 +37,7 @@ const AddQuestions = () => {
   const answer3Input = useRef();
   const answer4Input = useRef();
 const lastQuestionLocation = useRef()
+const moveUp  = useRef()
   const [subjects, setSubjects] = useState([]);
   const [currentQuiz, setCurrentQuiz] = useState({
     quizSubject: [],
@@ -249,17 +250,19 @@ const lastQuestionLocation = useRef()
     } else if (checkNumber === 0) {
       alertFunction(true, "No answer picked", 1000);
     } else {
-        lastQuestionLocation.current.scrollIntoView();
       alertFunction(true, "added", 500);
-      setImageUrl("")
+      setImageUrl("");
       setQuestionBank([...questionBank, questionToBeAdded]);
 
       emptyInputFuction("", 0);
-    
     }
 
-
+     lastQuestionLocation.current.scrollIntoView();
   };
+
+  const scrollUpBtn = () => {
+    moveUp.current.scrollIntoView();
+  }
 
   const [editQuestionIndex, setEditQuestionIndex] = useState(-1)
   const[disableBtn, setDisableBtn] = useState(false);
@@ -356,7 +359,6 @@ const lastQuestionLocation = useRef()
         changeStatus,
         editQuestionBtn,
         disableBtn,
-    
       }}
     >
       <div>
@@ -370,16 +372,16 @@ const lastQuestionLocation = useRef()
             </button>
           </div>
         </div>
+        <div ref={moveUp} className="w-7p mx-auto"></div>
         <div className="w-8p mt-6 ml-auto sidebarNone:w-10p">
           {imageswitch && (
             <div className="text w-8p mx-auto  sidebarNone:w-10p sidebarNone:flex sidebarNone:justify-center">
-              
-               <textarea
+              <textarea
                 ref={questionInput}
                 name=""
                 className="h-4 sidebarNone:mb-3"
                 onChange={(e) => setQuestion(e.target.value)}
-              ></textarea> 
+              ></textarea>
             </div>
           )}
           {!imageswitch && (
@@ -605,6 +607,15 @@ const lastQuestionLocation = useRef()
                 </div>
               </div>
             </div>
+            {questionBank.length > 0 && (
+              <button
+                onClick={() => scrollUpBtn()}
+                className="fixed bottom-4 right-4 w-5 h-5 bg-green-like-100 flex  justify-center items-center"
+              >
+                <FaArrowUp className="text-white" />
+              </button>
+            )}
+
             {questionBank.length > 0 && (
               <div className="w-3p ml-auto sidebarNone:w-9p">
                 <button

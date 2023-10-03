@@ -43,8 +43,8 @@ const Index = () => {
             >
               Get Started
             </Link>
-            <Link className="text-white mx-7 text-sm" to="/admin/register">
-              Preview
+            <Link className="text-white mx-7 text-sm" to="/search">
+              Result
             </Link>
           </div>
           <div className="smm:hidden">
@@ -192,7 +192,7 @@ const Index = () => {
           <div>
             <h2 className="text-center text-l_bold">AUTO</h2>
             <p className="text-center text-l_bold">
-              Admin and users don't have control on the submit, It submit every
+              Admin and users don't have control on the submit, It submits 
               automically on the countdown of the time
             </p>
           </div>
@@ -252,8 +252,8 @@ const Index = () => {
                 <img src={star1Svg} alt="" />
               </span>
             </div>
-            <div className="my-5">
-              <h2 className="text-l_bold text-center mt-3">Excellent</h2>
+            <div className="my-5 w-8p mx-auto bg-l_bold border-2 border-black">
+              <h2 className="text-white text-center py-1">Excellent</h2>
             </div>
             <div className="user_img flex justify-center items-center">
               <img
@@ -262,7 +262,7 @@ const Index = () => {
                 src={heroImg}
                 alt=""
               />
-              <h3 className="uppercase text-l_bold">Oyelowo Emmanuel</h3>
+              <h3 className="uppercase px-2 text-l_bold">Oyelowo Emmanuel</h3>
             </div>
           </div>
         </div>
@@ -288,8 +288,8 @@ const Index = () => {
                 <img src={star2Svg} alt="" />
               </span>
             </div>
-            <div className="my-5">
-              <h2 className="text-l_bold text-center mt-3">Excellent</h2>
+            <div className="my-5 w-8p mx-auto bg-l_bold border-2 border-black">
+              <h2 className="text-center text-white py-1">Very Good</h2>
             </div>
             <div className="user_img flex justify-center items-center">
               <img
@@ -298,7 +298,7 @@ const Index = () => {
                 src={heroImg}
                 alt=""
               />
-              <h3 className="uppercase text-l_bold">Oyelowo Emmanuel</h3>
+              <h3 className="uppercase px-2 text-l_bold">Oluwadara Oluwasegun</h3>
             </div>
           </div>
         </div>
@@ -324,8 +324,8 @@ const Index = () => {
                 <img src={star2Svg} alt="" />
               </span>
             </div>
-            <div className="my-5">
-              <h2 className="text-l_bold text-center mt-3">Excellent</h2>
+            <div className="my-5 w-8p mx-auto bg-l_bold border-2 border-black">
+              <h2 className="text-white text-center py-1">Very Good</h2>
             </div>
             <div className="user_img flex justify-center items-center">
               <img
@@ -334,7 +334,7 @@ const Index = () => {
                 src={heroImg}
                 alt=""
               />
-              <h3 className="uppercase text-l_bold">Oyelowo Emmanuel</h3>
+              <h3 className="uppercase px-2 text-l_bold">Emeey Lanr</h3>
             </div>
           </div>
         </div>
@@ -363,7 +363,9 @@ const Index = () => {
           </div>
           <div>
             <div className="fa border-b border-b-white flex  w-8p mx-auto h-10 justify-between items-center bg-l_bold">
-              <p className="text-white pl-4">What's Trivy</p>
+              <p className="text-white pl-4">
+                How many times can an admin play a game?
+              </p>
               <button onClick={() => setFaq2((prev) => !prev)} className="pr-4">
                 <SlEye className="text-white" />
               </button>
@@ -371,15 +373,17 @@ const Index = () => {
             {faq2 && (
               <div className="faq_back w-7p mx-auto">
                 <p className="w-8p mx-auto text-l_bold leading-8">
-                  Trivy is a web application that allows you to create quiz or
-                  exam in real time with a click of the start button
+                  An admin can play a game created only four times, after the
+                  fourth times, the quiz can't be played again
                 </p>
               </div>
             )}
           </div>
           <div>
             <div className="fa border-b border-b-white flex  w-8p mx-auto h-10 justify-between items-center bg-l_bold">
-              <p className="text-white pl-4">What's Trivy</p>
+              <p className="text-white pl-4">
+                Can student play/do a quiz/exam without an admin?
+              </p>
               <button onClick={() => setFaq3((prev) => !prev)} className="pr-4">
                 <SlEye className="text-white" />
               </button>
@@ -387,15 +391,17 @@ const Index = () => {
             {faq3 && (
               <div className="faq_back w-7p mx-auto">
                 <p className="w-8p mx-auto text-l_bold leading-8">
-                  Trivy is a web application that allows you to create quiz or
-                  exam in real time with a click of the start button
+                  Without the admin logged in, the game cannot start nor can
+                  they have access to log in
                 </p>
               </div>
             )}
           </div>
           <div>
             <div className="fa border-b border-b-white flex  w-8p mx-auto h-10 justify-between items-center bg-l_bold">
-              <p className="text-white pl-4">What's Trivy</p>
+              <p className="text-white pl-4">
+                How does students view their results?
+              </p>
               <button onClick={() => setFaq4((prev) => !prev)} className="pr-4">
                 <SlEye className="text-white" />
               </button>
@@ -403,8 +409,9 @@ const Index = () => {
             {faq4 && (
               <div className="faq_back w-7p mx-auto">
                 <p className="w-8p mx-auto text-l_bold leading-8">
-                  Trivy is a web application that allows you to create quiz or
-                  exam in real time with a click of the start button
+                  Student search for the admin user, and if the result is not
+                  locked they can have access to view it, if it's locked, they
+                  will have request for result access password
                 </p>
               </div>
             )}
@@ -414,13 +421,22 @@ const Index = () => {
       {/* ===== */}
       <div className="w-10p mt-13 h-9 mb-5 bg-l_bold">
         <div className="w-8p h-9 mx-auto flex justify-center items-center">
-          <a className="px-3 flex justify-center items-center" href="">
+          <a
+            className="px-3 flex justify-center items-center"
+            href="https://github.com/Emeey-Lanr"
+          >
             <img className="w-4 h-4" src={github} alt="" />
           </a>
-          <a className="px-3 flex justify-center items-center" href="">
+          <a
+            className="px-3 flex justify-center items-center"
+            href="https://twitter.com/Emeey_Lanr"
+          >
             <img className="w-4 h-4" src={twitter} alt="" />
           </a>
-          <a className="px-3 flex justify-center items-center" href="">
+          <a
+            className="px-3 flex justify-center items-center"
+            href="https://www.linkedin.com/in/emmanuel-oyelowo-b2363a23a/"
+          >
             <img className="w-4 h-4" src={linkedin} alt="" />
           </a>
         </div>
