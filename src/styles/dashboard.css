@@ -1,0 +1,23 @@
+.top-scorer {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  margin: 0 auto;
+  justify-content: space-between;
+  position: relative;
+  top: -60px;
+  width: 85%;
+}
+.top-scorer .beststudent {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  padding: 15px;
+}
+
+@media (max-width: 900px) {
+  .top-scorer {
+    grid-template-columns: 100%;
+  }
+  .top-scorer .beststudent {
+    margin-bottom: 20px;
+  }
+}

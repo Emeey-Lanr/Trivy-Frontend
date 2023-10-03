@@ -1,0 +1,62 @@
+/* Create Modal */
+.quiznameInput {
+  width: 100%;
+}
+.quiznameInput label {
+  margin-left: 15px;
+}
+.quiznameInput div {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+.quiznameInput div input {
+  width: 90%;
+  height: 44px;
+  border: 1px solid #bcbcbc;
+  border-radius: 3px;
+}
+
+.quiznameInput div input:focus {
+  /* outline: 2px solid #03a26d7e; */
+  outline: none;
+  border: none;
+  border-radius: 0;
+  border-bottom: 2px solid #03a26d7e;
+  transition: 0.5s ease-in all;
+}
+.addQuiz {
+  padding: 30px 0;
+}
+.addQuiz label {
+  margin-left: 20px;
+}
+.addQuiz div {
+  width: 90%;
+  display: grid;
+  grid-template-columns: 70% 30%;
+  margin: 10px auto;
+}
+.addQuiz div input {
+  width: 100%;
+  border: 1px solid #bcbcbc;
+  border-radius: 2px 0 0 2px;
+}
+.addQuiz div input:focus {
+  outline: none;
+}
+.addedQuestion {
+  width: 95%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 25% 25% 25%;
+  justify-content: space-between;
+}
+.addedQuestion div {
+  margin-bottom: 10px;
+}
+.subjectnameToAddQuestionTo{
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  justify-content: space-evenly;
+}
