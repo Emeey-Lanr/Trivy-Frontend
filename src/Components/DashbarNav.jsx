@@ -23,12 +23,12 @@ const DashbarNav = () => {
             <div className="w-100 sidebarNone:hidden">
               <p>{adminOrganizationUserName}</p>
             </div>
-            <div className="ml-5 inputbtn sidebarNone:ml-0">
+            {/* <div className="ml-5 inputbtn sidebarNone:ml-0">
               <button>
                 <FaSearch style={{ color: "#969696" }} />
               </button>
               <input type="text" placeholder="Search....." />
-            </div>
+            </div> */}
           </div>
           <div className="flex justify-between h-8 items-center">
             <div className="w-5 h-5 mr-4 border-2 border-green-like-100 flex justify-center items-center">

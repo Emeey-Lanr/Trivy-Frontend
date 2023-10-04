@@ -112,7 +112,7 @@ const CreateModal = () => {
   return (
     <>
       {showCreateModal && (
-        <div className="w-10p h-10p fixed top-0 left-0 flex justify-center items-center bg-modalback   createmodal:items-end">
+        <div className="w-10p h-10p fixed top-0 left-0 flex overflow-scroll justify-center items-center bg-modalback   createmodal:items-end">
           <div className="w-createModalSize bg-white py-5 rounded-createModal createmodalWidth:w-10p">
             <div>
               <div className="flex justify-end w-9p mx-auto">

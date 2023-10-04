@@ -112,7 +112,7 @@ function App() {
           setLastPlayedDetails(result.data.quizDetails);
         } 
       }).catch((error) => {
-         navigate("/admin/login");
+        //  navigate("/admin/login");
       })
   };
   return (

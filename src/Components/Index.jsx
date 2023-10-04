@@ -104,7 +104,7 @@ const Index = () => {
         </div>
       </div>
       {/* Content 1 */}
-      <div className="w-10p mb-13 flex justify-center items-center">
+      <div className="w-10p flex justify-center items-center">
         <div className="content_2 flex justify-center items-center mt-6">
           <div className="content_2_text mb-6">
             <h2 className="text-l_bold leading-10 text-center uppercase">
@@ -159,7 +159,7 @@ const Index = () => {
         </div>
       </div>
       {/* ============ */}
-      <div className="mode mt-15 bg-l_bold">
+      <div className="mode mx-auto bg-l_bold">
         <div className="mode_trivy_div pb-12 flex justify-center items-center bg-l_bold">
           <div className="w-9p">
             <div className="mode_trivy">
@@ -211,16 +211,16 @@ const Index = () => {
             an access key or not.
           </p>
           <div className="mt-5">
-            <div className="mb-1 flex justify-center items-center">
-              <div className="h-4 w-4 bg-l_bold"></div>
+            <div className="point mb-1 flex justify-center items-center">
+              <div className="h-3 w-3 border rounded-l_btn bg-l_bold"></div>
               <p className="px-1 security_text_2nd_P text-l_bold">
-                If on student can view result via the result platform via the
+               Student can view result via the result platform via the
                 access key
               </p>
             </div>
 
-            <div className="flex justify-center items-center">
-              <div className="w-4 h-4 bg-l_bold"></div>
+            <div className="point flex justify-center items-center">
+              <div className="h-3 w-3 border rounded-l_btn bg-l_bold"></div>
               <p className="px-1 security_text_3rd_P">
                 If off, the result is open to everyone to view
               </p>
@@ -298,7 +298,7 @@ const Index = () => {
                 src={heroImg}
                 alt=""
               />
-              <h3 className="uppercase px-2 text-l_bold">Oluwadara Oluwasegun</h3>
+              <h3 className="uppercase px-2 text-l_bold">Oluwadara</h3>
             </div>
           </div>
         </div>
@@ -347,7 +347,7 @@ const Index = () => {
         <div>
           <div>
             <div className="fa border-b border-b-white flex  w-8p mx-auto h-10 justify-between items-center bg-l_bold">
-              <p className="text-white pl-4">What's Trivy</p>
+              <p className="question_text text-white pl-4">What's Trivy</p>
               <button onClick={() => setFaq1((prev) => !prev)} className="pr-4">
                 <SlEye className="text-white" />
               </button>
@@ -363,7 +363,7 @@ const Index = () => {
           </div>
           <div>
             <div className="fa border-b border-b-white flex  w-8p mx-auto h-10 justify-between items-center bg-l_bold">
-              <p className="text-white pl-4">
+              <p className="question_text text-white pl-4">
                 How many times can an admin play a game?
               </p>
               <button onClick={() => setFaq2((prev) => !prev)} className="pr-4">
@@ -371,7 +371,7 @@ const Index = () => {
               </button>
             </div>
             {faq2 && (
-              <div className="faq_back w-7p mx-auto">
+              <div className="question_text faq_back w-7p mx-auto">
                 <p className="w-8p mx-auto text-l_bold leading-8">
                   An admin can play a game created only four times, after the
                   fourth times, the quiz can't be played again
@@ -381,7 +381,7 @@ const Index = () => {
           </div>
           <div>
             <div className="fa border-b border-b-white flex  w-8p mx-auto h-10 justify-between items-center bg-l_bold">
-              <p className="text-white pl-4">
+              <p className="question_text text-white pl-4">
                 Can student play/do a quiz/exam without an admin?
               </p>
               <button onClick={() => setFaq3((prev) => !prev)} className="pr-4">
@@ -399,7 +399,7 @@ const Index = () => {
           </div>
           <div>
             <div className="fa border-b border-b-white flex  w-8p mx-auto h-10 justify-between items-center bg-l_bold">
-              <p className="text-white pl-4">
+              <p className="question_text text-white pl-4">
                 How does students view their results?
               </p>
               <button onClick={() => setFaq4((prev) => !prev)} className="pr-4">

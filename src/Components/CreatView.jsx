@@ -30,7 +30,7 @@ const CreatView = () => {
         <p className="text-center py-4 font-light">
           Create a new collection or view existing collections
         </p>
-        <div className="flex justify-between w-10p createmodal:block ">
+        <div className="flex justify-between w-10p mx-auto createmodal:block createmodal:w-9p ">
           <button
             className="bg-green-like-100 py-3 px-11 mx-7 rounded-sideicon text-white createmodal:mx-0 block createmodal:w-10p createmodal:mb-2 createmodal:px-0"
             onClick={() => setShowCreateModal(true)}

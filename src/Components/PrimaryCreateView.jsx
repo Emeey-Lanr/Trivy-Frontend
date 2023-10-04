@@ -20,10 +20,11 @@ const PrimaryCreateView = () => {
         <div className="w-10p bg-dashback-100">
           <CreatView />
         </div>
-        <CreateModal />
+
         <SideBarBack />
         <DashbarNav />
         <Sidebar />
+        <CreateModal />
       </div>
     </>
   );
