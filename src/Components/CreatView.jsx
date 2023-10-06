@@ -11,14 +11,14 @@ const CreatView = () => {
     setShowCreateModal,
     currentSet,
   } = useContext(appContext);
+  
   const saveIdEndPoint  = `${adminEndPoint}/saveClassId`
   const view = () => {
-    axios.post(saveIdEndPoint, { class: currentSet, adminId: adminId }).then((result) => {
-      if (result.data.status) {
-        localStorage.quizClassId = result.data.identification;
+    localStorage.class = currentSet
+    // console.log(adminId)
+ 
         navigate("/quizcollections");
-      }
-    })
+  
     
   }
   return (

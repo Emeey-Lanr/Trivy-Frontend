@@ -20,8 +20,10 @@ const DashbarNav = () => {
       <div className="w-10p  h-8 mx-auto bg-white shadow-sm sidebarNone:h-9">
         <div className="flex h-8 justify-between items-center ml-3 sidebarNone:h-9 ">
           <div className="flex items-center h-8 ">
-            <div className="w-100 sidebarNone:hidden">
-              <p>{adminOrganizationUserName}</p>
+            <div className="w-10">
+              <p className="w-10 overflow-hidden whitespace-nowrap text-ellipsis">
+                {adminOrganizationUserName}
+              </p>
             </div>
             {/* <div className="ml-5 inputbtn sidebarNone:ml-0">
               <button>

@@ -50,7 +50,7 @@ const AdminRegister = () => {
   };
 
   const signUp = () => {
-    console.log(adminSchema)
+
     if (adminEmail === "" || adminUserName === "" || adminpassword === "") {
       setAlertModalStatus(true);
       setAlertMessage("Looks like you forgot something");

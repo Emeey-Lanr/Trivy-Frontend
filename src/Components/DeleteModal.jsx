@@ -38,7 +38,7 @@ const DeleteModal = () => {
     <>
       {deleteModalState && (
         <div className="w-10p h-10p fixed top-0 bg-modalback flex justify-center items-center">
-          <div className="w-createModalSize bg-white rounded-sideicon">
+          <div className="w-createModalSize bg-white rounded-sideicon createmodal:w-9p">
             <div className="w-10p flex justify-end py-2 px-1">
               <FaTimes
                 className="text-green-like-100"

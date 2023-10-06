@@ -1,13 +1,13 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import noImg from "../Images/noImage.png"
-import { FaEye, FaSearch, FaSpinner, FaThumbsUp, FaTimes,  } from 'react-icons/fa';
+import { FaSearch, FaSpinner,  FaTimes,  } from 'react-icons/fa';
 import SearchResult from "./SearchResult";
-import { SlPeople, SlSettings, SlUserFollowing } from "react-icons/sl";
+import { SlPeople,  SlUserFollowing } from "react-icons/sl";
 import CollectionSearchResult from "./CollectionSearchResult";
 import { appContext } from "../App";  
 import axios from "axios";
 import AlertModal from "./AlertModal";
-import ordinal from "ordinal";
+
 export const searchContext = createContext();
 const Result = () => {
   const {socket, searchEndPoint, setAlertMessage, setAlertModalStatus } =
@@ -24,15 +24,14 @@ const Result = () => {
   const [collectionName, setCollectionName] = useState("")
   const [collectionFound, setCollectionFound] =useState([])
   const [ifFoundStyle, setIfFoundStyle] = useState(0)
-  const [resultMessage, setResultMessage] = useState("")
   const [accessModal, setAcessModal] = useState(false)
   const [quizId, setQuizId] = useState("")
   const [acessPin, setAcessPin] = useState("")
   const [quizName, setQuizName] = useState("")
   const [btnAcessStatus, setBtnAcessStatus] = useState(false)
-  const [views, setViews] = useState([])
+
   const [profileModal, setprofileModal] = useState(0)
-  const [userRanking,setUserRanking] =useState([])
+
   const alertFunction = (a,b,c,d) => {
      setAlertMessage(a);
      setAlertModalStatus(b);
@@ -120,8 +119,10 @@ const Result = () => {
         if (result.data.status) {
           setIfFoundStyle(2)
           setBtnStyleSpin(1)
-          setCollectionFound(result.data.userFound)
+          console.log(result.data)
+
         } else {
+            console.log(result.data);
           alertFunction(result.data.message, true, "", false);
           setBtnStyleSpin(1)
          

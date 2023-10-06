@@ -102,7 +102,7 @@ const Search = () => {
             </div>
 
             {resultPage && (
-              <div className="w-4p mt-3 mx-auto overflow-y-auto h-dbh bg-white">
+              <div className="w-4p mt-3 mx-auto overflow-y-auto h-dbh bg-white createmodal:w-10p">
                 {adminFound.length < 1 ? (
                   <div className="h-10 flex justify-center items-center">
                     <p className="text-center text-green-like-100">

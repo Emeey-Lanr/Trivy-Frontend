@@ -40,7 +40,7 @@ const QuizCollection = () => {
       axios
         .get(loadQuizEndPoint, {
           headers: {
-            Authorization: `bearer ${localStorage.quizClassId}`,
+            Authorization: `bearer ${localStorage.class}/${localStorage.adminId}`,
             "Content-Type": "application/json",
           },
         })

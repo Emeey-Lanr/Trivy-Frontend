@@ -17,6 +17,7 @@ import { SlEye, SlStar } from 'react-icons/sl'
 import linkedin from "../Images/mdi_linkedin.png"
 import twitter from "../Images/ri_twitter-x-line.png"
 import github from "../Images/bi_github.png"
+import { AiOutlineMenu } from 'react-icons/ai'
 
 const Index = () => {
   const navigate = useNavigate()
@@ -55,7 +56,7 @@ const Index = () => {
               Login
             </button>
             <button
-              onClick={() => navigate("/play/userlogin")}
+              onClick={() => navigate("/play/mode")}
               className="w-13 h-6 bg-white rounded-sm"
             >
               Play

@@ -48,6 +48,7 @@ module.exports = {
       input: "300px",
       textArea:"334px",
       dimageSize: "400px",
+      editModal:"500px",
       dashtable: "600px",
       createModalSize: "400px",
       scoreResultSize: "3000px",

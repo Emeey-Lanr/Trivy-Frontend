@@ -631,10 +631,10 @@ const moveUp  = useRef()
         </div>
         <AlertModal />
         <EditQuestion />
-        <SaveQuestionModal />
         <SidBarBack />
         <DashbarNav />
         <Sidebar />
+        <SaveQuestionModal />
       </div>
     </addQuestionContext.Provider>
   );

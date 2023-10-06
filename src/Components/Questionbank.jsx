@@ -259,7 +259,7 @@ const Questionbank = () => {
               : ``
           }`}
         >
-          Generate New Password
+  New Password
         </button>
         <button
           onClick={() => openPassword()}
@@ -269,7 +269,7 @@ const Questionbank = () => {
               : ``
           }`}
         >
-          Password
+          Passwords
         </button>
       </div>
       {questionPasswordBank === "password" && (
@@ -344,7 +344,7 @@ const Questionbank = () => {
                     </div>
                     {content.question.image !== "" && (
                       <div>
-                        <img src="" alt="" />
+                        <img src={content.question.image} alt="" />
                       </div>
                     )}
                   </div>
@@ -355,7 +355,7 @@ const Questionbank = () => {
                           ans.status
                             ? "bg-green-like-100 text-white"
                             : "bg-dashback-200"
-                        }  w-7p mx-auto my-1 flex justify-between py-3 items-center px-2 sidebarNone:9p`}
+                        }  w-7p mx-auto my-1 flex justify-between py-3 items-center px-2 createmodal:w-10p`}
                       >
                         <p>{ans.option}</p>
                         <div
@@ -382,7 +382,7 @@ const Questionbank = () => {
       )}
       {generateModal && (
         <div className="w-10p h-10p fixed top-0 bg-modalback flex justify-center items-center">
-          <div className="bg-white w-createModalSize  py-2 rounded-sideicon">
+          <div className="bg-white w-createModalSize  py-2 rounded-sideicon createmodal:w-9p">
             <div className="w-9p flex justify-end  mx-auto">
               <button onClick={() => setGenerateModal(false)}>
                 <FaTimes className="text-green-like-100" />
@@ -422,7 +422,7 @@ const Questionbank = () => {
       {/* ///////DELETE MODAL/////// */}
       {deleteQuestionModal && (
         <div className="w-10p h-10p fixed top-0  bg-modalback flex justify-center items-center">
-          <div className="bg-white  w-input   rounded-sideicon">
+          <div className="bg-white  w-input   rounded-sideicon createmodal:w-9p">
             <div className="w-10p py-1 px-1 flex justify-end">
               <button onClick={() => setDeleteQuestionModal(false)}>
                 <FaTimes className="text-green-like-100" />
@@ -452,7 +452,7 @@ const Questionbank = () => {
       )}
       {openEditModal && (
         <div className="w-10p h-10p fixed top-0 bg-modalback flex justify-center items-end">
-          <div className="w-5p bg-white rounded-sideicon py-3">
+          <div className="w-editModal bg-white rounded-sideicon py-3 createmodal:w-9p">
             <div className="px-2">
               <button onClick={() => setEditModal(false)}>
                 <FaTimes className="text-green-like-100" />
@@ -476,7 +476,7 @@ const Questionbank = () => {
               <textarea
                 onChange={(e) => setEditedQuestionText(e.target.value)}
                 value={editQuestionText}
-                className="h-6 w-10p rounded-side-icon  border border-inputLine focus:outline-green-like-100"
+                className="h-6 w-10p rounded-side-icon  resize:none border border-inputLine focus:outline-green-like-100"
               ></textarea>
             </div>
             <div className="w-9p my-3  mx-auto">

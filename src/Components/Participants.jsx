@@ -89,18 +89,16 @@ let navigate = useNavigate()
   return (
     <div className="w-10p">
       {currentPositionStatus === 1 ? (
-        <div className="mt-dw w-8p mx-auto">
+        <div className="mt-12 w-8p mx-auto sidebarNone:w-10p ">
           <div className="w-9p h-7 mx-auto">
             <button onClick={() => navigate(`/quizcollections`)}>
               <FaArrowLeft className="text-green-like-100  text-1xl" />
             </button>
           </div>
-          <button onClick={() => navigate(`/quizcollections`)}>
-            <FaArrowLeft className="text-green-like-100 bg-green-like-100 text-1xl" />
-          </button>
+
           <p className="text-center text-xl mb-2">Series</p>
           {Participants.map((content, id) => (
-            <div className="w-8p mb-5 mx-auto bg-green-like-100 rounded-sideicon sideBarNone:w-9p">
+            <div className="w-8p mb-5 mx-auto bg-l_bold rounded-sideicon sideBarNone:w-9p">
               <p className="text-white w-8p mx-auto text-2xl border-b py-3">
                 Quiz {id + 1}
               </p>

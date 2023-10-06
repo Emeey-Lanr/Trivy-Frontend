@@ -26,13 +26,15 @@ import Result from "./Components/Result.jsx";
 import Index from "./Components/Index";
 import ResetPassword from "./Components/ResetPassword";
 import EmailForgotPassRestLink from "./Components/EmailForgotPassRestLink";
+import PlayMode from "./Components/PlayMode";
 export const appContext = createContext(null);
 function App() {
   let navigate = useNavigate();
-  let backendEndPoint = "https://trivy.onrender.com";
+  let localApiEndPoint = `http://localhost:2340`;
+  let serverAPIEndPoint = "https://trivy.onrender.com";
   let socket = useRef();
   useEffect(() => {
-    socket.current = Socket(backendEndPoint);
+    socket.current = Socket(serverAPIEndPoint);
   }, []);
   // hfhh
   const [adminDetails, setAdminDetails] = useState({});
@@ -41,13 +43,13 @@ function App() {
   const [adminEmail, setAdminEmail] = useState("")
   const [adminImage, setAdminImage] = useState("")
   const [adminEndPoint, setAdminEndPoint] = useState(
-    "https://trivy.onrender.com/admin"
+    `${serverAPIEndPoint}/admin`
   );
   const [gameEndPoint, setGameEndPoint] = useState(
-    "https://trivy.onrender.com/game"
+    `${serverAPIEndPoint}/game`
   );
   const [searchEndPoint, setSearchEndPoint] = useState(
-    "https://trivy.onrender.com/search"
+    `${serverAPIEndPoint}/search`
   );
   // created for the alert modal, so that it can be used by any component when needed
   const [alertModalStatus, setAlertModalStatus] = useState(false);
@@ -194,6 +196,7 @@ function App() {
         <Route path="/verify/:id" element={<VerifyEmail />} />
         <Route path="/play/userlogin" element={<IndividualGameLogin />} />
         <Route path="/play/adminlogin" element={<AdminGameLogin />} />
+        <Route path="/play/mode" element={<PlayMode/>} />
         <Route path="/play/username" element={<NameJoin />} />
         <Route path="/play" element={<Game />} />
         <Route path="/trial" element={<Trail />} />

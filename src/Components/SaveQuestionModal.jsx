@@ -79,7 +79,7 @@ const SaveQuestionModal = () => {
   return (
     <>
       {openSaveQuestionModal && (
-        <div className="w-10p h-10p fixed top-0 bg-modalback flex justify-center items-center">
+        <div className="w-10p h-10p fixed top-0 bg-modalback flex justify-center items-center createmodal:overflow-scroll">
           <div className="w-createModalSize bg-white rounded-sideicon createmodalWidth:w-9p">
             <div className="w-10p flex justify-end py-1 px-1">
               <button onClick={() => setOpenSaveQuestionModal(false)}>

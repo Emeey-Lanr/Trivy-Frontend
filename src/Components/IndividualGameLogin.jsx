@@ -58,7 +58,7 @@ const IndividualGameLogin = () => {
           </h2>
         </div>
         <div className="bg-l_bold sign_up_div">
-          <div className="w-dimageSize">
+          <div className="w-dimageSize createmodal:w-9p">
             <div className="w-10p flex justify-center my-3">
               <img src={logo} className="h-4 w-4" alt="" />
             </div>

@@ -47,7 +47,7 @@ const Index_Navigation = ({logo}) => {
                 </Link>
                 <Link
                   className="text-l_bold border-b border-inputLine  block text-center leading-10  text-sm  hover:bg-l_bold hover:text-white hover:rounded-sideicon  px-2"
-                  to="/play/username"
+                  to="/play/mode"
                 >
                   Play
                 </Link>

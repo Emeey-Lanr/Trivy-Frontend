@@ -130,7 +130,7 @@ const NameJoin = () => {
           </h2>
         </div>
         <div className="bg-l_bold sign_up_div">
-          <div className="w-dimageSize">
+          <div className="w-dimageSize createmodal:w-9p">
             {formDone === 1 && <div>
               <button onClick={() => setFormDone(2)}>
                 <FaArrowLeft className="text-white" />
