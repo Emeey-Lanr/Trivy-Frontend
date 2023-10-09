@@ -29,7 +29,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     setSideBarBoxShadow(1);
     dashboardFuction()
-    setShowSidebar("hidden")
+    setShowSidebar("hideSideBar");
   }, []);
  
 

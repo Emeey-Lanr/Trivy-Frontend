@@ -18,7 +18,7 @@ const SeniorCreateView = () => {
     setCurrentSet("Senior");
     setShowCreateModal(false);
     dashboardFuction()
-    setShowSidebar("hidden")
+    setShowSidebar("hideSideBar")
   }, []);
   return (
     <>

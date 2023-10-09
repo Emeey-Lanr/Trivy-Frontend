@@ -113,7 +113,7 @@ const moveUp  = useRef()
  
   useEffect(() => {
     
-    setShowSidebar("hidden")
+    setShowSidebar("hideSideBar");
     dashboardFuction()
     if (localStorage.questions) {
        const yes = JSON.parse(localStorage.questions);

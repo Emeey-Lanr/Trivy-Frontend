@@ -56,7 +56,7 @@ function App() {
 
   const [alertMessage, setAlertMessage] = useState("");
   // responsiblefor using sibar and hidding sidebar
-  const [showSideBar, setShowSidebar] = useState("hidden");
+  const [showSideBar, setShowSidebar] = useState("hideSideBar");
   // for sidebarbox shadox as an indication for the current place that the admin is
   const [sidebarBOxShadow, setSideBarBoxShadow] = useState(0);
 

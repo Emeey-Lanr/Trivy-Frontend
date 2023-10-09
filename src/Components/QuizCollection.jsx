@@ -68,7 +68,7 @@ const QuizCollection = () => {
   useEffect(() => {
     dashboardFuction()
     loadcollectionsFunction()
-     setShowSidebar("hidden")
+     setShowSidebar("hideSideBar");
   }, []);
 
   const targetQuizCollectionEndPoint = `${adminEndPoint}/generateQuizSpecificToken`;

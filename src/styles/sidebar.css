@@ -1,5 +1,5 @@
 
-   .hidden{
+   .hideSideBar{
  display: block;
 }
 .backmodal{
@@ -9,10 +9,10 @@
     .backmodal{
     display: block;
 }
- .hidden{
+ .hideSideBar{
     display: none;
  }
-.block{
+.revealSideBar{
     display: block;
 }
 

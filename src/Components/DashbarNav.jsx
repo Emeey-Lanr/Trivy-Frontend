@@ -9,10 +9,10 @@ const DashbarNav = () => {
   const { adminOrganizationUserName, adminImage, showSideBar, setShowSidebar } =
     useContext(appContext);
   const handleShowSideBar = () => {
-    if (showSideBar === "hidden") {
-      setShowSidebar("block");
+    if (showSideBar === "hideSideBar") {
+      setShowSidebar("revealSideBar");
     } else {
-      setShowSidebar("hidden");
+      setShowSidebar("hideSideBar");
     }
   };
   return (

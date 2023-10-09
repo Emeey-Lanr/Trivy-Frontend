@@ -13,7 +13,7 @@ const JuniorCreateView = () => {
     setCurrentSet("Junior");
     setShowCreateModal(false);
     dashboardFuction()
-     setShowSidebar("hidden")
+     setShowSidebar("hideSideBar");
   }, []);
   return (
     <>

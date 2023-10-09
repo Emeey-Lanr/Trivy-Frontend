@@ -12,7 +12,7 @@ const PrimaryCreateView = () => {
     setCurrentSet("Primary");
     setShowCreateModal(false)
     dashboardFuction()
-     setShowSidebar("hidden")
+     setShowSidebar("hideSideBar");
   }, []);
   return (
     <>
