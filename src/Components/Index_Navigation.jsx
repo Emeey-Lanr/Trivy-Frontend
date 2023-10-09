@@ -8,7 +8,7 @@ const Index_Navigation = ({logo}) => {
       <>
         {mobileNav && (
           <div className="w-10p h-10p fixed top-0 bg-dashback-100">
-            <div className="w-10p flex justify-end">
+            <div className="w-9p h-8 mx-auto  flex justify-end items-end">
               <span>
                 <button onClick={() => setMobileNav(false)}>
                   <FaTimes />

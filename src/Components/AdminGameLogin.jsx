@@ -149,7 +149,7 @@ const [pickedState, setPickedState] = useState("")
             <div className="flex justify-center py-2">
               <button
                 onClick={() => adminBtn()}
-                className={`py-1 flex justify-center px-6 ${
+                className={`py-1 flex justify-center px-6 createmodal:px-0 createmodal:w-4p ${
                   modeBtn === 1
                     ? `bg-white text-green-like-100`
                     : `bg-green-like-100 text-white`
@@ -159,7 +159,7 @@ const [pickedState, setPickedState] = useState("")
               </button>
               <button
                 onClick={() => autoBtn()}
-                className={`py-1 flex justify-center px-6  border-l  ${
+                className={`py-1 flex justify-center px-6  border-l createmodal:px-0 createmodal:w-4p ${
                   modeBtn === 2
                     ? `bg-white text-green-like-100`
                     : `bg-green-like-100 text-white`
@@ -169,7 +169,7 @@ const [pickedState, setPickedState] = useState("")
               </button>
               <button
                 onClick={() => selfBtn()}
-                className={`py-1 flex justify-center px-6 border-l ${
+                className={`py-1 flex justify-center px-6 border-l createmodal:px-0 createmodal:w-4p ${
                   modeBtn === 3
                     ? `bg-white text-green-like-100`
                     : `bg-green-like-100 text-white`

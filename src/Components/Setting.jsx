@@ -75,7 +75,7 @@ const uploadImageEndPoint = `${adminEndPoint}/settingImage`;
     <>
       <div className="w-100">
         <div className="w-10p bg-dashback-100">
-          <div className="w-8p mx-auto mt-12 py-3">
+          <div className="w-8p mx-auto mt-12 py-3 createmodal:w-10p">
             <div
               className="w-13 h-13 mx-auto border-2 border-green-like-100"
               style={{ borderRadius: "100px" }}

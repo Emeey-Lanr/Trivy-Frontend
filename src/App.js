@@ -30,11 +30,10 @@ import PlayMode from "./Components/PlayMode";
 export const appContext = createContext(null);
 function App() {
   let navigate = useNavigate();
-  let localApiEndPoint = `http://localhost:2340`;
-  let serverAPIEndPoint = "https://trivy.onrender.com";
+
   let socket = useRef();
   useEffect(() => {
-    socket.current = Socket(serverAPIEndPoint);
+    socket.current = Socket(process.env.REACT_APP_API_URL);
   }, []);
   // hfhh
   const [adminDetails, setAdminDetails] = useState({});
@@ -43,13 +42,13 @@ function App() {
   const [adminEmail, setAdminEmail] = useState("")
   const [adminImage, setAdminImage] = useState("")
   const [adminEndPoint, setAdminEndPoint] = useState(
-    `${serverAPIEndPoint}/admin`
+    `${process.env.REACT_APP_API_URL}/admin`
   );
   const [gameEndPoint, setGameEndPoint] = useState(
-    `${serverAPIEndPoint}/game`
+    `${process.env.REACT_APP_API_URL}/game`
   );
   const [searchEndPoint, setSearchEndPoint] = useState(
-    `${serverAPIEndPoint}/search`
+    `${process.env.REACT_APP_API_URL}/search`
   );
   // created for the alert modal, so that it can be used by any component when needed
   const [alertModalStatus, setAlertModalStatus] = useState(false);
@@ -114,7 +113,7 @@ function App() {
           setLastPlayedDetails(result.data.quizDetails);
         } 
       }).catch((error) => {
-        //  navigate("/admin/login");
+         navigate("/admin/login");
       })
   };
   return (
