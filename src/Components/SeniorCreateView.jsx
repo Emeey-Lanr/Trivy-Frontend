@@ -27,8 +27,8 @@ const SeniorCreateView = () => {
           <CreatView />
         </div>
         <SideBarBack />
-        <DashbarNav />
         <Sidebar />
+        <DashbarNav />
         <CreateModal />
       </div>
     </>

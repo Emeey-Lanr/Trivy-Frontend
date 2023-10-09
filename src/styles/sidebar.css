@@ -1,0 +1,20 @@
+
+   .hidden{
+ display: block;
+}
+.backmodal{
+    display: none;
+}
+@media (max-width:1182px) {
+    .backmodal{
+    display: block;
+}
+ .hidden{
+    display: none;
+ }
+.block{
+    display: block;
+}
+
+
+}

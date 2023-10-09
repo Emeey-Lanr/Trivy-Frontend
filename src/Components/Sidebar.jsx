@@ -4,12 +4,13 @@ import BorderBottomLine from "./BorderBottomLine";
 import { appContext } from "../App";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+
 const Sidebar = () => {
   const { showSideBar, sidebarBOxShadow, setSideBarBoxShadow } =
     useContext(appContext);
   return (
     <div
-      className={`w-dw h-9p pb-3 fixed bottom-0 left-0 bg-dashback-100  rounded-r-sideedge overflow-y-auto  ${showSideBar === "hidden" ? `sidebarNone: hidden` :`sidebarNone: block` }`}
+      className={`w-dw h-9p pb-3 fixed bottom-0 left-0 bg-dashback-100  rounded-r-sideedge overflow-y-auto  ${showSideBar}`}
     >
       <Link
         to="/admindashboard"

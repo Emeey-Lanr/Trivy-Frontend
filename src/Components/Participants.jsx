@@ -300,8 +300,8 @@ let navigate = useNavigate()
         </div>
       )}
       <AlertModal />
-      <SidBarBack />
       <Sidebar />
+      <SidBarBack />
       <DashbarNav />
     </div>
   );

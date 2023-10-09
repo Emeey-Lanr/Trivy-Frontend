@@ -113,8 +113,8 @@ const uploadImageEndPoint = `${adminEndPoint}/settingImage`;
                 <input
                   type="text"
                   disabled={true}
-                 
-                  className="w-10p h-6 border border-inputLine rounded-sideicon" value={`${adminEmail}`}
+                  className="w-10p h-6 border border-inputLine rounded-sideicon"
+                  value={`${adminEmail}`}
                 />
               </div>
               <div className="w-8p mx-auto py-4">
@@ -122,7 +122,8 @@ const uploadImageEndPoint = `${adminEndPoint}/settingImage`;
                 <input
                   type="text"
                   disabled={true}
-                  className="w-10p h-6 border border-inputLine rounded-sideicon" value={adminOrganizationUserName}
+                  className="w-10p h-6 border border-inputLine rounded-sideicon"
+                  value={adminOrganizationUserName}
                 />
               </div>
             </div>
@@ -130,8 +131,8 @@ const uploadImageEndPoint = `${adminEndPoint}/settingImage`;
         </div>
         <CreateModal />
         <SideBarBack />
-        <DashbarNav />
         <Sidebar />
+        <DashbarNav />
         <AlertModal />
       </div>
     </>

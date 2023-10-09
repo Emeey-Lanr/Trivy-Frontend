@@ -259,7 +259,7 @@ const Questionbank = () => {
               : ``
           }`}
         >
-  New Password
+          New Password
         </button>
         <button
           onClick={() => openPassword()}
@@ -562,8 +562,8 @@ const Questionbank = () => {
       )}
 
       <SidBarBack />
-      <DashbarNav />
       <Sidebar />
+      <DashbarNav />
     </div>
   );
 };

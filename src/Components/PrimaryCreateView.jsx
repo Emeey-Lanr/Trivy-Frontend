@@ -22,8 +22,9 @@ const PrimaryCreateView = () => {
         </div>
 
         <SideBarBack />
-        <DashbarNav />
         <Sidebar />
+        <DashbarNav />
+
         <CreateModal />
       </div>
     </>

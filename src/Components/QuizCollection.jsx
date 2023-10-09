@@ -196,7 +196,9 @@ const QuizCollection = () => {
             <FaArrowLeft className="text-green-like-100" />
           </button>
           <div className="border-b-green-like-100 py-2">
-            <p  className="text-xl text-green-like-100 text-center uppercase">{currentSet}</p>
+            <p className="text-xl text-green-like-100 text-center uppercase">
+              {currentSet}
+            </p>
           </div>
         </div>
 
@@ -323,9 +325,7 @@ const QuizCollection = () => {
           </div>
         ) : (
           <div className="text-center flex justify-center mt-12">
-            <p className="text-4xl uppercase text-inputLine">
-                {loadingResult}
-            </p>
+            <p className="text-4xl uppercase text-inputLine">{loadingResult}</p>
           </div>
         )}
       </div>
@@ -369,8 +369,9 @@ const QuizCollection = () => {
         </div>
       )}
       <SidBarBack />
-      <DeleteModal />
       <Sidebar />
+      <DeleteModal />
+
       <DashbarNav />
       <AlertModal />
     </quizCollectionContext.Provider>

@@ -247,10 +247,10 @@ const AdminDashboard = () => {
             <div></div>
           )}
         </div>
-        {/* Side Bar */}
+
         <SideBarBack />
-        <DashbarNav />
         <Sidebar />
+        <DashbarNav />
       </div>
     </dashboardContext.Provider>
   );
