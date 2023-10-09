@@ -43,7 +43,7 @@ function App() {
   const [adminEmail, setAdminEmail] = useState("")
   const [adminImage, setAdminImage] = useState("")
   const [adminEndPoint, setAdminEndPoint] = useState(
-    `https://trivy.onrender.com/admin`
+    `${process.env.REACT_APP_API_URL}/admin`
   );
   const [gameEndPoint, setGameEndPoint] = useState(
     `${process.env.REACT_APP_API_URL}/game`
