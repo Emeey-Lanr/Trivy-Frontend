@@ -33,6 +33,7 @@ function App() {
 
   let socket = useRef();
   useEffect(() => {
+
     socket.current = Socket(process.env.REACT_APP_API_URL);
   }, []);
   // hfhh
@@ -42,7 +43,7 @@ function App() {
   const [adminEmail, setAdminEmail] = useState("")
   const [adminImage, setAdminImage] = useState("")
   const [adminEndPoint, setAdminEndPoint] = useState(
-    `${process.env.REACT_APP_API_URL}/admin`
+    `https://trivy.onrender.com/admin`
   );
   const [gameEndPoint, setGameEndPoint] = useState(
     `${process.env.REACT_APP_API_URL}/game`

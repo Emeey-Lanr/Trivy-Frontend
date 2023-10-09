@@ -9,7 +9,7 @@ const Sidebar = () => {
     useContext(appContext);
   return (
     <div
-      className={`w-dw h-9p pb-3 fixed bottom-0 left-0 bg-dashback-100  rounded-r-sideedge overflow-y-auto sidebarNone:${showSideBar}`}
+      className={`w-dw h-9p pb-3 fixed bottom-0 left-0 bg-dashback-100  rounded-r-sideedge overflow-y-auto  ${showSideBar === "hidden" ? `sidebarNone: hidden` :`sidebarNone: block` }`}
     >
       <Link
         to="/admindashboard"
