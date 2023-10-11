@@ -81,7 +81,7 @@ const Index = () => {
         </div>
 
         <div className="hero_sub_text mt-4 w-5p  mx-auto">
-          <p className="text-center text-white ">
+          <p className="text-center text-white  createmodal:px-1">
             With <span>Triviy</span> your dreams become reality. The features
             available and embbeded <br className="sub_text_br1" /> in it, allow
             you to get everything done with ease. An answer to your puzzled{" "}
