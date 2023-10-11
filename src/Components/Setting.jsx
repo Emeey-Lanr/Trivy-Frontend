@@ -27,7 +27,7 @@ const Setting = () => {
     useEffect(() => {
         setSideBarBoxShadow(5);
       setShowCreateModal(false);
-       setShowSidebar("hidden")
+       setShowSidebar("hideSideBar");
     }, []);
     const alertModalMessage = (a, b, c, d) => {
          setAlertModalStatus(a);

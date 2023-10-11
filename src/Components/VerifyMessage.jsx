@@ -13,7 +13,7 @@ const VerifyMessage = () => {
               <AiOutlineMail className="text-5xl text-green-like-100" />
             </div>
 
-            <span style={{ color: "#6a6a6a", lineHeight: "3" }}>
+            <span className="px-2" style={{ color: "#6a6a6a", lineHeight: "3" }}>
               A mail has been sent to your account for your account
               verification, check your mail or your spam to confirm your email.
             </span>
