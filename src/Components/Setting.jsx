@@ -20,11 +20,12 @@ const Setting = () => {
       setAlertMessage,
       setSideBarBoxShadow,
       setShowCreateModal,
-       setShowSidebar,
+      setShowSidebar,       
       setCurrentSet,
     } = useContext(appContext);
     const [spin, setSpin] = useState("")
-    useEffect(() => {
+  useEffect(() => {
+      dashboardFuction()
         setSideBarBoxShadow(5);
       setShowCreateModal(false);
        setShowSidebar("hideSideBar");

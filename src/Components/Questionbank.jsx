@@ -106,8 +106,10 @@ const Questionbank = () => {
   const genratePasswordEndPoint = `${adminEndPoint}/generateMorePassword`;
   // meant to genrate password
   const whenGeneratingFunction = (a) => {
-     setMessage(a);
-     setTimeout(() => {
+    setMessage(a);
+    
+    setTimeout(() => {
+       getInfo()
        setMessage("");
        setGenerateModal(false);
        setModalSpin(false);
@@ -144,8 +146,10 @@ const Questionbank = () => {
     if (questionId === -1 && currentQuizName === "") {
       alert("reload cannot delete")
     } else {
+      setModalSpin(true)
       axios.post(deleteQuestionEndPoint, {collectionId: collectionId,subjectName: currentQuizName, questionId: questionId }).then((result) => {
         if (result.data.status) {
+         
           whenGeneratingFunction(result.data.message)
         } else {
           whenGeneratingFunction(result.data.message)
@@ -412,7 +416,7 @@ const Questionbank = () => {
                 onClick={() => generatePasswordBtn()}
               >
                 <span className="px-1"> Generate </span>
-                {modalSpin && <FaSpinner className="spin" />}
+                {modalSpin && <FaSpinner className="spin px-2" />}
               </button>
             </div>
           </div>
@@ -430,7 +434,7 @@ const Questionbank = () => {
             </div>
             {message !== "" && (
               <div className="w-9p mx-auto bg-dashback-100 py-1">
-                <p>{message}</p>
+                <p className="text-center">{message}</p>
               </div>
             )}
             <div className="w-9p mx-auto">
@@ -450,6 +454,10 @@ const Questionbank = () => {
           </div>
         </div>
       )}
+
+      <SidBarBack />
+      <Sidebar />
+      <DashbarNav />
       {openEditModal && (
         <div className="w-10p h-10p fixed top-0 bg-modalback flex justify-center items-end">
           <div className="w-editModal bg-white rounded-sideicon py-3 createmodal:w-9p">
@@ -468,7 +476,7 @@ const Questionbank = () => {
             )}
             <div className="flex justify-center items-center">
               <p className="text-inputline mx-3">Questions</p>
-              <div className="w-5 w-5 flex justify-center items-center rounded-icon bg-green-like-100">
+              <div className="w-5 h-5 flex justify-center items-center rounded-icon bg-green-like-100">
                 <p className="text-white">1</p>
               </div>
             </div>
@@ -560,10 +568,6 @@ const Questionbank = () => {
           </div>
         </div>
       )}
-
-      <SidBarBack />
-      <Sidebar />
-      <DashbarNav />
     </div>
   );
 };
