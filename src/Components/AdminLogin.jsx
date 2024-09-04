@@ -70,7 +70,7 @@ const AdminLogin = () => {
             <span>Y</span> <br />
           </h2>
         </div>
-        <div className="bg-l_bold sign_up_div">
+        <div className="bg-l_bold sign_up_div px-1">
           <div className="w-dimageSize createmodalWidth:w-9p">
             <div className="w-10p flex justify-center py-2">
               <img src={logo} className="h-5 w-5" alt="" />
@@ -80,19 +80,19 @@ const AdminLogin = () => {
             
              </div>
             <div className="my-3">
-              <p className="text-white text-sm">Admin Username</p>
+              <p className="text-white text-sm pb-1">Admin Username</p>
               <input
                 type="text"
                 onChange={(e) => setAdminUserName(e.target.value)}
-                className="h-10 w-10p rounded-sideicon border border-inputLine focus:outline-green-like-100"
+                className="h-10 w-10p px-2 rounded-sideicon border border-inputLine focus:outline-green-like-100"
               />
             </div>
             <div className="my-3">
-              <p className="text-white text-sm">Password</p>
+              <p className="text-white text-sm pb-1">Password</p>
               <input
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
-                className="h-10 w-10p rounded-sideicon border border-inputLine focus:outline-green-like-100"
+                className="h-10 w-10p px-2 rounded-sideicon border border-inputLine focus:outline-green-like-100"
               />
             </div>
             <div className="w-10p">

@@ -47,7 +47,7 @@ const EmailForgotPassRestLink = () => {
     
 }
   return (
-    <div className="w-10p h-10p fixed top-0 flex justify-center items-center">
+    <div className="w-10p h-10p fixed top-0 flex justify-center items-center ">
       <div className="sign_Up">
         <div className="logo_name">
           <h2 className="text-l_bold">
@@ -58,7 +58,7 @@ const EmailForgotPassRestLink = () => {
             <span>Y</span> <br />
           </h2>
         </div>
-        <div className="bg-l_bold sign_up_div">
+        <div className="bg-l_bold sign_up_div px-12">
           <div className="w-dimageSize createmodalWidth:w-9p">
             <div className="w-10p flex justify-center py-2">
               <img src={logo} className="h-5 w-5" alt="" />
