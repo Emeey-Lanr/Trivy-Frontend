@@ -26,6 +26,8 @@ const VerifyEmail = () => {
         } else {
           setVerifyMessage(result.data.message);
         }
+      }).catch((err) => {
+          setVerifyMessage(err.response.data.message);
       });
   }, []);
   return (

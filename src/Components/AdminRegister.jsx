@@ -6,6 +6,8 @@ import axios from "axios";
 import AlertModal from "./AlertModal";
 import { appContext } from "../App";
 import { useNavigate } from "react-router-dom";
+
+import { IoEye, IoEyeOff } from "react-icons/io5";
 const AdminRegister = () => {
   const { adminEndPoint, setAlertModalStatus, setAlertMessage } =
     useContext(appContext);
@@ -16,6 +18,7 @@ const AdminRegister = () => {
   const [adminEmail, setAdminEmail] = useState("");
   const [adminUserName, setAdminUserName] = useState("");
   const [adminpassword, setAdminPassword] = useState("");
+  const [passShow, setPasswordShow] = useState(false)
   const emailFunction = (e) => {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value)) {
       setAdminEmail(e.target.value);
@@ -38,7 +41,8 @@ const AdminRegister = () => {
     "bg-green-like-100 text-white"
   );
   const adminEndPointUrl = `${adminEndPoint}/signup`;
-
+    
+  console.log(adminEndPointUrl)
   const adminSchema = {
     adminEmail: adminEmail,
     adminUserName: adminUserName,
@@ -49,6 +53,18 @@ const AdminRegister = () => {
     locked:false,
   };
 
+  const errorMessage = (errorMessage) => {
+     // If Email or Username is already in use, it display this message
+          setSignUpShowing("Signup");
+          setDisableBtn(false);
+          setBtnDisableStyle("bg-green-like-100 text-white");
+          setAlertMessage(errorMessage);
+          setAlertModalStatus(true);
+          setTimeout(() => {
+            setAlertMessage("");
+            setAlertModalStatus(false);
+          }, 2000);
+  }
   const signUp = () => {
 
     if (adminEmail === "" || adminUserName === "" || adminpassword === "") {
@@ -62,23 +78,17 @@ const AdminRegister = () => {
       setSignUpShowing("Signup...");
       setDisableBtn(true);
       setBtnDisableStyle("bg-green-like-200 text-green-like-100");
+
       axios.post(adminEndPointUrl, adminSchema).then((result) => {
       
         if (result.data.status) {
           navigate("/emailverification");
         } else {
-          setSignUpShowing("Signup");
-          setDisableBtn(false);
-          setBtnDisableStyle("bg-green-like-100 text-white");
-          setAlertMessage(result.data.message);
-          setAlertModalStatus(true);
-          setTimeout(() => {
-            setAlertMessage("");
-            setAlertModalStatus(false);
-          }, 2000);
+         errorMessage(result.data.message);
         }
-      }).catch((err)=>{
-      
+      }).catch((err) => {
+        errorMessage(err.response.data.message)
+     
       })
     }
   };
@@ -119,11 +129,15 @@ const AdminRegister = () => {
             </div>
             <div className="my-3">
               <p className="text-white text-sm pb-1">Password</p>
-              <input
-                type="password"
-                onChange={(e) => passwordSetting(e)}
-                className="h-10 w-10p px-2 rounded-sideicon border border-inputLine focus:outline-green-like-100"
-              />
+              <div className="relative">
+                <input
+                  className="px-2 h-10 w-10p flex  rounded-sideicon border border-inputLine focus:outline-green-like-100"
+                  type={`${passShow ? "text" : "password"}`}
+                  onChange={(e) => passwordSetting(e)}
+                />
+                <button onClick={()=>setPasswordShow(!passShow)} className="absolute top-[40%] right-[5%] ">{passShow ?<IoEye /> : <IoEyeOff />  } </button>
+              </div>
+
               <p className="text-xs" style={{ color: "red" }}>
                 {ifNotPassord}
               </p>

@@ -23,6 +23,15 @@ const Search = () => {
   const bringSearchInputBtn = () => {
     setBringSearchInput(true);
   };
+
+  const handleError = (message) => {
+     setAlertMessage();
+     setAlertModalStatus(true);
+     setTimeout(() => {
+       setAlertMessage("");
+       setAlertModalStatus(false);
+     }, 2000);
+  }
   const searchForUser = () => {
     if (infoData !== "") {
       setButtonSwitch(2);
@@ -37,14 +46,11 @@ const Search = () => {
           setButtonSwitch(1);
           setResultPage(true);
         }
+      }).catch((err) => {
+        handleError(err.response.data.message)
       });
     } else {
-      setAlertMessage("Enter a name")
-      setAlertModalStatus(true)
-      setTimeout(() => {
-        setAlertMessage("")
-        setAlertModalStatus(false)
-      },2000)
+     handleError("Enter a name");
     }
   };
   const navigateToCheckEndPoint = `${searchEndPoint}/saveAdminId`;
@@ -55,13 +61,10 @@ const Search = () => {
         navigate("/result")
         
       } else {
-        setAlertMessage("Enter a name");
-        setAlertModalStatus(true);
-        setTimeout(() => {
-          setAlertMessage("");
-          setAlertModalStatus(false);
-        }, 2000);
+         handleError("Enter a name");
       }
+    }).catch((err) => {
+         handleError(err.response.data.message);
     });
   };
   return (

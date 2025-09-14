@@ -42,10 +42,23 @@ const NameJoin = () => {
         } else {
           navigate("/play/userlogin")
         }
+      }).catch(() => {
+        navigate("/play/userlogin");
       });
   }, []);
 
   const uploadImgEndPoint = `${gameEndPoint}/uploadPlayerImg`;
+
+   const ifErrorFunction = (message, time) => {
+     setAlertModalStatus(true);
+     setAlertMessage(message);
+     setTimeout(() => {
+       setLoading("");
+       setAlertMessage("");
+       setAlertModalStatus(false);
+     }, time);
+  };
+  
   const uploadImg = (e) => {
     let reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
@@ -60,14 +73,12 @@ const NameJoin = () => {
             setImageUrl(result.data.imgUrl);
             setLoading("")
           } else {
-            setAlertModalStatus(true);
-            setAlertMessage(result.data.message) 
-            setTimeout(() => {
-              setLoading("")
-               setAlertModalStatus(false);
-               setAlertMessage(""); 
-            },1000)
+          
+            ifErrorFunction(result.data.message, 1000) 
+            
           }
+        }).catch((err) => {
+          ifErrorFunction(err.response.data.message, 1000)
         });
     };
   };
@@ -81,22 +92,15 @@ const NameJoin = () => {
     totalScore: 0,
     schoolName: schoolName
   };
-  const ifErrorFunction = (a, b, c, d) => {
-     setAlertModalStatus(a);
-     setAlertMessage(b);
-     setTimeout(() => {
-       setAlertMessage(c);
-       setAlertModalStatus(d);
-     }, 700);
-  }
+ 
   const fromBtn = () => {
     setFormDone(2)
   }
   const proceedBtn = () => {
     if (imgUrl === "") {
-      ifErrorFunction(true, "Can't proceed no image uploaded")
+      ifErrorFunction( "Can't proceed no image uploaded", 700)
     } else if (schoolName === "" || name === "") {
-      ifErrorFunction(true, "fill in input to proceed")
+      ifErrorFunction("fill in input to proceed", 700)
     } else if (imgUrl !== "" && schoolName !== "" && name !== "") {
       setFormDone(1)
     }
@@ -111,8 +115,10 @@ const NameJoin = () => {
           setSpin("")
         } else {
           setSpin("")
-           ifErrorFunction(true, result.data.message, "", false);
+           ifErrorFunction(result.data.message, 700);
         }
+      }).catch((err)=>{
+        ifErrorFunction(err.response.data.message, 700)
       });
     
   };

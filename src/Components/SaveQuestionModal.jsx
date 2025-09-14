@@ -66,6 +66,8 @@ const SaveQuestionModal = () => {
          setMessage(result.data.message)
         }
         
+      }).catch((err) => {
+         setMessage(err.response.data.message);
       });
       } else {
         setMessage("Add time")

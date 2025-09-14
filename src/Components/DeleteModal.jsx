@@ -12,26 +12,27 @@ const DeleteModal = () => {
   const [deleteSpinner, setDeleteSpinner] = useState(false);
   const [message, setMessage] = useState("");
   const deleteCollection = `${adminEndPoint}/deleteCollection`;
+  
+  const handleResponse = (message, time) => {
+    setMessage(message);
+    setTimeout(() => {
+      setMessage("");
+      setDeleteModalState(false);
+      setDeleteSpinner(false);
+    }, time);
+  }
   const deleteBtn = () => {
  
       setDeleteSpinner(true)
     axios.post(deleteCollection, quizIdentificationForDeleting).then((result) => {
         if (result.data.status) {
             loadcollectionsFunction();
-            setMessage(result.data.message)
-            setTimeout(() => {
-                setMessage("")
-                setDeleteModalState(false)
-                setDeleteSpinner(false)
-            },500)
+            handleResponse(result.data.message, 5000)
         } else {
-            setMessage(result.data.message)
-            setTimeout(() => {
-                setMessage("")
-                setDeleteModalState(false)
-                setDeleteSpinner(false)
-            }, 1000)
+           handleResponse(result.data.message, 1000);
       }
+    }).catch((err) => {
+       handleResponse(err.response.data.message, 1000);
     });
   };
   return (

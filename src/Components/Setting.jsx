@@ -30,12 +30,12 @@ const Setting = () => {
       setShowCreateModal(false);
        setShowSidebar("hideSideBar");
     }, []);
-    const alertModalMessage = (a, b, c, d) => {
-         setAlertModalStatus(a);
-         setAlertMessage(b);
+    const alertModalMessage = (message) => {
+         setAlertModalStatus(true);
+         setAlertMessage(message);
         setTimeout(() => {
-            setAlertModalStatus(c)
-             setAlertMessage(d)
+            setAlertModalStatus(false)
+             setAlertMessage("")
          },1000);
     }
 const uploadImageEndPoint = `${adminEndPoint}/settingImage`;
@@ -65,8 +65,10 @@ const uploadImageEndPoint = `${adminEndPoint}/settingImage`;
                       dashboardFuction();
                       } else {
                           setSpin("")
-                       alertModalMessage(true, result.data.message, false, "");
+                       alertModalMessage(result.data.message);
                     }
+                  }).catch((err) => {
+                    alertModalMessage(err.response.data.message);
                   });
            }
         

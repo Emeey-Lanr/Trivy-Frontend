@@ -85,6 +85,12 @@ const CreateModal = () => {
     setChecked(2)
     setMultipleStatus(true)
   };
+
+  const handleError = (message) => {
+     setMessage(message);
+     setSpinState(false);
+  }
+
   const createQuiz = () => {
     if (adminId === "") {
       setMessage("Reload Page,cannot create");
@@ -103,9 +109,10 @@ const CreateModal = () => {
             navigate("/quizcollections");
           },1000)
         } else {
-          setMessage(result.data.message)
-          setSpinState(false)
+         handleError(result.data.message);
 }
+      }).catch((err) => {
+        handleError(err.response.data.message)
       });
     }
   };

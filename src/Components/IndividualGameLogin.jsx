@@ -23,7 +23,12 @@ const IndividualGameLogin = () => {
   }
   useEffect(() => {
     getIdFunction()
-  },[])
+  }, [])
+  
+  const handleError = (message) => {
+     setSpin("");
+     setMessage(message);
+  }
   const checkForGame = () => {
 
     
@@ -37,11 +42,13 @@ const IndividualGameLogin = () => {
          localStorage.pass = result.data.passId
          navigate("/play/username");
         } else {
-          setSpin("")
-          setMessage(result.data.message)
+        
+          handleError(result.data.message)
           
         }
       
+      }).catch((err) => {
+        handleError(err.response.data.message)
       })
     }
   };

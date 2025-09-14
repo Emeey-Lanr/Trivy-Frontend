@@ -6,6 +6,7 @@ import { appContext } from "../App";
 import AlertModal from "./AlertModal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 const AdminLogin = () => {
   const { adminEndPoint, setAlertModalStatus, setAlertMessage } =
     useContext(appContext);
@@ -15,8 +16,22 @@ const AdminLogin = () => {
   const [btnVerifyStyle, setBtnVerifyStyle] = useState(
     "bg-green-like-100 w-10p py-3 text-white rounded-sideicon"
   );
+    const [passShow, setPasswordShow] = useState(false);
   const [btnClicked, setBtnClicked] = useState("Login");
   const loginEndPoint = `${adminEndPoint}/adminlogin`;
+
+  const errorMessageHandler = (errormessage) => {
+     setAlertMessage(errormessage);
+     setAlertModalStatus(true);
+     setTimeout(() => {
+       setAlertModalStatus(false);
+       setBtnVerifyStyle(
+         "bg-green-like-100 w-10p py-3 text-white rounded-sideicon"
+       );
+       setBtnClicked("Login");
+     }, 1000);
+  }
+
   const verify = () => {
     if (password === "" || adminUserName === "") {
       setAlertModalStatus(true);
@@ -30,6 +45,7 @@ const AdminLogin = () => {
         "bg-green-like-200 w-10p py-3 text-green-like-100 rounded-sideicon"
       );
       setBtnClicked("Login....");
+      console.log(adminUserName, password)
       axios
         .post(loginEndPoint, { userName: adminUserName, password: password })
         .then((result) => {
@@ -41,13 +57,8 @@ const AdminLogin = () => {
             localStorage.removeItem("quizxxx");
             localStorage.removeItem("")
           } else {
-            setAlertMessage(result.data.message);
-            setAlertModalStatus(true);
-            setTimeout(() => {
-              setAlertModalStatus(false)
-              setBtnVerifyStyle("bg-green-like-100 w-10p py-3 text-white rounded-sideicon")
-              setBtnClicked("Login")
-            },1000)
+            
+            errorMessageHandler(result.data.message)
           }
 
           if (result.data.mailStatus === true) {
@@ -55,6 +66,9 @@ const AdminLogin = () => {
           } else if (result.data.mailStatus === false) {
             navigate("/admindashboard");
           }
+        }).catch((err) => {
+          errorMessageHandler(err.response.data.message)
+          
         });
     }
   };
@@ -77,8 +91,7 @@ const AdminLogin = () => {
             </div>
             <div>
               <p className="uppercase text-white text-xl text-center">Login</p>
-            
-             </div>
+            </div>
             <div className="my-3">
               <p className="text-white text-sm pb-1">Admin Username</p>
               <input
@@ -89,11 +102,19 @@ const AdminLogin = () => {
             </div>
             <div className="my-3">
               <p className="text-white text-sm pb-1">Password</p>
-              <input
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-                className="h-10 w-10p px-2 rounded-sideicon border border-inputLine focus:outline-green-like-100"
-              />
+              <div className="relative">
+                <input
+                  type={`${passShow ? "text" : "password"}`}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="h-10 w-10p px-2 rounded-sideicon border border-inputLine focus:outline-green-like-100"
+                />
+                <button
+                  onClick={() => setPasswordShow(!passShow)}
+                  className="absolute top-[40%] right-[5%] "
+                >
+                  {passShow ? <IoEye /> : <IoEyeOff />}{" "}
+                </button>
+              </div>
             </div>
             <div className="w-10p">
               <button className={btnVerifyStyle} onClick={() => verify()}>

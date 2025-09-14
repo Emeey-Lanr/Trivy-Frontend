@@ -84,6 +84,9 @@ let navigate = useNavigate()
         setDeleteModalStatus(false)
        
       }
+    }).catch((err) => {
+       alertModalFunction(err.response.data.message, true, "", false, "Delete", "bg-dashback-100 text-inputLine py-2 px-3")
+        setDeleteModalStatus(false)
     })
   }
   return (

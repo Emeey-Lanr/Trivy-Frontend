@@ -30,9 +30,7 @@ const EditQuestion = () => {
     disableBtn,
   } = useContext(addQuestionContext);
 
-    const switchStatus = (index) => {
-       
-    }
+   
     return (
       <>
         {editQuestionState && (

@@ -213,6 +213,14 @@ const moveUp  = useRef()
   const uploadImageForQuizEndPoint = `${adminEndPoint}/uploadImgForQuiz` 
   const [spin, setSpin] = useState("")
   const [imgUploadMessage, setimgUploadMessage] = useState("")
+
+  const errorHandler = (message)=>{
+setimgUploadMessage(message)
+         setTimeout(() => {
+           setSpin("")
+           setimgUploadMessage("")
+         },1000)
+  }
  const uploadImage = (e) => {
 
    let reader = new FileReader();
@@ -227,12 +235,10 @@ const moveUp  = useRef()
          setSpin("")
 
        }else{
-         setimgUploadMessage(result.data.message)
-         setTimeout(() => {
-           setSpin("")
-           setimgUploadMessage("")
-         },1000)
+         errorHandler(result.data.message);
        }
+     }).catch((err) => {
+       errorHandler(err.response.data.message)
      })
    };
  };

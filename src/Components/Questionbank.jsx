@@ -75,6 +75,11 @@ const Questionbank = () => {
                }
              } else {
              }
+           }).catch((err) => {
+             setMessage(err.response.data.message)
+             setTimeout(() => {
+               setMessage("")
+             },1000)
            });
   }
   useEffect(() => {
@@ -127,6 +132,8 @@ const Questionbank = () => {
       } else {
       whenGeneratingFunction(result.data.message)
       }
+       }).catch((err) => {
+        whenGeneratingFunction(err.response.data.message);
     })
     } else {
       

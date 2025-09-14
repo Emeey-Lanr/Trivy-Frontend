@@ -32,12 +32,12 @@ const Result = () => {
 
   const [profileModal, setprofileModal] = useState(0)
 
-  const alertFunction = (a,b,c,d) => {
-     setAlertMessage(a);
-     setAlertModalStatus(b);
+  const alertFunction = (message) => {
+     setAlertMessage(message);
+     setAlertModalStatus(true);
      setTimeout(() => {
-       setAlertMessage(c);
-       setAlertModalStatus(d);
+       setAlertMessage("");
+       setAlertModalStatus(false);
      }, 2000);
   }
   const loadAdminDetails = `${searchEndPoint}/loadAdminDetails`
@@ -54,8 +54,10 @@ const Result = () => {
         
             setAdminDetails(result.data.admin)
         } else {
-       alertFunction("an error occured", true, "",false)
+       alertFunction("an error occured")
         }
+      }).catch((err) => {
+        alertFunction(err.response.data.message)
       });
       
     },[])
@@ -109,9 +111,9 @@ const Result = () => {
   const collectionEndPoint = `${searchEndPoint}/adminCollection`
   const lookForCollection = () => {
     if (btnStyle === 0 || btnStyle === 4 ) {
-      alertFunction("click on either the primary or the junior or the sec button", true, "", false);
+      alertFunction("click on either the primary or the junior or the sec button");
     } else if (collectionName === "") {
-      alertFunction("Fill in input", true, "", false);
+      alertFunction("Fill in input");
     }
     else {
       setBtnStyleSpin(2)
@@ -123,10 +125,12 @@ const Result = () => {
 
         } else {
             console.log(result.data);
-          alertFunction(result.data.message, true, "", false);
+          alertFunction(result.data.message);
           setBtnStyleSpin(1)
          
         }
+      }).catch((err) => {
+       alertFunction(err.response.data.message)
       })
     }
   }
@@ -139,10 +143,12 @@ const Result = () => {
           setIfFoundStyle(3)
             socket.current.emit("views",{ name: quizId, result:result.data.gamePlayedResult, id:userId });
         } else {
-          alertFunction(result.data.message, true, "", false);
+          alertFunction(result.data.message);
           setBtnAcessStatus(false)
         }
-      })
+    }).catch((err) => {
+    alertFunction(err.response.data.message);
+    })
  } 
   const enterAcessPin = (id, name) => {
     setQuizId(id)
@@ -152,7 +158,7 @@ const Result = () => {
 
   const enterAcessPinBtn = () => {
     if (acessPin === "") {
-      alertFunction("Enter access pin", true, "", false)
+      alertFunction("Enter access pin")
     } else {
       setBtnAcessStatus(true)
       axios.post(acessPinEndPoint, { quizId: quizId, acessPass: acessPin, locked:"yes" }).then((result) => {
@@ -165,9 +171,12 @@ const Result = () => {
           setAcessModal(false)
           setBtnAcessStatus(false)
         } else {
-          alertFunction(result.data.message, true, "", false);
+          alertFunction(result.data.message);
           setBtnAcessStatus(false)
         }
+      }).catch((err) => {
+        alertFunction(err.response.data.message);
+          setBtnAcessStatus(false);
       })
     }
   }
